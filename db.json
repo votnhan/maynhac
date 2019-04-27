@@ -1,0 +1,58 @@
+{
+    "user":{
+        "_id":"autocreate - String",
+        "username":"String",
+        "password":"String",
+        "name":"String",
+        "email":"String",
+        "avatar":"String",
+        "listmusicsposted":"List - StringId",
+        "listplaylists":"List - StringId",
+        "listalbums":"List - StringId",
+        "reaction":[{
+            "_id":"Id Of Song - String",
+            "status": "Like or Dislike - Boolean"
+        }]
+    },
+    "song":{
+        "_id":"autocreate - String",
+        "name":"String",
+        "link":"String",
+        "lyrics":"List - String",
+        "comments":"List - StringId",
+        "dateposted":"Date",
+        "numlike":"Int",
+        "numdislike":"Int",
+        "numlisten":"Int",
+        "type":"Number",
+        "author":"String"
+    },
+    "playlist":{
+        "_id":"autocreate - String",
+        "songs":"List - StringId",
+        "type":"Number",
+        "datecreate":"Date",
+        "name":"String",
+        "description":"String"
+    },
+    "comment":{
+        "_id":"autocreate - String",
+        "content":"String",
+        "commentator":"Name of commentator - String",
+        "datecomment":"Date"
+    },
+    "album":{
+        "_id":"autocreate - String",
+        "name":"String",
+        "title":"StringId",
+        "datecreate":"Date",
+        "description":"String",
+        "songs":"List - StringId",
+        "author":"String"
+    },
+    "typesong":{
+        "_id":"autocreate - String",
+        "name":"String",
+        "typeid":"Number"
+    }
+}

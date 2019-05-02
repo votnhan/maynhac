@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken');
 
 const {User} = require('../../models/User');
 const {Playlist, PlaylistSchema} = require('../../models/Playlist');
+const {Song, SongSchema} = require('../../models/Song');
+
 const verifyToken = require('../../middlewares/verifyToken');
 
 const router = express.Router();
@@ -93,7 +95,7 @@ router.post('/createPlaylist', verifyToken, (req, res, next) => {
         data => {
             const idplaylist = data._id;
             User.update({username}, {$push: {listplaylists: idplaylist}}).then(
-                data =>  {res.status(200).send('Create playlist successfully.'); }
+                data =>  {res.status(200).send(newPlaylist); }
             )
             .catch(err => {
                 console.log(err); 
@@ -124,6 +126,49 @@ router.post('/deletePlaylist', verifyToken, (req, res, next) => {
         res.status(500).send('Delete playlist failed.');
     });
 });
+
+router.post('/comment', verifyToken, (req, res, next) => {
+    
+    const {content, commentator ,songId} = req.body;
+    const comment = {
+        "content": content,
+        "commentator": commentator,
+        "datecomment": new Date().toISOString()
+    }
+
+    Song.update({_id: songId}, {$push: {comments: comment}}).then(
+        data => {
+            res.status(200).send(comment);
+        }
+    )
+    .catch(err => {
+        console.log(err);
+        res.status(500).send('Comment song failed.');
+    });
+});
+
+router.post('/postsong', verifyToken, (req, res, next) => {
+    const username  = req.username;
+    const {name, link, lyrics, typeid, author} = req.body;
+    const newSong = new Song({name, link, lyrics, type: typeid, author});
+    newSong.save().then(
+        data => {
+            const idsong = data._id;
+            User.update({username}, {$push: {listmusicsposted: idsong}}).then(
+                data =>  {
+                    res.status(200).send(newSong);
+                }
+            )
+            .catch(err => {
+                console.log(err); 
+                res.status(500).send('Upload song failed.')
+            })
+        }
+    )
+    .catch(err => console.log(err))
+});
+
+
 
 
 

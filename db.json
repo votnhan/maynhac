@@ -19,7 +19,13 @@
         "name":"String",
         "link":"String",
         "lyrics":"List - String",
-        "comments":"List - StringId",
+        "comments":[    
+                {
+                "content":"String",
+                "commentator":"Name of commentator - String",
+                "datecomment":"Date"
+            }
+        ],
         "dateposted":"Date",
         "numlike":"Int",
         "numdislike":"Int",
@@ -34,12 +40,6 @@
         "datecreate":"Date",
         "name":"String",
         "description":"String"
-    },
-    "comment":{
-        "_id":"autocreate - String",
-        "content":"String",
-        "commentator":"Name of commentator - String",
-        "datecomment":"Date"
     },
     "album":{
         "_id":"autocreate - String",

@@ -11,7 +11,14 @@ const SongSchema = new Schema({
         required:true
     },
     lyrics:[String],
-    comments:[String],
+    comments:[{
+        content: String,
+        commentator:String,
+        datecomment: {
+            type: Date,
+            default: () => new Date().toISOString()
+        }
+    }],
     dateposted:{
         type:Date,
         default: () => new Date().toISOString()

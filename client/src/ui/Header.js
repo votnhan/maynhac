@@ -3,6 +3,7 @@ import '../assets/css/Header.css';
 import logo from '../assets/imgs/logo.jpg';
 import UserInfo from '../models/UserInfo';
 import LoginModal from './LoginModal';
+import SongService from '../services/SongService';
 
 
 class Header extends React.Component {
@@ -12,6 +13,7 @@ class Header extends React.Component {
         this.state = {buttonCode: <a href className="logout-button" onClick={this.onLoginClicked}>Login</a>,
          playlistCode: null, 
          popup: null,
+         searchKey: '',
         openModal: false};
         this.loginModal = React.createRef();
     }
@@ -34,14 +36,22 @@ class Header extends React.Component {
         }
     }
 
+    onInputChanged = (e) => {
+        this.setState({searchKey: e.target.value});
+        this.setState({openModal: false});
+    }
+
     render() {
         return (
             <header className="header-two-bars">
                 <div className="header-first-bar">
                     <div className="header-limiter">
+
                         <h1><a href><img className="logo" src={logo} alt="Logo" /></a></h1>
-                        <form method="get" action="#">
-                            <input type="search" placeholder="Search!" name="search"/>
+                        <form method="get" onSubmit={this.onSearch}>
+                            <input type="search" placeholder="Search!" onChange={this.onInputChanged} name="search"/>
+                            <button type="submit"></button>
+
                         </form>
                         {this.state.buttonCode}
                     
@@ -71,6 +81,14 @@ class Header extends React.Component {
     onLoginClicked = (e) => {
         e.preventDefault();
         this.setState({openModal: true});
+    }
+
+    onSearch = (e) => {
+        e.preventDefault();
+        SongService.handleSearch(this.state.searchKey, (res) => {
+            console.log(res);
+        })
+        console.log(this.state.searchKey);
     }
 }
 

@@ -230,6 +230,8 @@ router.post('/comment', verifyToken, (req, res, next) => {
 });
 
 router.post('/searchSong', (req, res) => {
+    console.log(req.body);
+    console.log(req);
     const {name} = req.body;
     Song.find({name: {$regex:name,$options:"$i"}}, (err, data) => {
         if(err){
@@ -240,8 +242,16 @@ router.post('/searchSong', (req, res) => {
     });
 });
 
-
-
+router.get('/topkSong', (req, res) => {
+    const {k} = req.query;
+    Song.find().sort({numlisten:-1}).exec((err, data)=>{
+        if(err){
+            console.log(err);
+            return res.status(500).send(err);
+        }
+        res.status(200).send(data.slice(0, k));
+    });
+});
 
 
 module.exports = router;

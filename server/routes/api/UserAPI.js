@@ -43,6 +43,11 @@ router.post('/login', (req, res) => {
 
 });
 
+router.post('/logout', verifyToken, (req, res, next) => {
+    const username = req.username;
+    res.status(200).send('Logout successfully.');
+});
+
 router.post('/signup', (req, res) =>{
     const {username, password, name, email} = req.body
     

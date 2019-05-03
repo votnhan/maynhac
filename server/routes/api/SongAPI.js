@@ -230,10 +230,12 @@ router.post('/comment', verifyToken, (req, res, next) => {
 });
 
 router.post('/searchSong', (req, res) => {
+    console.log("req.body-->");
     console.log(req.body);
-    console.log(req);
-    const {name} = req.body;
-    Song.find({name: {$regex:name,$options:"$i"}}, (err, data) => {
+    console.log("<--END body");
+
+    const reqName = req.body.key;
+    Song.find({name: {$regex:reqName,$options:"$i"}}, (err, data) => {
         if(err){
             console.log(err);
             return res.status(500).send(err);

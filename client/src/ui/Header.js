@@ -1,6 +1,6 @@
 import React from 'react';
 import '../assets/css/Header.css';
-import logo from '../assets/imgs/2.jpg';
+import logo from '../assets/imgs/logo.jpg';
 import UserInfo from '../models/UserInfo';
 import LoginModal from './LoginModal';
 
@@ -39,7 +39,7 @@ class Header extends React.Component {
             <header className="header-two-bars">
                 <div className="header-first-bar">
                     <div className="header-limiter">
-                        <h1><a href>Company<span>logo</span></a></h1>
+                        <h1><a href><img className="logo" src={logo} alt="Logo" /></a></h1>
                         <form method="get" action="#">
                             <input type="search" placeholder="Search!" name="search"/>
                         </form>

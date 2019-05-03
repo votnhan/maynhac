@@ -21,6 +21,10 @@
 	color: #bc40df;
 }
 
+.logo {
+	height: 40px;
+	margin-bottom: 10px;
+}
 /* The first bar */
 
 .header-two-bars .header-first-bar{
@@ -74,6 +78,7 @@
 	border: 1px solid #5E6367;
 	line-height: 40px;
 	box-sizing: border-box;
+	cursor: pointer;
 }
 
 

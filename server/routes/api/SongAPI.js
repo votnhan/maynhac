@@ -240,8 +240,16 @@ router.post('/searchSong', (req, res) => {
     });
 });
 
-
-
+router.get('/topkSong', (req, res) => {
+    const {k} = req.query;
+    Song.find().sort({numlisten:-1}).exec((err, data)=>{
+        if(err){
+            console.log(err);
+            return res.status(500).send(err);
+        }
+        res.status(200).send(data.slice(0, k));
+    });
+});
 
 
 module.exports = router;

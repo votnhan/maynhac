@@ -3,6 +3,7 @@ import '../assets/css/Header.css';
 import logo from '../assets/imgs/2.jpg';
 import UserInfo from '../models/UserInfo';
 import LoginModal from './LoginModal';
+import SongService from '../services/SongService';
 
 
 class Header extends React.Component {
@@ -82,6 +83,9 @@ class Header extends React.Component {
 
     onSearch = (e) => {
         e.preventDefault();
+        SongService.handleSearch(this.state.searchKey, (res) => {
+            console.log(res);
+        })
         console.log(this.state.searchKey);
     }
 }

@@ -228,6 +228,7 @@ router.post('/comment', verifyToken, (req, res, next) => {
         res.status(500).send(err);
     });
 });
+
 router.post('/searchSong', (req, res) => {
     const {name} = req.body;
     Song.find({name: {$regex:name,$options:"$i"}}, (err, data) => {
@@ -238,6 +239,8 @@ router.post('/searchSong', (req, res) => {
         res.status(200).send(data);
     });
 });
+
+
 
 
 

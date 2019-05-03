@@ -10,7 +10,7 @@ const SongSchema = new Schema({
         type:String,
         required:true
     },
-    lyrics:[String],
+    lyrics:String,
     comments:[{
         content: String,
         commentator:String,
@@ -24,10 +24,6 @@ const SongSchema = new Schema({
         default: () => new Date().toISOString()
     },
     numlike:{
-        type:Number,
-        default:0
-    },
-    numdislike:{
         type:Number,
         default:0
     },

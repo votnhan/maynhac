@@ -3,11 +3,8 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 
 const {User} = require('../../models/User');
-const {Playlist, PlaylistSchema} = require('../../models/Playlist');
-const {Song, SongSchema} = require('../../models/Song');
 
 const verifyToken = require('../../middlewares/verifyToken');
-
 const router = express.Router();
 
 router.get('/me', verifyToken, (req, res, next) =>{
@@ -19,29 +16,7 @@ router.get('/me', verifyToken, (req, res, next) =>{
     });
 });
 
-router.get('/playlist', verifyToken, (req, res, next) => {
-    const username = req.username;
-    User.findOne({username}).then(
-        data => {
-            const playlistIds = data.listplaylists;
-            Playlist.find({_id: {$in: playlistIds}}).then(
-                playlist => {
-                    res.status(200).send(playlist);
-                }
-            )
-            .catch(err => {
-                console.log(err);
-                res.status(500).send('Get playlist failed.');
-            })
-            
-        }
-    )
-    .catch(err => {
-            console.log(err);
-            res.status(500).send('Get playlist failed.');
-        }
-    )
-});
+
 
 router.post('/login', (req, res) => {
     
@@ -87,86 +62,15 @@ router.post('/signup', (req, res) =>{
     })
 });
 
-router.post('/createPlaylist', verifyToken, (req, res, next) => {
-    const {name, description, typeid} = req.body;
-    const username = req.username;
-    let newPlaylist = new Playlist({name, description, type:typeid } );
-    newPlaylist.save().then(
-        data => {
-            const idplaylist = data._id;
-            User.update({username}, {$push: {listplaylists: idplaylist}}).then(
-                data =>  {res.status(200).send(newPlaylist); }
-            )
-            .catch(err => {
-                console.log(err); 
-                res.status(500).send('Create playlist failed.')
-            })
-        }
-    )
-    .catch(err => console.log(err))
-});
 
-router.post('/deletePlaylist', verifyToken, (req, res, next) => {
-    const username = req.username;
-    const {playlistId} = req.body;
-    
-    User.update({username}, {$pull: {listplaylists: playlistId}}).then(
-        user => {
-            Playlist.remove({_id:playlistId}).then(
-                data => res.status(200).send(data)
-            )
-            .catch(err => {
-                console.log(err);
-                res.status(500).send('Delete playlist failed.');
-            });
-        }
-    )
-    .catch( err => {
-        console.log(err);
-        res.status(500).send('Delete playlist failed.');
-    });
-});
 
-router.post('/comment', verifyToken, (req, res, next) => {
-    
-    const {content, commentator ,songId} = req.body;
-    const comment = {
-        "content": content,
-        "commentator": commentator,
-        "datecomment": new Date().toISOString()
-    }
 
-    Song.update({_id: songId}, {$push: {comments: comment}}).then(
-        data => {
-            res.status(200).send(comment);
-        }
-    )
-    .catch(err => {
-        console.log(err);
-        res.status(500).send('Comment song failed.');
-    });
-});
 
-router.post('/postsong', verifyToken, (req, res, next) => {
-    const username  = req.username;
-    const {name, link, lyrics, typeid, author} = req.body;
-    const newSong = new Song({name, link, lyrics, type: typeid, author});
-    newSong.save().then(
-        data => {
-            const idsong = data._id;
-            User.update({username}, {$push: {listmusicsposted: idsong}}).then(
-                data =>  {
-                    res.status(200).send(newSong);
-                }
-            )
-            .catch(err => {
-                console.log(err); 
-                res.status(500).send('Upload song failed.')
-            })
-        }
-    )
-    .catch(err => console.log(err))
-});
+
+
+
+
+
 
 
 

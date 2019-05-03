@@ -20,7 +20,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(cookieParser());
 
-app.use(express.static(path.join(__dirname, './views')));
+app.use(express.static(path.join(__dirname, './public')));
+
+app.get('/', (req, res) => {
+    res.sendFile(path.resolve(__dirname, './views/index.html'));
+
+});
 
 app.use('/', routes);
 

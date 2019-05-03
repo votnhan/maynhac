@@ -2,13 +2,18 @@ import React from 'react';
 import './assets/css/Header.css';
 import logo from './assets/imgs/2.jpg';
 import UserInfo from './models/UserInfo';
+import LoginModal from './LoginModal';
 
 
 class Header extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {buttonCode: <a href="#" className="logout-button">Login</a>};
+        this.state = {buttonCode: <a href className="logout-button" onClick={this.onLoginClicked}>Login</a>,
+         playlistCode: null, 
+         popup: null,
+        openModal: false};
+        this.loginModal = React.createRef();
     }
 
     componentDidMount() {
@@ -19,12 +24,12 @@ class Header extends React.Component {
                         <div classNameName="header-user-menu">
                             <img src={logo} alt="User"/>
                             <ul>
-                                <li><a href="#">Settings</a></li>
-                                <li><a href="#">Payments</a></li>
-                                <li><a href="#" classNameName="highlight">Logout</a></li>
+                                <li><a href>Settings</a></li>
+                                <li><a href>Payments</a></li>
+                                <li><a href classNameName="highlight">Logout</a></li>
                             </ul>
                         </div>,
-                playlistCode: <a href="#"><i className="fa fa-cogs"></i> Settings</a>   
+                playlistCode: <a href><i className="fa fa-cogs"></i> Settings</a>   
                     });
         }
     }
@@ -34,7 +39,7 @@ class Header extends React.Component {
             <header className="header-two-bars">
                 <div className="header-first-bar">
                     <div className="header-limiter">
-                        <h1><a href="#">Company<span>logo</span></a></h1>
+                        <h1><a href>Company<span>logo</span></a></h1>
                         <form method="get" action="#">
                             <input type="search" placeholder="Search!" name="search"/>
                         </form>
@@ -45,21 +50,27 @@ class Header extends React.Component {
                 <div className="header-second-bar">
                     <div className="header-limiter">
                         <nav>
-                            <a href="#"><i className="fa fa-comments-o"></i>Home</a>
-                            <a href="#"><i className="fa fa-file-text"></i>Chart</a>
-                            <a href="#"><i className="fa fa-group"></i>Top 10</a>
+                            <a href><i className="fa fa-comments-o"></i>Home</a>
+                            <a href><i className="fa fa-file-text"></i>Chart</a>
+                            <a href><i className="fa fa-group"></i>Top 10</a>
                             {this.state.playlistCode}
                         </nav>
                     </div>
                 </div>
-
-                
+                <div>
+                    <LoginModal ref={this.loginModal} isOpen={this.state.openModal}/>
+                </div>
             </header>
         );
     }
 
-    onSearchClicked(target) {
+    onSearchClicked = (e) => {
         console.log(document.getElementById("searchInput"));
+    }
+
+    onLoginClicked = (e) => {
+        e.preventDefault();
+        this.setState({openModal: true});
     }
 }
 

@@ -191,9 +191,6 @@
 	right: 30px;
 	margin-left: 500px;
 	border-radius: 3px;
-	background-color:  #3a3c3e;
-	width: 44px;
-	height: 39px;
 	cursor: pointer;
 
 	-ms-user-select: none;
@@ -202,30 +199,15 @@
 	user-select: none;
 }
 
-/* CSS search icon */
 
-.header-two-bars .header-limiter form:before {
+
+.header-two-bars .header-limiter form button {
 	position: absolute;
 	content: '';
-	border-radius: 50%;
-	border: 2px solid #fff;
-	width: 9px;
-	height: 9px;
-	top: 12px;
-	left: 14px;
-}
-
-.header-two-bars .header-limiter form:after {
-	position: absolute;
-	content: '';
-	background-color: #fff;
-	width: 2px;
-	height: 8px;
-	top: 22px;
-	left: 26px;
-	-webkit-transform: rotate(-44deg);
-	-moz-transform: rotate(-44deg);
-	transform: rotate(-44deg);
+	background-color: #3a3c3e;
+	width: 40px;
+	height: 40px;
+	right: 30px;
 }
 
 /* The search box */
@@ -235,7 +217,7 @@
 	right: 42px;
 	padding: 11px 12px 9px;
 	border: none;
-	width: 450px;
+	width: 400px;
 	border-radius: 2px 0 0 2px;
 	height: 39px;
 	box-sizing: border-box;

@@ -12,6 +12,7 @@ class Header extends React.Component {
         this.state = {buttonCode: <a href className="logout-button" onClick={this.onLoginClicked}>Login</a>,
          playlistCode: null, 
          popup: null,
+         searchKey: '',
         openModal: false};
         this.loginModal = React.createRef();
     }
@@ -34,14 +35,20 @@ class Header extends React.Component {
         }
     }
 
+    onInputChanged = (e) => {
+        this.setState({searchKey: e.target.value});
+        this.setState({openModal: false});
+    }
+
     render() {
         return (
             <header className="header-two-bars">
                 <div className="header-first-bar">
                     <div className="header-limiter">
                         <h1><a href>Company<span>logo</span></a></h1>
-                        <form method="get" action="#">
-                            <input type="search" placeholder="Search!" name="search"/>
+                        <form method="get" onSubmit={this.onSearch}>
+                            <input type="search" placeholder="Search!" onChange={this.onInputChanged} name="search"/>
+                            <button type="submit"></button>
                         </form>
                         {this.state.buttonCode}
                     
@@ -71,6 +78,11 @@ class Header extends React.Component {
     onLoginClicked = (e) => {
         e.preventDefault();
         this.setState({openModal: true});
+    }
+
+    onSearch = (e) => {
+        e.preventDefault();
+        console.log(this.state.searchKey);
     }
 }
 

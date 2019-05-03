@@ -1,7 +1,7 @@
 import React from 'react';
-import './assets/css/Header.css';
-import logo from './assets/imgs/2.jpg';
-import UserInfo from './models/UserInfo';
+import '../assets/css/Header.css';
+import logo from '../assets/imgs/2.jpg';
+import UserInfo from '../models/UserInfo';
 import LoginModal from './LoginModal';
 
 

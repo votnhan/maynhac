@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import Header from './Header';
+import Header from './ui/Header';
 
 ReactDOM.render(<Header/>, document.getElementById('header'));
 ReactDOM.render(<App/>, document.getElementById('content'));

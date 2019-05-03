@@ -20,13 +20,13 @@ router.get('/Playlist', verifyToken, (req, res, next) => {
             )
             .catch(err => {
                 console.log(err);
-                res.status(500).send('Get playlist failed.');
+                res.status(500).send(err);
             });
         }
     )
     .catch(err => {
             console.log(err);
-            res.status(500).send('Get playlist failed.');
+            res.status(500).send(err);
         }
     )
 });
@@ -43,7 +43,7 @@ router.post('/createPlaylist', verifyToken, (req, res, next) => {
             )
             .catch(err => {
                 console.log(err); 
-                res.status(500).send('Create playlist failed.')
+                res.status(500).send(err)
             })
         }
     )
@@ -61,13 +61,13 @@ router.post('/deletePlaylist', verifyToken, (req, res, next) => {
             )
             .catch(err => {
                 console.log(err);
-                res.status(500).send('Delete playlist failed.');
+                res.status(500).send(err);
             });
         }
     )
     .catch( err => {
         console.log(err);
-        res.status(500).send('Delete playlist failed.');
+        res.status(500).send(err);
     });
 });
 
@@ -76,7 +76,7 @@ router.post('/updatePlaylist', verifyToken, (req, res, next) => {
     Playlist.findOneAndUpdate({_id: idplaylist},{name, description, type}, {new:true}, (err, data) =>{
         if(err){
             console.log(err);
-            return res.status(500).send('Update playlist failed.');
+            return res.status(500).send(err);
         }
         res.status(200).send(data);
     });

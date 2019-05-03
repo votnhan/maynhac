@@ -26,11 +26,34 @@ router.post('/postSong', verifyToken, (req, res, next) => {
             )
             .catch(err => {
                 console.log(err); 
-                res.status(500).send('Upload song failed.')
+                res.status(500).send(err)
             })
         }
     )
     .catch(err => console.log(err))
+});
+
+router.post('/removeSong', verifyToken, (req, res, next) => {
+    const username = req.username;
+    const {songid} = req.body
+    User.updateOne({username}, {$pull: {listmusicsposted: songid}}, {new:true}, (err, result)=>{
+        if(err){
+            console.log(err);
+            return res.status(500).send(err);
+        }
+        if(result.nModified == 1){
+            Song.remove({_id:songid}, (err, result)=>{
+                if(err){
+                    console.log(err);
+                    return res.status(500).send(err);
+                }
+                res.status(200).send(result);
+            });
+        }
+        else{
+            return res.status(404).send('This song is not found.');
+        }
+    });
 });
 
 router.get('/typeSong', (req, res) => {
@@ -40,7 +63,7 @@ router.get('/typeSong', (req, res) => {
     })
     .catch(err => {
         console.log(err);
-        res.status(500).send('Get type song failed.')
+        res.status(500).send(err)
     });
 
 });
@@ -50,7 +73,7 @@ router.get('/SongsbyTypeid', (req, res) => {
     Song.find({type:typeid}, (err, data) => {
         if(err){
             console.log(err);
-            return res.status(404).send('Get song by type Id failed.');
+            return res.status(404).send(err);
         }
         res.status(200).send(data);
     })
@@ -58,10 +81,10 @@ router.get('/SongsbyTypeid', (req, res) => {
 
 router.get('/SongbyId', (req, res) => {
     const {songId} = req.query;
-    Song.findOne({_id:songId}, (err, data) => {
+    Song.findOneAndUpdate({_id:songId}, {$inc: {numlisten:1}}, {new:true},(err, data) => {
         if(err){
             console.log(err);
-            return res.status(500).send('Get song by Id failed.');
+            return res.status(500).send(err);
         }
         res.status(200).send(data);
     });
@@ -72,44 +95,68 @@ router.post('/contributeLyrics', (req, res) => {
     Song.findOneAndUpdate({_id:songId}, {lyrics},{new:true} ,(err, data) =>{
         if(err){
             console.log(err);
-            return res.status(500).send('Contribute lyrics failed.');
+            return res.status(500).send(err);
         }
         res.status(200).send(data.lyrics);
     });
 });
 
 router.post('/addSongtoPlaylist', verifyToken,(req, res, next) => {
+    const username = req.username;
     const {idsong, idplaylist} = req.body;
-    
-    Playlist.findOne({_id:idplaylist}, (err, data) => {
+    User.findOne({username}, (err, user) => {
         if(err){
             console.log(err);
-            return res.status(500).send('Add song to playlist failed.');
+            return res.status(500).send(err);
         }
-        var songs = data.songs;
-        if (songs.includes(idsong)){
-            return res.status(405).send({'type':'Dumplicated', 'idsong':idsong});
+        var listplaylists = user.listplaylists;
+        if (listplaylists.includes(idplaylist)){
+            Playlist.findOne({_id:idplaylist}, (err, data) => {
+                if(err){
+                    console.log(err);
+                    return res.status(500).send(err);
+                }
+                var songs = data.songs;
+                if (songs.includes(idsong)){
+                    return res.status(405).send({'type':'Dumplicated', 'idsong':idsong});
+                }
+                songs.push(idsong);
+                data.save((err, playlist) => {
+                    if(err){
+                        console.log(err);
+                        return res.status(500).send(err);
+                    }
+                    res.status(200).send(playlist.songs);
+                });
+            });
         }
-        songs.push(idsong);
-        data.save((err, playlist) => {
-            if(err){
-                console.log(err);
-                return res.status(500).send('Add song to playlist failed.');
-            }
-            res.status(200).send(playlist.songs);
-
-        });
+        else{
+            res.status(404).send('This playlist is not found.');
+        }
     });
 });
 
 router.post('/removeSonginPlaylist', verifyToken, (req, res, next) => {
     const {idsong, idplaylist} = req.body;
-    Playlist.findOneAndUpdate({_id: idplaylist}, {$pull: {songs: idsong}}, {new: true}, (err, data) => {
+    const username = req.username;
+    User.findOne({username}, (err, user) => {
         if(err){
             console.log(err);
-            return res.status(500).send('Remove song in playlist failed.');
+            return res.status(500).send(err);
         }
-        res.status(200).send(data.songs);
+        var listplaylists = user.listplaylists;
+        if(listplaylists.includes(idplaylist)){
+            Playlist.findOneAndUpdate({_id: idplaylist}, {$pull: {songs: idsong}}, {new: true}, (err, data) => {
+                if(err){
+                    console.log(err);
+                    return res.status(500).send(err);
+                }
+                res.status(200).send(data.songs);
+            });
+        }
+        else{
+            res.status(404).send('This playlist is not found.');
+        }
     });
 });
 
@@ -119,7 +166,7 @@ router.post('/reaction', verifyToken, (req, res, next) => {
     User.findOne({username}, (err, data) => {
         if (err){
             console.log(err);
-            return res.status(500).send('React song failed.');
+            return res.status(500).send(err);
         }
         if(!data){
             return res.status(404).send('Not found username.');
@@ -148,7 +195,7 @@ router.post('/reaction', verifyToken, (req, res, next) => {
                 ).catch(
                     err => {
                         console.log(err);
-                        res.status(500).send('React song failed.')
+                        res.status(500).send(err)
                     }
                 );
             }
@@ -157,7 +204,7 @@ router.post('/reaction', verifyToken, (req, res, next) => {
         .catch( 
             err => {
                 console.log(err);
-                res.status(500).send('React song failed.');
+                res.status(500).send(err);
         });
     });
 });
@@ -178,8 +225,20 @@ router.post('/comment', verifyToken, (req, res, next) => {
     )
     .catch(err => {
         console.log(err);
-        res.status(500).send('Comment song failed.');
+        res.status(500).send(err);
     });
 });
+router.post('/searchSong', (req, res) => {
+    const {name} = req.body;
+    Song.find({name: {$regex:name,$options:"$i"}}, (err, data) => {
+        if(err){
+            console.log(err);
+            return res.status(500).send(err);
+        }
+        res.status(200).send(data);
+    });
+});
+
+
 
 module.exports = router;

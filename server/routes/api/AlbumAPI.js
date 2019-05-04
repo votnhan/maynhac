@@ -76,9 +76,16 @@ router.post('/updateAlbum', verifyToken, (req, res, next) => {
             return res.status(404).send('This album is not found.');
         }
     });
+});
 
+
+
+router.post('/addSongtoAlbum', verifyToken, (req, res, next) => {
+    const username = req.username;
     
 
 });
+
+
 
 module.exports = router;

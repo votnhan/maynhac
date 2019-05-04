@@ -36,7 +36,7 @@ class LoginModal extends React.Component {
     this.state = {
       modalIsOpen: false
     };
- 
+    this.props = props;
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -68,28 +68,8 @@ class LoginModal extends React.Component {
       title: 'Sign Up With', 
       buttonTitle: 'Sign Up', 
       suggest: 'Login',
-    additionalField: <div>
-      <div className="p-t-31 p-b-9">
-						<span className="txt1">
-							Name
-						</span>
-					</div>
-					<div className="wrap-input100 validate-input" data-validate = "Username is required">
-						<input className="input100" type="text" name="name" onChange={this.onInputChanged}/>
-						<span className="focus-input100"></span>
-					</div>
-
-
-          <div className="p-t-31 p-b-9">
-						<span className="txt1">
-							Email
-						</span>
-					</div>
-					<div className="wrap-input100 validate-input" data-validate = "Username is required">
-						<input className="input100" type="text" name="email" onChange={this.onInputChanged}/>
-						<span className="focus-input100"></span>
-					</div>
-    </div>});
+    additionalField: [this.createField("email", "Email", "Email is required", false)
+    , this.createField("name", "Name", "Name is required")]});
   }
 
   componentWillReceiveProps(nextProps) {
@@ -133,13 +113,13 @@ class LoginModal extends React.Component {
     e.preventDefault();
     console.log("Submit");
     if (this.state.isLogin === true) {
+
       UserService.handleLogin(this.state.username, this.state.pass, (e) => {
         UserInfo.setJWT(e);
         console.log(e);
         UserInfo.setUserName(this.state.username);
-        UserService.handleMe(this.state.username, (e) => {
-          console.log(e);
-        });
+        console.log(UserInfo.getUserName());
+        this.props.loginCallback(this.state.username);
       });
     }
     else {
@@ -149,6 +129,22 @@ class LoginModal extends React.Component {
     }
     
 
+  }
+
+  createField = (name, suggest, validate, isPassword) => {
+    return (
+      <div className="container-login100-form-btn m-t-8"> 
+        <div className="p-t-5 p-b-9">
+						<span className="txt1">
+							{suggest}
+						</span>
+					</div>
+					<div className="wrap-input100 validate-input" data-validate = { validate}>
+						<input className="input100" type={isPassword ? "password" : "text"} name={name} onChange={this.onInputChanged}/>
+						<span className="focus-input100"></span>
+					</div>
+      </div>
+    )
   }
  
   render() {
@@ -179,37 +175,17 @@ class LoginModal extends React.Component {
 
           {this.state.additionalField}
 					
-					<div className="p-t-31 p-b-9">
-						<span className="txt1">
-							Username
-						</span>
-					</div>
-					<div className="wrap-input100 validate-input" data-validate = "Username is required">
-						<input className="input100" type="text" name="username" onChange={this.onInputChanged}/>
-						<span className="focus-input100"></span>
-					</div>
+          {this.createField("username", "Username", "Username is required", false)}
+          {this.createField("pass", "Password", "Password is required", true)}
 					
-					<div className="p-t-13 p-b-9">
-						<span className="txt1">
-							Password
-						</span>
 
-						<a href className="txt2 bo1 m-l-5">
-							Forgot?
-						</a>
-					</div>
-					<div className="wrap-input100 validate-input" data-validate = "Password is required">
-						<input className="input100" type="password" name="pass" onChange={this.onInputChanged}/>
-						<span className="focus-input100"></span>
-					</div>
-
-					<div className="container-login100-form-btn m-t-17">
+					<div className="container-login100-form-btn m-t-8">
 						<button className="login100-form-btn">
 							{this.state.buttonTitle}
 						</button>
 					</div>
 
-                    <div className="w-full text-center p-t-55">
+                    <div className="w-full text-center p-t-30">
 						<a href onClick={this.onSuggestClicked} className="txt2 bo1">
 							{this.state.suggest}
 						</a>

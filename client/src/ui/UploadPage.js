@@ -5,19 +5,19 @@ class UploadPage extends React.Component {
 
     render() {
         return (
-        <form className="ui form" style={{width: "80%", marginLeft: "10%", marginRight: "10%"}}>
+        <form className="ui form" onSubmit={this.onFormSubmit} style={{width: "80%", marginLeft: "10%", marginRight: "10%"}}>
             <div className="field">
             <label>Name</label>
-            <input type="text" name="name" placeholder="Name"/>
+            <input onChange={this.onInputChanged} type="text" name="name" placeholder="Name"/>
             </div>
 
             <div className="field">
                 <label>Artist</label>
-                <input type="text" name="artist" placeholder="Artist"/>
+                <input onChange={this.onInputChanged} type="text" name="artist" placeholder="Artist"/>
             </div>
 
             <div className="field">
-                <select className="ui dropdown" name="type">
+                <select onChange={this.onInputChanged} className="ui dropdown" name="type">
                     <option value="">Type</option>
                     <option value="1">US-UK</option>
                     <option value="0">KPOP</option>
@@ -27,13 +27,13 @@ class UploadPage extends React.Component {
 
             <div className="field">
                 <label>Lyric</label>
-                <textarea name="lyric"></textarea>
+                <textarea onChange={this.onInputChanged} name="lyric"></textarea>
             </div>
 
 
             <div className="ui middle aligned center aligned grid container" style={{paddingTop: "20px"}}>
                 <div className="ui fluid segment">
-                    <input type="file" accept="audio/*"  className="inputfile" id="embedpollfileinput" />
+                    <input onChange={this.onFileSelected} type="file" accept="audio/*" name="file"  className="inputfile" id="embedpollfileinput" />
 
                     <label htmlFor="embedpollfileinput" className="ui huge red right floated button">
                         <i className="ui upload icon"></i> 
@@ -47,6 +47,22 @@ class UploadPage extends React.Component {
             
         </form>
             );
+    }
+
+    onInputChanged = (e) => {
+        this.setState({[e.target.name]: e.target.value});
+    }
+
+    onFileSelected = (e) => {
+        this.setState({file: e.target.files});
+        console.log(e.target.files[0]);
+        console.log(e.target.files.length);
+    }
+
+    onFormSubmit = (e) => {
+        e.preventDefault();
+        console.log(this.state);
+
     }
 }
 

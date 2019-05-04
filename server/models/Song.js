@@ -37,6 +37,8 @@ const SongSchema = new Schema({
     },
     type: Number,
     author: String,
+    unsignedname:String,
+    avatar: String
 });
 
 const Song = mongoose.model('Song', SongSchema);

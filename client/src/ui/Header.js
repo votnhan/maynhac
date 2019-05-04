@@ -1,17 +1,12 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import "../assets/css/Header.css";
 import logo from "../assets/imgs/logo.jpg";
 import UserInfo from "../models/UserInfo";
 import LoginModal from "./LoginModal";
 import SongService from "../services/SongService";
-import UploadPage from "./UploadPage";
-import ChartPage from "./ChartPage";
-import HomePage from "./HomePage";
-import TopPage from "./TopPage";
-import PlaylistPage from "./PlaylistPage";
 import "semantic-ui-css/semantic.min.css";
-import { Button, Icon, Menu } from "semantic-ui-react";
+import { Icon, Menu } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
 class Header extends React.Component {
   constructor(props) {
@@ -28,12 +23,7 @@ class Header extends React.Component {
       openModal: false,
       activeItem: "home"
     };
-    this.loginModal = React.createRef();
-    this.toUploadPage = this.toUploadPage.bind(this);
-    this.toChartPage = this.toChartPage.bind(this);
-    this.toHomePage = this.toHomePage.bind(this);
-    this.toTopPage = this.toTopPage.bind(this);
-    this.toPlaylistPage = this.toPlaylistPage.bind(this);
+   
   }
 
   componentDidMount() {
@@ -72,54 +62,71 @@ class Header extends React.Component {
     this.setState({ openModal: false });
   };
 
+  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
+
   render() {
     const { activeItem } = this.state;
     const menuBar = (
       <Menu borderless size="huge" icon="labeled">
-        <Menu.Item
-          name="home"
-          active={activeItem === "home"}
-          onClick={this.toHomePage}
-        >
-          <Icon name="home" size="large" />
-          Home
-        </Menu.Item>
+        <Link to="/">
+          <Menu.Item
+            name="home"
+            active={activeItem === "home"}
+            onClick={this.handleItemClick}
 
-        <Menu.Item
-          name="charts"
-          active={activeItem === "charts"}
-          onClick={this.toChartPage}
-        >
-          <Icon name="chart bar" size="large" />
-          Charts
-        </Menu.Item>
+          >
+            <Icon name="home" size="large" />
+            Home
+          </Menu.Item>
+        </Link>
 
-        <Menu.Item
-          name="top10"
-          active={activeItem === "top10"}
-          onClick={this.toTopPage}
-        >
-          <Icon name="chart line" size="large" />
-          Top 10
-        </Menu.Item>
+        <Link to="/charts">
+          <Menu.Item
+            name="charts"
+            active={activeItem === "charts"}
+            onClick={this.handleItemClick}
 
-        <Menu.Item
-          name="playlist"
-          active={activeItem === "playlist"}
-          onClick={this.toPlaylistPage}
-        >
-          <Icon name="list" size="large" />
-          My Playlist
-        </Menu.Item>
+          >
+            <Icon name="chart bar" size="large" />
+            Charts
+          </Menu.Item>
+        </Link>
 
-        <Menu.Item
-          name="upload"
-          active={activeItem === "upload"}
-          onClick={this.toUploadPage}
-        >
-          <Icon name="cloud upload" size="large" />
-          Upload
-        </Menu.Item>
+        <Link to="/top">
+          <Menu.Item
+            name="top10"
+            active={activeItem === "top10"}
+            onClick={this.handleItemClick}
+
+          >
+            <Icon name="chart line" size="large" />
+            Top 10
+          </Menu.Item>
+        </Link>
+
+        <Link to="/playlist">
+          <Menu.Item
+            name="playlist"
+            active={activeItem === "playlist"}
+            onClick={this.handleItemClick}
+
+          >
+            <Icon name="list" size="large" />
+            My Playlist
+          </Menu.Item>
+        </Link>
+
+        <Link to="/upload">
+          <Menu.Item
+            name="upload"
+            active={activeItem === "upload"}
+            onClick={this.handleItemClick}
+            
+          >
+            <Icon name="cloud upload" size="large" />
+            Upload
+          </Menu.Item>
+        </Link>
       </Menu>
     );
     return (
@@ -127,7 +134,7 @@ class Header extends React.Component {
         <div className="header-first-bar">
           <div className="header-limiter">
             <h1>
-              <a href="true">
+              <a href="/">
                 <img className="logo" src={logo} alt="Logo" />
               </a>
             </h1>
@@ -146,7 +153,7 @@ class Header extends React.Component {
           </div>
         </div>
 
-        <div >
+        <div className="header-line">
           <div className="header-limiter ">
             <nav>
               {menuBar}
@@ -178,36 +185,6 @@ class Header extends React.Component {
     });
     console.log(this.state.searchKey);
   };
-
-  toUploadPage(e, { name }) {
-    this.setState({ activeItem: name });
-    e.preventDefault();
-    ReactDOM.render(<UploadPage />, document.getElementById("content"));
-  }
-
-  toChartPage(e, { name }) {
-    this.setState({ activeItem: name });
-    e.preventDefault();
-    ReactDOM.render(<ChartPage />, document.getElementById("content"));
-  }
-
-  toHomePage(e, { name }) {
-    this.setState({ activeItem: name });
-    e.preventDefault();
-    ReactDOM.render(<HomePage />, document.getElementById("content"));
-  }
-
-  toTopPage(e, { name }) {
-    this.setState({ activeItem: name });
-    e.preventDefault();
-    ReactDOM.render(<TopPage />, document.getElementById("content"));
-  }
-
-  toPlaylistPage(e, { name }) {
-    this.setState({ activeItem: name });
-    e.preventDefault();
-    ReactDOM.render(<PlaylistPage />, document.getElementById("content"));
-  }
 }
 
 export default Header;

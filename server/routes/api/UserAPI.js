@@ -20,7 +20,7 @@ router.get('/me', verifyToken, (req, res, next) =>{
 
 router.post('/login', (req, res) => {
     
-    const {username, password} = req.query;
+    const {username, password} = req.body;
     if (username === undefined)
         res.status(422).send('Username is not provided');
     if (password === undefined)

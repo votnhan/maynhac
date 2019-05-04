@@ -234,8 +234,9 @@ router.post('/searchSong', (req, res) => {
     console.log(req.body);
     console.log("<--END body");
 
-    const reqName = req.body.key;
-    Song.find({name: {$regex:reqName,$options:"$i"}}, (err, data) => {
+    const {key} = req.body;
+    
+    Song.find({name: {$regex:key,$options:"$i"}}, (err, data) => {
         if(err){
             console.log(err);
             return res.status(500).send(err);

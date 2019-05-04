@@ -24,7 +24,8 @@
     "react-modal-login": "^1.3.4",
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.0",
-    "reactjs-popup": "^1.3.2"
+    "reactjs-popup": "^1.3.2",
+    "semantic-ui-react": "^0.86.0"
   },
   "scripts": {
     "start": "",

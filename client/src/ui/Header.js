@@ -146,8 +146,8 @@ class Header extends React.Component {
           </div>
         </div>
 
-        <div>
-          <div className="header-limiter">
+        <div >
+          <div className="header-limiter ">
             <nav>
               {menuBar}
 

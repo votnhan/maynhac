@@ -89,6 +89,15 @@
 
 /* Second Bar */
 
+.ui.menu {
+	border: 0px solid rgba(34,36,38,.15);
+	box-shadow: 0 0px 0px 0 rgba(34,36,38,.15);
+}
+
+.header-line{
+	border-bottom: 3px solid rgba(34,36,38,.15);
+}
+
 .header-two-bars .header-second-bar {
 
 	background-color: #ffffff;
@@ -220,6 +229,7 @@
 	width: 40px;
 	height: 40px;
 	right: 30px;
+	
 }
 
 /* The search box */

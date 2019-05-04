@@ -5,8 +5,9 @@ import UserInfo from "../models/UserInfo";
 import LoginModal from "./LoginModal";
 import SongService from "../services/SongService";
 import "semantic-ui-css/semantic.min.css";
-import { Icon, Menu } from "semantic-ui-react";
+import { Button, Icon, Menu } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import history from "./history";
 
 class Header extends React.Component {
   constructor(props) {
@@ -23,7 +24,6 @@ class Header extends React.Component {
       openModal: false,
       activeItem: "home"
     };
-   
   }
 
   componentDidMount() {
@@ -62,71 +62,59 @@ class Header extends React.Component {
     this.setState({ openModal: false });
   };
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
+  handleItemClick = (e, { name }) => {
+    this.setState({ activeItem: name });
+    history.push(`/${name}`);
+  };
 
   render() {
     const { activeItem } = this.state;
     const menuBar = (
       <Menu borderless size="huge" icon="labeled">
-        <Link to="/">
-          <Menu.Item
-            name="home"
-            active={activeItem === "home"}
-            onClick={this.handleItemClick}
+        <Menu.Item
+          name="home"
+          active={activeItem === "home"}
+          onClick={this.handleItemClick}
+        >
+          <Icon name="home" size="large" />
+          Home
+        </Menu.Item>
 
-          >
-            <Icon name="home" size="large" />
-            Home
-          </Menu.Item>
-        </Link>
+        <Menu.Item
+          name="charts"
+          active={activeItem === "charts"}
+          onClick={this.handleItemClick}
+        >
+          <Icon name="chart bar" size="large" />
+          Charts
+        </Menu.Item>
 
-        <Link to="/charts">
-          <Menu.Item
-            name="charts"
-            active={activeItem === "charts"}
-            onClick={this.handleItemClick}
+        <Menu.Item
+          name="top10"
+          active={activeItem === "top10"}
+          onClick={this.handleItemClick}
+        >
+          <Icon name="chart line" size="large" />
+          Top 10
+        </Menu.Item>
 
-          >
-            <Icon name="chart bar" size="large" />
-            Charts
-          </Menu.Item>
-        </Link>
+        <Menu.Item
+          name="playlist"
+          active={activeItem === "playlist"}
+          onClick={this.handleItemClick}
+        >
+          <Icon name="list" size="large" />
+          My Playlist
+        </Menu.Item>
 
-        <Link to="/top">
-          <Menu.Item
-            name="top10"
-            active={activeItem === "top10"}
-            onClick={this.handleItemClick}
-
-          >
-            <Icon name="chart line" size="large" />
-            Top 10
-          </Menu.Item>
-        </Link>
-
-        <Link to="/playlist">
-          <Menu.Item
-            name="playlist"
-            active={activeItem === "playlist"}
-            onClick={this.handleItemClick}
-
-          >
-            <Icon name="list" size="large" />
-            My Playlist
-          </Menu.Item>
-        </Link>
-
-        <Link to="/upload">
-          <Menu.Item
-            name="upload"
-            active={activeItem === "upload"}
-            onClick={this.handleItemClick}
-            
-          >
-            <Icon name="cloud upload" size="large" />
-            Upload
-          </Menu.Item>
-        </Link>
+        <Menu.Item
+          name="upload"
+          active={activeItem === "upload"}
+          onClick={this.handleItemClick}
+        >
+          <Icon name="cloud upload" size="large" />
+          Upload
+        </Menu.Item>
       </Menu>
     );
     return (

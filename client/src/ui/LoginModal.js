@@ -2,7 +2,7 @@ import React from 'react';
 import Modal from 'react-modal';
 import icongoogle from '../assets/imgs/icons/icon-google.png';
 import 'bootstrap/dist/css/bootstrap.css';
-import 'font-awesome/css/font-awesome.min.css';
+import '../assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css';
 import '../assets/fonts/Linearicons-Free-v1.0.0/icon-font.min.css';
 import '../assets/vendor/animate/animate.css';
 import '../assets/vendor/css-hamburgers/hamburgers.min.css';

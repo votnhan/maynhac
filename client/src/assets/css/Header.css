@@ -119,6 +119,8 @@
 }
 
 .header-two-bars .header-second-bar nav a {
+	margin-left: 15px;
+	margin-right: 15px;
 	display: inline-block;
 	color: #4e5359;
 	text-decoration: none;

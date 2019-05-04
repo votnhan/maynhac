@@ -1,10 +1,17 @@
-import React from "react";
-import "../assets/css/Header.css";
-import logo from "../assets/imgs/logo.jpg";
-import UserInfo from "../models/UserInfo";
-import LoginModal from "./LoginModal";
-import SongService from "../services/SongService";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import '../assets/css/Header.css';
+import logo from '../assets/imgs/logo.jpg';
+import UserInfo from '../models/UserInfo';
+import LoginModal from './LoginModal';
+import SongService from '../services/SongService';
+import UploadPage from './UploadPage';
+import ChartPage from './ChartPage';
+import HomePage from './HomePage';
+import TopPage from './TopPage';
+import 'semantic-ui-css/semantic.min.css'
 import { Button, Icon, Menu } from "semantic-ui-react";
+
 class Header extends React.Component {
   constructor(props) {
     super(props);
@@ -68,11 +75,12 @@ class Header extends React.Component {
         <Menu.Item
           name="home"
           active={activeItem === "home"}
-          onClick={this.handleItemClick}
+          onClick={this.toHomePage}
         >
           <Icon name="home" size="large" />
           Home
         </Menu.Item>
+
 
         <Menu.Item
           name="charts"
@@ -86,7 +94,7 @@ class Header extends React.Component {
         <Menu.Item
           name="top10"
           active={activeItem === "top10"}
-          onClick={this.handleItemClick}
+          onClick={this.toTopPage}
         >
           <Icon name="chart line" size="large" />
           Top 10
@@ -158,6 +166,31 @@ class Header extends React.Component {
     });
     console.log(this.state.searchKey);
   };
+
+    toUploadPage(e, { name }) {
+      this.setState({ activeItem: name });
+        e.preventDefault();
+        ReactDOM.render(<UploadPage/>, document.getElementById("content"));
+    }
+
+    toChartPage(e, { name }) {
+        e.preventDefault();
+        ReactDOM.render(<ChartPage/>, document.getElementById("content"));
+
+    }
+
+    toHomePage(e, { name }) {
+        e.preventDefault();
+        ReactDOM.render(<HomePage/>, document.getElementById("content"));
+    }
+
+    toTopPage(e, { name }) {
+        e.preventDefault();
+        ReactDOM.render(<TopPage/>, document.getElementById("content"));
+    }
+
+   
+
 }
 
 export default Header;

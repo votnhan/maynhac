@@ -11,6 +11,7 @@ import '../assets/vendor/select2/select2.min.css';
 import '../assets/vendor/daterangepicker/daterangepicker.css';
 import '../assets/css/LoginModal.css';
 import UserService from '../services/UserService';
+import UserInfo from '../models/UserInfo';
 
 
  
@@ -58,6 +59,10 @@ class LoginModal extends React.Component {
       additionalField: null});
   }
 
+  onInputChanged = (e) => {
+    this.setState({[e.target.name]: e.target.value});
+  }
+
   toSignUp = () => {
     this.setState({isLogin: false, 
       title: 'Sign Up With', 
@@ -70,7 +75,7 @@ class LoginModal extends React.Component {
 						</span>
 					</div>
 					<div className="wrap-input100 validate-input" data-validate = "Username is required">
-						<input className="input100" type="text" name="username" />
+						<input className="input100" type="text" name="name" onChange={this.onInputChanged}/>
 						<span className="focus-input100"></span>
 					</div>
 
@@ -81,7 +86,7 @@ class LoginModal extends React.Component {
 						</span>
 					</div>
 					<div className="wrap-input100 validate-input" data-validate = "Username is required">
-						<input className="input100" type="text" name="username" />
+						<input className="input100" type="text" name="email" onChange={this.onInputChanged}/>
 						<span className="focus-input100"></span>
 					</div>
     </div>});
@@ -124,11 +129,24 @@ class LoginModal extends React.Component {
   }
 
   onSubmit = (e) => {
+    console.log(this.state);
     e.preventDefault();
     console.log("Submit");
-    UserService.handleLogin("abc", "bcd", (e) => {
-      console.log(e);
-    })
+    if (this.state.isLogin === true) {
+      UserService.handleLogin(this.state.username, this.state.pass, (e) => {
+        UserInfo.setJWT(e);
+        UserInfo.setUserName(this.state.username);
+        UserService.handleMe(this.state.username, (e) => {
+          console.log(e);
+        });
+      });
+    }
+    else {
+      UserService.handleSignup(this.state.name, this.state.email, this.state.username, this.state.pass, (e) => {
+        console.log(e);
+      });
+    }
+    
 
   }
  
@@ -166,7 +184,7 @@ class LoginModal extends React.Component {
 						</span>
 					</div>
 					<div className="wrap-input100 validate-input" data-validate = "Username is required">
-						<input className="input100" type="text" name="username" />
+						<input className="input100" type="text" name="username" onChange={this.onInputChanged}/>
 						<span className="focus-input100"></span>
 					</div>
 					
@@ -180,7 +198,7 @@ class LoginModal extends React.Component {
 						</a>
 					</div>
 					<div className="wrap-input100 validate-input" data-validate = "Password is required">
-						<input className="input100" type="password" name="pass" />
+						<input className="input100" type="password" name="pass" onChange={this.onInputChanged}/>
 						<span className="focus-input100"></span>
 					</div>
 

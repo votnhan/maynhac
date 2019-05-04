@@ -151,6 +151,7 @@
     font-size: 14px;
     color: #999999;
     line-height: 1.5;
+    cursor: pointer;
   }
   
   .bo1 {border-bottom: 1px solid #999999;}
@@ -240,6 +241,7 @@
     transition: all 0.4s;
     position: relative;
     z-index: 1;
+    cursor: pointer;
   }
   
   .btn-google::before,

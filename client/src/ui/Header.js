@@ -66,7 +66,7 @@ class Header extends React.Component {
                     
                     </div>
                 </div>
-                <div className="header-second-bar">
+                <div className="header-second-bar" style={{paddingBottom: "40px"}}>
                     <div className="header-limiter">
                         <nav>
                             <a href="true" onClick={this.toHomePage}><i className="home icon"></i>Home</a>

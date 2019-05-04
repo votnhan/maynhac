@@ -12,6 +12,7 @@ import '../assets/vendor/daterangepicker/daterangepicker.css';
 import '../assets/css/LoginModal.css';
 import UserService from '../services/UserService';
 import UserInfo from '../models/UserInfo';
+import {connect} from 'react-redux';
 
 
  
@@ -115,11 +116,7 @@ class LoginModal extends React.Component {
     if (this.state.isLogin === true) {
 
       UserService.handleLogin(this.state.username, this.state.pass, (e) => {
-        UserInfo.setJWT(e);
-        console.log(e);
-        UserInfo.setUserName(this.state.username);
-        console.log(UserInfo.getUserName());
-        this.props.loginCallback(this.state.username);
+        this.props.onUserLogin(this.state.username, e);
       });
     }
     else {
@@ -199,4 +196,17 @@ class LoginModal extends React.Component {
   }
 }
 
-export default LoginModal;
+const mapStateToProps = state => {
+  return {
+    ...state
+  };
+}
+
+const mapDispatchToProps = dispatch => {
+  return  {
+    onUserLogin: (username, jwt) => dispatch({type: 'LOGIN', payload: {username, jwt}}) 
+  }; 
+
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginModal);

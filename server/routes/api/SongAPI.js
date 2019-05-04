@@ -7,21 +7,26 @@ const {Song} = require('../../models/Song');
 const {Playlist} = require('../../models/Playlist');
 
 const {TypeSong} = require('../../models/TypeSong');
-const util = require('../../util/ForUser');
+const utilUser = require('../../util/ForUser');
+const utilSong = require('../../util/ForSong');
 
 const verifyToken = require('../../middlewares/verifyToken');
+const {uploadFile} = require('../../middlewares/uploadFile');
 const router = express.Router();
 
-router.post('/postSong', verifyToken, (req, res, next) => {
+router.post('/postSong',[ verifyToken, uploadFile.fields([{name:'song', maxCount : 1}, {name: 'avatar', maxCount : 1}])] ,(req, res, next) => {
     const username  = req.username;
-    const {name, link, lyrics, typeid, author} = req.body;
-    const newSong = new Song({name, link, lyrics, type: typeid, author});
+    const {name, lyrics, typeid, author, artist} = req.body;
+    const unsignedname = utilSong.getSongName(name);
+    const link = req.hashedFileMusic;
+    const avatar = req.hashedFileAvatar;
+    const newSong = new Song({name, link, lyrics, type: typeid, author, unsignedname, artist, avatar});
     newSong.save().then(
-        data => {
-            const idsong = data._id;
+        song => {
+            const idsong = song._id;
             User.update({username}, {$push: {listmusicsposted: idsong}}).then(
                 data =>  {
-                    res.status(200).send(newSong);
+                    res.status(200).send(song);
                 }
             )
             .catch(err => {
@@ -172,7 +177,7 @@ router.post('/reaction', verifyToken, (req, res, next) => {
             return res.status(404).send('Not found username.');
         }
         var reactions = data.reaction;
-        var reactObj = util.getObjectReaction(reactions, songId);
+        var reactObj = utilUser.getObjectReaction(reactions, songId);
         var status = true;
         if(reactObj){
             if(reactObj.status == true){
@@ -233,7 +238,7 @@ router.post('/searchSong', (req, res) => {
 
     const {key} = req.body;
 
-    Song.find({name: {$regex:key,$options:"$i"}}, (err, data) => {
+    Song.find({$or:[{name: {$regex:key,$options:"$i"}}, {unsignedname: {$regex:key, $options:"$i"}} ]}, (err, data) => {
         if(err){
             console.log(err);
             return res.status(500).send(err);

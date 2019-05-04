@@ -135,6 +135,7 @@ class LoginModal extends React.Component {
     if (this.state.isLogin === true) {
       UserService.handleLogin(this.state.username, this.state.pass, (e) => {
         UserInfo.setJWT(e);
+        console.log(e);
         UserInfo.setUserName(this.state.username);
         UserService.handleMe(this.state.username, (e) => {
           console.log(e);

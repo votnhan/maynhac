@@ -40,7 +40,7 @@ class Header extends React.Component {
                         <a href="true">Payments</a>
                       </li>
                       <li>
-                        <a href="true" className="highlight">
+                        <a href="true" onClick={this.onLogoutClicked} className="highlight">
                           Logout
                         </a>
                       </li>
@@ -179,6 +179,11 @@ class Header extends React.Component {
     console.log(this.state.searchKey);
   };
 
+  onLogoutClicked = (e) => {
+      e.preventDefault();
+    this.props.onUserLogout();
+  }
+
 
 }
 
@@ -188,5 +193,12 @@ const mapStateToProps = state => {
     };
   }
 
+  const mapDispatchToProps = dispatch => {
+    return  {
+      onUserLogout: () => dispatch({type: 'LOGOUT'}) 
+    }; 
+  
+  }
 
-export default connect(mapStateToProps)(Header);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

@@ -1,10 +1,16 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import '../assets/css/Header.css';
 import logo from '../assets/imgs/logo.jpg';
 import iconSearch from "../assets/imgs/icons/icon-search.png";
 import UserInfo from '../models/UserInfo';
 import LoginModal from './LoginModal';
 import SongService from '../services/SongService';
+import UploadPage from './UploadPage';
+import ChartPage from './ChartPage';
+import HomePage from './HomePage';
+import TopPage from './TopPage';
+import 'semantic-ui-css/semantic.min.css'
 
 
 class Header extends React.Component {
@@ -63,9 +69,10 @@ class Header extends React.Component {
                 <div className="header-second-bar">
                     <div className="header-limiter">
                         <nav>
-                            <a href="true"><i className="fa fa-comments-o"></i>Home</a>
-                            <a href="true"><i className="fa fa-file-text"></i>Chart</a>
-                            <a href="true"><i className="fa fa-group"></i>Top 10</a>
+                            <a href="true" onClick={this.toHomePage}><i className="home icon"></i>Home</a>
+                            <a href="true" onClick={this.toChartPage}><i className="signal icon"></i>Chart</a>
+                            <a href="true" onClick={this.toTopPage}><i className="hotjar icon"/>Top 10</a>
+                            <a href="true" onClick={this.toUploadPage}><i className="cloud upload icon"></i>Upload</a>
                             {this.state.playlistCode}
                         </nav>
                     </div>
@@ -75,10 +82,6 @@ class Header extends React.Component {
                 </div>
             </header>
         );
-    }
-
-    onSearchClicked = (e) => {
-        console.log(document.getElementById("searchInput"));
     }
 
     onLoginClicked = (e) => {
@@ -92,6 +95,27 @@ class Header extends React.Component {
             console.log(res);
         })
         console.log(this.state.searchKey);
+    }
+
+    toUploadPage(e) {
+        e.preventDefault();
+        ReactDOM.render(<UploadPage/>, document.getElementById("content"));
+    }
+
+    toChartPage(e) {
+        e.preventDefault();
+        ReactDOM.render(<ChartPage/>, document.getElementById("content"));
+
+    }
+
+    toHomePage(e) {
+        e.preventDefault();
+        ReactDOM.render(<HomePage/>, document.getElementById("content"));
+    }
+
+    toTopPage(e) {
+        e.preventDefault();
+        ReactDOM.render(<TopPage/>, document.getElementById("content"));
     }
 }
 

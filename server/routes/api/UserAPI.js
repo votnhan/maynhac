@@ -16,8 +16,6 @@ router.get('/me', verifyToken, (req, res, next) =>{
     });
 });
 
-
-
 router.post('/login', (req, res) => {
     
     const {username, password} = req.query;
@@ -66,18 +64,6 @@ router.post('/signup', (req, res) =>{
         .catch(err => console.log(err));
     })
 });
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

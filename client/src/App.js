@@ -21,7 +21,6 @@ class App extends Component {
           <Route path="/playlist" component={PlaylistPage} />
           <Route path="/top10" component={TopPage} />
           <Route path="/upload" component={UploadPage} />
-          {/* <Route path="/" component={FooterBar} /> */}
         </div>
       </Router>
     );

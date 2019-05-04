@@ -24,6 +24,8 @@ class Header extends React.Component {
       openModal: false,
       activeItem: "home"
     };
+
+    this.loginModal = React.createRef();
   }
 
   componentDidMount() {

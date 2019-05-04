@@ -1,15 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import '../assets/css/Header.css';
-import logo from '../assets/imgs/logo.jpg';
-import UserInfo from '../models/UserInfo';
-import LoginModal from './LoginModal';
-import SongService from '../services/SongService';
-import UploadPage from './UploadPage';
-import ChartPage from './ChartPage';
-import HomePage from './HomePage';
-import TopPage from './TopPage';
-import 'semantic-ui-css/semantic.min.css'
+import React from "react";
+import ReactDOM from "react-dom";
+import "../assets/css/Header.css";
+import logo from "../assets/imgs/logo.jpg";
+import UserInfo from "../models/UserInfo";
+import LoginModal from "./LoginModal";
+import SongService from "../services/SongService";
+import UploadPage from "./UploadPage";
+import ChartPage from "./ChartPage";
+import HomePage from "./HomePage";
+import TopPage from "./TopPage";
+import PlaylistPage from "./PlaylistPage";
+import "semantic-ui-css/semantic.min.css";
 import { Button, Icon, Menu } from "semantic-ui-react";
 
 class Header extends React.Component {
@@ -28,6 +29,11 @@ class Header extends React.Component {
       activeItem: "home"
     };
     this.loginModal = React.createRef();
+    this.toUploadPage = this.toUploadPage.bind(this);
+    this.toChartPage = this.toChartPage.bind(this);
+    this.toHomePage = this.toHomePage.bind(this);
+    this.toTopPage = this.toTopPage.bind(this);
+    this.toPlaylistPage = this.toPlaylistPage.bind(this);
   }
 
   componentDidMount() {
@@ -66,8 +72,6 @@ class Header extends React.Component {
     this.setState({ openModal: false });
   };
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
-
   render() {
     const { activeItem } = this.state;
     const menuBar = (
@@ -81,11 +85,10 @@ class Header extends React.Component {
           Home
         </Menu.Item>
 
-
         <Menu.Item
           name="charts"
           active={activeItem === "charts"}
-          onClick={this.handleItemClick}
+          onClick={this.toChartPage}
         >
           <Icon name="chart bar" size="large" />
           Charts
@@ -103,10 +106,19 @@ class Header extends React.Component {
         <Menu.Item
           name="playlist"
           active={activeItem === "playlist"}
-          onClick={this.handleItemClick}
+          onClick={this.toPlaylistPage}
         >
           <Icon name="list" size="large" />
           My Playlist
+        </Menu.Item>
+
+        <Menu.Item
+          name="upload"
+          active={activeItem === "upload"}
+          onClick={this.toUploadPage}
+        >
+          <Icon name="cloud upload" size="large" />
+          Upload
         </Menu.Item>
       </Menu>
     );
@@ -134,8 +146,8 @@ class Header extends React.Component {
           </div>
         </div>
 
-        <div>
-          <div className="header-limiter">
+        <div >
+          <div className="header-limiter ">
             <nav>
               {menuBar}
 
@@ -167,30 +179,35 @@ class Header extends React.Component {
     console.log(this.state.searchKey);
   };
 
-    toUploadPage(e, { name }) {
-      this.setState({ activeItem: name });
-        e.preventDefault();
-        ReactDOM.render(<UploadPage/>, document.getElementById("content"));
-    }
+  toUploadPage(e, { name }) {
+    this.setState({ activeItem: name });
+    e.preventDefault();
+    ReactDOM.render(<UploadPage />, document.getElementById("content"));
+  }
 
-    toChartPage(e, { name }) {
-        e.preventDefault();
-        ReactDOM.render(<ChartPage/>, document.getElementById("content"));
+  toChartPage(e, { name }) {
+    this.setState({ activeItem: name });
+    e.preventDefault();
+    ReactDOM.render(<ChartPage />, document.getElementById("content"));
+  }
 
-    }
+  toHomePage(e, { name }) {
+    this.setState({ activeItem: name });
+    e.preventDefault();
+    ReactDOM.render(<HomePage />, document.getElementById("content"));
+  }
 
-    toHomePage(e, { name }) {
-        e.preventDefault();
-        ReactDOM.render(<HomePage/>, document.getElementById("content"));
-    }
+  toTopPage(e, { name }) {
+    this.setState({ activeItem: name });
+    e.preventDefault();
+    ReactDOM.render(<TopPage />, document.getElementById("content"));
+  }
 
-    toTopPage(e, { name }) {
-        e.preventDefault();
-        ReactDOM.render(<TopPage/>, document.getElementById("content"));
-    }
-
-   
-
+  toPlaylistPage(e, { name }) {
+    this.setState({ activeItem: name });
+    e.preventDefault();
+    ReactDOM.render(<PlaylistPage />, document.getElementById("content"));
+  }
 }
 
 export default Header;

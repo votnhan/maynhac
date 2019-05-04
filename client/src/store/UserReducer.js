@@ -12,7 +12,7 @@ const reducer = (state = initalState, action) => {
         }
     }
     else if (action.type === 'LOGOUT') {
-        return {
+        return { 
             ...state,
             username: '',
             jwt: ''

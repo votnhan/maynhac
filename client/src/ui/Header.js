@@ -8,16 +8,13 @@ import "semantic-ui-css/semantic.min.css";
 import { Button, Icon, Menu } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import history from "./history";
+import {connect} from 'react-redux';
 
 class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      buttonCode: (
-        <a href="true" className="logout-button" onClick={this.onLoginClicked}>
-          Login
-        </a>
-      ),
+      buttonCode: this.createUserDropDownButton(props.username),
       playlistCode: null,
       popup: null,
       searchKey: "",
@@ -28,35 +25,41 @@ class Header extends React.Component {
     this.loginModal = React.createRef();
   }
 
-  componentDidMount() {
-    var userName = UserInfo.getUserName();
-    if (userName !== null && userName.length !== 0) {
-      this.setState({
-        buttonCode: (
-          <div className="header-user-menu">
-            <img src={logo} alt="User" />
-            <ul>
-              <li>
-                <a href="true">Settings</a>
-              </li>
-              <li>
-                <a href="true">Payments</a>
-              </li>
-              <li>
-                <a href="true" className="highlight">
-                  Logout
-                </a>
-              </li>
-            </ul>
-          </div>
-        ),
-        playlistCode: (
-          <a href="true">
-            <i className="fa fa-cogs" /> Settings
-          </a>
-        )
-      });
-    }
+  createUserDropDownButton = (username) => {
+      console.log('Create user button');
+      console.log(username);
+      if (username != undefined && username !== '') {
+        return (
+            <div className="header-user-menu">
+                    <img src={logo} alt="User" />
+                    <ul>
+                      <li>
+                        <a href="true">{username}</a>
+                      </li>
+                      <li>
+                        <a href="true">Payments</a>
+                      </li>
+                      <li>
+                        <a href="true" onClick={this.onLogoutClicked} className="highlight">
+                          Logout
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+          );
+      }
+      else {
+          return <a href="true" className="logout-button" onClick={this.onLoginClicked}>
+          Login
+        </a>
+      }
+      
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+        buttonCode: this.createUserDropDownButton(nextProps.username)
+        });
   }
 
   onInputChanged = e => {
@@ -176,6 +179,26 @@ class Header extends React.Component {
     console.log(this.state.searchKey);
   };
 
+  onLogoutClicked = (e) => {
+      e.preventDefault();
+    this.props.onUserLogout();
+  }
+
+
 }
 
-export default Header;
+const mapStateToProps = state => {
+    return {
+      ...state
+    };
+  }
+
+  const mapDispatchToProps = dispatch => {
+    return  {
+      onUserLogout: () => dispatch({type: 'LOGOUT'}) 
+    }; 
+  
+  }
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

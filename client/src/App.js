@@ -10,6 +10,12 @@ import TopPage from "./components/TopPage";
 import UploadPage from "./components/UploadPage";
 import history from  './history';
 import FooterPlayer from "./components/FooterPlayer";
+import RootReducer from "./reducers/rootReducer";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import {compose} from "redux";
+import * as uiActions from "./actions/uiActions";
+
 class App extends Component {
   render() {
     return (
@@ -30,4 +36,18 @@ class App extends Component {
   }
 }
 
-export default App;
+function mapStateToProps(state) {
+  return {
+
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch
+  };
+}
+
+export default connect(mapStateToProps,
+  mapDispatchToProps
+)(App);

@@ -11,6 +11,8 @@
   }
 
 .home-page-song-list-card{
+  z-index: 1;
+  position: relative;
   margin: 30px;
 }
 

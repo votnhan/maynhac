@@ -17,7 +17,6 @@ class HomePage extends React.Component {
       listSong: [],
       ImagesAutoPlay: []
     };
-    this.handlePlaySong = this.handlePlaySong.bind(this);
   }
 
   getDivImagesAutoPlay() {
@@ -36,13 +35,13 @@ class HomePage extends React.Component {
     });
   }
 
-  handlePlaySong() {
-    showSongPlayer();
+  handlePlaySong(name) {
+    this.props.showSongPlayer(name);
   }
 
   render() {
     const CardExampleImageCard = (obj, i) => (
-      <Card key={i} onClick={this.handlePlaySong}>
+      <Card key={i} onClick={()=> this.handlePlaySong(obj.name)}>
         <Image src="https://github.com/trungnhanuchiha/maynhac/blob/server/client/src/assets/imgs/logo.jpg?raw=true" />
         {/* <Image src={obj.avatar}/> */}
         <Card.Content>
@@ -70,13 +69,13 @@ class HomePage extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    state: state.uiReducer
+
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(uiActions, dispatch)
+    showSongPlayer: name =>  dispatch(showSongPlayer(name)),
   };
 }
 

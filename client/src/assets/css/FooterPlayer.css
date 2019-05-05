@@ -1,4 +1,5 @@
 .sticky-floating-footer {
+    z-index: 2;
     color: black;
     background: rgb(8, 250, 89);
     position: fixed;

@@ -4,10 +4,8 @@ import "antd/dist/antd.css";
 import "../assets/css/HomePage.css";
 import HomePageService from "../services/HomePageService";
 import { Card, Icon, Image } from "semantic-ui-react";
-import { showSongPlayer } from "../actions/uiActions";
+import { showSongPlayer, hideSongPlayer } from "../actions/uiActions";
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import * as uiActions from "../actions/uiActions";
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -37,6 +35,7 @@ class HomePage extends React.Component {
 
   handlePlaySong(name) {
     this.props.showSongPlayer(name);
+    debugger;
   }
 
   render() {
@@ -76,6 +75,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     showSongPlayer: name =>  dispatch(showSongPlayer(name)),
+    hideSongPlayer: () => dispatch(hideSongPlayer())
   };
 }
 

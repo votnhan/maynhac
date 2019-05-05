@@ -7,7 +7,7 @@ import SongService from "../services/SongService";
 import "semantic-ui-css/semantic.min.css";
 import { Button, Icon, Menu } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import history from "./history";
+import history from "../history";
 import {connect} from 'react-redux';
 
 class Header extends React.Component {

@@ -1,0 +1,10 @@
+.sticky-floating-footer {
+    color: black;
+    background: rgb(8, 250, 89);
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 50px;
+}
+

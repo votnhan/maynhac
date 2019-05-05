@@ -9,3 +9,11 @@
   .ant-carousel .slick-slide h3 {
     color: #fff;
   }
+
+.home-page-song-list-card{
+  margin: 30px;
+}
+
+.song-card{
+  padding: 20px;
+}

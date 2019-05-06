@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import rootReducer from "./reducers/rootReducer";
-import { createStore } from "redux";
+import { createStore, compose } from "redux";
 import { Provider } from "react-redux";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
@@ -18,9 +18,10 @@ const persistConfig = {
   stateReconciler: autoMergeLevel2
 };
 
+const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const pReducer = persistReducer(persistConfig, rootReducer);
-export const store = createStore(pReducer);
+export const store = createStore(pReducer, composeEnhancer());
 export const persistor = persistStore(store);
 
 ReactDOM.render(

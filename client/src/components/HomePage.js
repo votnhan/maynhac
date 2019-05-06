@@ -41,7 +41,7 @@ class HomePage extends React.Component {
     const CardExampleImageCard = (obj, i) => (
       <Card key={i} onClick={()=> this.handlePlaySong(obj.name)}>
         <Image src="https://github.com/trungnhanuchiha/maynhac/blob/server/client/src/assets/imgs/logo.jpg?raw=true" />
-        {/* <Image src={obj.avatar}/> */}
+        <Image src={obj.avatar}/>
         <Card.Content>
           <Card.Header>{obj.name}</Card.Header>
         </Card.Content>

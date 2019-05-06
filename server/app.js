@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const path = require('path');
+const fileUpload = require('express-fileupload');
 
 const routes = require('./routes');
 const config = require('./config');
@@ -19,6 +20,9 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(cookieParser());
+app.use(fileUpload({
+    limits: { fileSize: 50 * 1024 * 1024 }
+}));
 
 app.use(express.static(path.join(__dirname, './public')));
 

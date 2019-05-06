@@ -66,7 +66,7 @@ class FooterPlayer extends React.Component {
             cover:
               "https://github.com/trungnhanuchiha/maynhac/blob/server/client/src/assets/imgs/logo.jpg?raw=true",
             musicSrc:
-              "https://raw.githubusercontent.com/trungnhanuchiha/maynhac/master/server/public/music/Chon-Giau-Giac-Mo-Noo-Phuoc-Thinh.mp3"
+              "https://node-sdk-sample-de034739-e333-4019-a8fe-98be19dc6ca6.s3.amazonaws.com/Noi-Vong-Tay-Lon-Fanatic-Band.mp3?AWSAccessKeyId=AKIAIZH7T6FB5PYYHZLA&Expires=1557142357&Signature=ZPgHC9YE2120ARVi6t4EFTljhnI%3D"
           }
         ],
         

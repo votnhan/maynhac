@@ -72,14 +72,15 @@ class FooterPlayer extends React.Component {
         
       };
 
+    
       console.log(data);
-
+      
       return (
         <div className="sticky-floating-footer">
           <Button className="order-front" onClick={() => this.handleStop()}>
             STOP - {this.props.nowPlayingName}
           </Button>
-          <ReactJkMusicPlayer className="order-behind" {...data} />,
+          <ReactJkMusicPlayer className="order-behind" {...data} key={this.props.nowPlayingName}/>,
           {/* Now playing {this.props.nowPlayingName}....*/}{" "}
         </div>
       );

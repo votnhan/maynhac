@@ -16,3 +16,7 @@
     position: relative;
     z-index: 1;
 }
+
+.progress-bar{
+    background-color: transparent;
+}

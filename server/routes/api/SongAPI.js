@@ -11,15 +11,15 @@ const utilUser = require('../../util/ForUser');
 const utilSong = require('../../util/ForSong');
 
 const verifyToken = require('../../middlewares/verifyToken');
-const {uploadFile} = require('../../middlewares/uploadFile');
+const {uploadSongAWS} = require('../../middlewares/uploadFile');
 const router = express.Router();
 
-router.post('/postSong',[ verifyToken, uploadFile.fields([{name:'song', maxCount : 1}, {name: 'avatar', maxCount : 1}])] ,(req, res, next) => {
+router.post('/postSong',[ verifyToken, uploadSongAWS] ,(req, res, next) => {
     const username  = req.username;
     const {name, lyrics, typeid, author, artist} = req.body;
     const unsignedname = utilSong.getSongName(name);
-    const link = req.hashedFileMusic;
-    const avatar = req.hashedFileAvatar;
+    const link = req.urlSong;
+    const avatar = req.urlAvatar;
     const newSong = new Song({name, link, lyrics, type: typeid, author, unsignedname, artist, avatar});
     newSong.save().then(
         song => {

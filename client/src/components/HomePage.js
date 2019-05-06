@@ -19,7 +19,7 @@ class HomePage extends React.Component {
 
   getDivImagesAutoPlay() {
     return this.state.ImagesAutoPlay.map((object, idx) => {
-      return <img src={object} key={idx} />;
+      return <img src={object} key={idx} alt="null"/>;
     });
   }
 
@@ -35,7 +35,6 @@ class HomePage extends React.Component {
 
   handlePlaySong(name) {
     this.props.showSongPlayer(name);
-    debugger;
   }
 
   render() {

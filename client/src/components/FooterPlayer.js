@@ -71,7 +71,6 @@ class FooterPlayer extends React.Component {
         ],
         
       };
-
     
       console.log(data);
       

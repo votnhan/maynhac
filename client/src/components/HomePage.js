@@ -4,7 +4,7 @@ import "antd/dist/antd.css";
 import "../assets/css/HomePage.css";
 import HomePageService from "../services/HomePageService";
 import { Card, Icon, Image } from "semantic-ui-react";
-import { showSongPlayer, hideSongPlayer } from "../actions/uiActions";
+import { showSongPlayer, hideSongPlayer, fillMusicSrc } from "../actions/uiActions";
 import { connect } from "react-redux";
 
 class HomePage extends React.Component {
@@ -33,13 +33,13 @@ class HomePage extends React.Component {
     });
   }
 
-  handlePlaySong(name) {
-    this.props.showSongPlayer(name);
+  handlePlaySong(obj) {
+    this.props.showSongPlayer(obj);
   }
 
   render() {
     const CardExampleImageCard = (obj, i) => (
-      <Card key={i} onClick={()=> this.handlePlaySong(obj.name)}>
+      <Card key={i} onClick={()=> this.handlePlaySong(obj)}>
         <Image src="https://github.com/trungnhanuchiha/maynhac/blob/server/client/src/assets/imgs/logo.jpg?raw=true" />
         <Image src={obj.avatar}/>
         <Card.Content>
@@ -73,8 +73,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    showSongPlayer: name =>  dispatch(showSongPlayer(name)),
-    hideSongPlayer: () => dispatch(hideSongPlayer())
+    showSongPlayer: obj =>  dispatch(showSongPlayer(obj)),
+    hideSongPlayer: () => dispatch(hideSongPlayer()),
   };
 }
 

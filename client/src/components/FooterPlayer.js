@@ -32,7 +32,7 @@ const options = {
   panelTitle: "Now playing ",
   mode: "full",
   once: true,
-  autoPlay: false,
+  autoPlay: true,
   showMiniProcessBar: false,
   drag: true,
   seeked: true,
@@ -65,8 +65,7 @@ class FooterPlayer extends React.Component {
             singer: "--",
             cover:
               "https://github.com/trungnhanuchiha/maynhac/blob/server/client/src/assets/imgs/logo.jpg?raw=true",
-            musicSrc:
-              "https://node-sdk-sample-de034739-e333-4019-a8fe-98be19dc6ca6.s3.amazonaws.com/Noi-Vong-Tay-Lon-Fanatic-Band.mp3?AWSAccessKeyId=AKIAIZH7T6FB5PYYHZLA&Expires=1557142357&Signature=ZPgHC9YE2120ARVi6t4EFTljhnI%3D"
+            musicSrc: this.props.nowPlayingSrc
           }
         ],
         
@@ -91,7 +90,8 @@ class FooterPlayer extends React.Component {
 function mapStateToProps(state) {
   return {
     showPlayer: state.uiReducer.showPlayer,
-    nowPlayingName: state.uiReducer.nowPlayingName
+    nowPlayingName: state.uiReducer.nowPlayingName,
+    nowPlayingSrc: state.uiReducer.nowPlayingSrc
   };
 }
 

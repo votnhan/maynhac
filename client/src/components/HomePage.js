@@ -48,9 +48,12 @@ class HomePage extends React.Component {
     });
   }
 
-  handlePlaySong(name, link, artist) {
-    console.log("LINK >-> " + URI.serialize(URI.parse(link)));
-    this.props.showSongPlayer(name, URI.serialize(URI.parse(link)), artist);
+  handlePlaySong(obj) {
+    console.log("obj here");
+    console.log(obj);
+    // console.log("LINK  " + URI.serialize(URI.parse(link)));
+    const newObj = {...obj, link: URI.serialize(URI.parse(obj.link))}
+    this.props.showSongPlayer(newObj);
   } 
  
 
@@ -69,7 +72,7 @@ class HomePage extends React.Component {
           <Button
             animated="vertical"
             color="orange"
-            onClick={() => this.handlePlaySong(obj.name, obj.link, obj.author)}
+            onClick={() => this.handlePlaySong(obj)}
           >
             <Button.Content hidden>Play</Button.Content>
             <Button.Content visible>
@@ -138,7 +141,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    showSongPlayer: (name, link, artist) => dispatch(showSongPlayer(name, link, artist)),
+    showSongPlayer: obj => dispatch(showSongPlayer(obj)),
     hideSongPlayer: () => dispatch(hideSongPlayer())
   };
 }

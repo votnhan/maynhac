@@ -4,7 +4,7 @@ import { Form, Button, Segment, Header, Icon, Step } from "semantic-ui-react";
 import Dropzone from 'react-dropzone'
 
 class UploadBox extends Component{
-      constructor() {
+constructor() {
     super();
     this.onDrop = (files) => {
       this.setState({files})
@@ -13,6 +13,7 @@ class UploadBox extends Component{
       files: []
     };
   }
+
     render(){
         if (this.props.currentStep !== 1) {
             return null;
@@ -39,7 +40,7 @@ class UploadBox extends Component{
                 <Header icon>
                 <Icon name="upload" />
                 <div>
-                {this.state.files.length ? <ul>{this.state.files}</ul> :
+                {this.state.files.length ? <ul>this.state.files</ul> :
                 'No documents are listed for this customer.'}
                 </div>
                 </Header>
@@ -161,7 +162,7 @@ class UploadPage extends Component {
             </Step>
             <Step>
             <Step.Content>
-            <Step.Title>Confirm Order</Step.Title>
+            <Step.Title>Upload</Step.Title>
             </Step.Content>
             </Step>
             </Step.Group>
@@ -173,12 +174,12 @@ class UploadPage extends Component {
             <SongDetails currentStep={this.state.currentStep} handleChange={this.handleChange}/>
             </div>
             <div class="nav-panel">
-            <Button icon labelPosition='left' onClick={this._prev}>
+            <Button icon labelPosition='left' onClick={this._prev} disabled={this.state.currentStep === 3}>
             <Icon name='left arrow' />
       Go back
     </Button>
-    <Button icon labelPosition='right' onClick={this._next}>
-      Continue
+    <Button icon labelPosition='right' onClick={this._next} disabled={this.state.currentStep === 3}>
+            {this.state.currentStep === 1 ? 'Continue' : 'Upload'}
       <Icon name='right arrow' />
     </Button>
             </div>

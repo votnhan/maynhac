@@ -15,3 +15,30 @@
 .ui .form {
     z-index: 1;
 }
+
+.upload-container {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.step-group {
+    text-align: center;
+    margin: 10px auto;
+}
+
+.nav-panel {
+    margin: 20px auto;
+    text-align: center;
+}
+
+.song-details {
+    margin: 20%;
+}
+
+.upload-box-wrapper {
+    margin: auto 20%;
+}
+
+.song-details-wrapper {
+    margin: auto 40%;
+}

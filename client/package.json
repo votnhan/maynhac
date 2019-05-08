@@ -9,6 +9,7 @@
     "react": "^16.8.6",
     "react-autobind": "^1.0.6",
     "react-dom": "^16.8.6",
+    "react-dropzone": "^10.1.4",
     "react-jinke-music-player": "^4.2.3",
     "react-modal": "^3.8.1",
     "react-redux": "^7.0.3",

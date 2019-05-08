@@ -2,9 +2,10 @@ import React from "react";
 import "../assets/css/FooterPlayer.css";
 import { connect } from "react-redux";
 import { hideSongPlayer } from "../actions/uiActions";
-import { Button } from "semantic-ui-react";
+import { Button, Icon } from "semantic-ui-react";
 import ReactJkMusicPlayer from "react-jinke-music-player";
 import "react-jinke-music-player/assets/index.css";
+
 
 const options = {
   //audio lists model
@@ -32,7 +33,7 @@ const options = {
   panelTitle: "Now playing ",
   mode: "full",
   once: true,
-  autoPlay: false,
+  autoPlay: true,
   showMiniProcessBar: false,
   drag: true,
   seeked: true,
@@ -55,32 +56,37 @@ class FooterPlayer extends React.Component {
     this.props.hideSongPlayer();
   }
 
+
   render() {
     if (this.props.showPlayer) {
+      console.log("LINK HERE: "+ this.props.nowPlayingLink);
       let data = {
         ...options,
         audioLists: [
           {
             name: this.props.nowPlayingName,
-            singer: "--",
+            singer: this.props.nowPlayingArtist,
             cover:
               "https://github.com/trungnhanuchiha/maynhac/blob/server/client/src/assets/imgs/logo.jpg?raw=true",
-            musicSrc:
-              "https://node-sdk-sample-de034739-e333-4019-a8fe-98be19dc6ca6.s3.amazonaws.com/Noi-Vong-Tay-Lon-Fanatic-Band.mp3?AWSAccessKeyId=AKIAIZH7T6FB5PYYHZLA&Expires=1557142357&Signature=ZPgHC9YE2120ARVi6t4EFTljhnI%3D"
+            musicSrc: this.props.nowPlayingLink
           }
-        ],
-        
+        ]
       };
-    
+
       console.log(data);
       
       return (
         <div className="sticky-floating-footer">
           <Button className="order-front" onClick={() => this.handleStop()}>
-            STOP - {this.props.nowPlayingName}
+            <Icon name="stop"/>
+            
           </Button>
-          <ReactJkMusicPlayer className="order-behind" {...data} key={this.props.nowPlayingName}/>,
-          {/* Now playing {this.props.nowPlayingName}....*/}{" "}
+          <ReactJkMusicPlayer
+            className="order-behind"
+            {...data}
+            key={this.props.nowPlayingName}
+          />
+
         </div>
       );
     } else return <div />;
@@ -90,7 +96,9 @@ class FooterPlayer extends React.Component {
 function mapStateToProps(state) {
   return {
     showPlayer: state.uiReducer.showPlayer,
-    nowPlayingName: state.uiReducer.nowPlayingName
+    nowPlayingName: state.uiReducer.nowPlayingName,
+    nowPlayingLink: state.uiReducer.nowPlayingLink,
+    nowPlayingArtist: state.uiReducer.nowPlayingArtist
   };
 }
 

@@ -1,10 +1,12 @@
 import * as types from '../constants/type';
 
-export function showSongPlayer(name) {
+export function showSongPlayer(name, link, artist) {
   console.log("show song actions");
   return {
     type: types.SHOW_SONG_PLAYER,
-    name
+    name,
+    link,
+    artist,
   };
 }
 

@@ -2,7 +2,7 @@ const multer = require('multer');
 const crypto = require('crypto');
 const uuid = require('uuid');
 const AWS = require('aws-sdk');
-const {AWS_ACCESS_KEY, AWS_BUTKET, AWS_SECRET_ACCESS_KEY} = require('./constant');
+const {AWS_ACCESS_KEY, AWS_BUCKET, AWS_SECRET_ACCESS_KEY} = require('./constant');
 
 const uploadFile =  multer({
     storage: multer.diskStorage({
@@ -41,11 +41,11 @@ function uploadSongAWS(req, res, next) {
     
     var extension = getFileExtensions(song.name)
     const keySong = uuid.v4() + '.'+ extension;
-    const filesong = {Bucket: AWS_BUTKET, Key: keySong, Body: song.data};
+    const filesong = {Bucket: AWS_BUCKET, Key: keySong, Body: song.data, ACL:'public-read'};
 
     extension = getFileExtensions(avatar.name);
     const keyAvatar = uuid.v4() + '.'+ extension;
-    const fileavatar = {Bucket: AWS_BUTKET, Key: keyAvatar, Body: avatar.data};
+    const fileavatar = {Bucket: AWS_BUCKET, Key: keyAvatar, Body: avatar.data, ACL:'public-read'};
 
     uploadFileAWS(filesong, (urlSong) => {
         req.urlSong = urlSong;
@@ -65,10 +65,7 @@ function getFileExtensions(name){
 function uploadFileAWS(fileinfors, cb){
     const uploadPromise = getUpdatePromise(fileinfors);
     uploadPromise.then( data =>{
-        const getLinkAWSPromise = getObjAWSS3();
-        const infortoget = {Bucket: AWS_BUTKET, Key: fileinfors.Key};
-        const url = getLinkAWSPromise.getSignedUrl('getObject', infortoget);
-        cb(url);
+        cb(data.Location);
     })
     .catch( err =>{
         console.log(err);
@@ -80,7 +77,7 @@ function getObjAWSS3(){
 }
 
 function getUpdatePromise(fileinfors){
-    return new AWS.S3({apiVersion: '2006-03-01', accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_ACCESS_KEY}).putObject(fileinfors).promise();
+    return new AWS.S3({apiVersion: '2006-03-01', accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_ACCESS_KEY}).upload(fileinfors).promise();
 }
 
 module.exports = {uploadSongAWS};

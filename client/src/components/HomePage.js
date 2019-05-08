@@ -143,6 +143,7 @@ function mapDispatchToProps(dispatch) {
   return {
     showSongPlayer: obj => dispatch(showSongPlayer(obj)),
     hideSongPlayer: () => dispatch(hideSongPlayer())
+
   };
 }
 

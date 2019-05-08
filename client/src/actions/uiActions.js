@@ -8,6 +8,7 @@ export function showSongPlayer(obj) {
     link: obj.link,
     artist: obj.artist,
     avatar: obj.avatar,
+
   };
 }
 

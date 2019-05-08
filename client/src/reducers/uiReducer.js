@@ -18,7 +18,7 @@ export default function uiReducer(state = initialState, action) {
         nowPlayingAvatar: action.avatar,
       };
     case types.HIDE_SONG_PLAYER:
-      return { showPlayer: false };
+      return { showPlayer: false }; 
 
     default:
       return state;

@@ -99,6 +99,7 @@ function mapStateToProps(state) {
     nowPlayingName: state.uiReducer.nowPlayingName,
     nowPlayingLink: state.uiReducer.nowPlayingLink,
     nowPlayingArtist: state.uiReducer.nowPlayingArtist
+
   };
 }
 

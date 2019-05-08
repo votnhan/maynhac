@@ -258,5 +258,34 @@ router.get('/topkSong', (req, res) => {
     });
 });
 
+router.get('/topkSongByTypeid', (req, res) => {
+    const {k, typeid} = req.query;
+    Song.find({type: typeid}).sort({numlisten: -1}).exec((err, data) => {
+        if(err){
+            console.log(err);
+            return res.status(500).send(err);
+        }
+        res.status(200).send(data.slice(0,k));
+    });
+
+});
+
+router.get('/topNewkSongByTypeid', (req, res) => {
+    const {k, typeid} = req.query;
+    Song.find({type:typeid}, (err, data) => {
+        var result = []
+        const aday = 24*3600*1000
+        data.forEach( Element => {
+            var dateindb = new Date(Element.dateposted);
+            var datenow = Date.now();
+            if((datenow - dateindb) < aday){
+                result.push(Element);
+            }
+        });
+        var resultAfterSort = result.sort((x,y) => {return x.numlisten < y.numlisten});
+        res.status(200).send(resultAfterSort.slice(0,k));
+    });
+
+});
 
 module.exports = router;

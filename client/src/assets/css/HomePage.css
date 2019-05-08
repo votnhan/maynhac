@@ -1,3 +1,5 @@
+@import "~slick-carousel/slick/slick.css";
+@import "~slick-carousel/slick/slick-theme.css";
 .ant-carousel .slick-slide {
     text-align: center;
     height: 100%;

@@ -5,7 +5,10 @@ export function showSongPlayer(obj) {
   return {
     type: types.SHOW_SONG_PLAYER,
     name: obj.name,
-    src: obj.link
+    link: obj.link,
+    artist: obj.artist,
+    avatar: obj.avatar,
+
   };
 }
 

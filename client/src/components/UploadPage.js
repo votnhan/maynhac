@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import "../assets/css/UploadPage.css";
-import { Form, Button, Segment, Header, Icon, Step, Label, Container, Grid, Progress, Dropdown } from "semantic-ui-react";
+import { Image, Form, Button, Segment, Header, Icon, Step, Label, Container, Grid, Progress, Dropdown } from "semantic-ui-react";
 import Dropzone from 'react-dropzone'
 import $ from 'jquery';
 class UploadBox extends Component{
@@ -8,14 +8,15 @@ class UploadBox extends Component{
         if (this.props.currentStep !== 1) {
             return null;
         }
-         const files = this.props.files.map(file => (
+           const song = this.props.song.map(file => (
       <li key={file.name}>
         {file.name} - {file.size} bytes
       </li>
-        ));
+    ));
+
 
         return (<div className="upload-box-wrapper">
-            <Dropzone onDrop={this.props.handleFilesChange}>
+            <Dropzone multiple={false} onDrop={this.props.handleSongChange}>
             {({getRootProps, getInputProps}) => (
                 <section className="container">
                 <div {...getRootProps({className: 'dropzone'})}>
@@ -31,7 +32,7 @@ class UploadBox extends Component{
                 <Header icon>
                 <Icon name="upload" />
                 <div>
-                {this.props.files.length ? <ul>{files}</ul> :
+                {this.props.song.length ? <ul>{song}</ul> :
                 'No documents are listed for this customer.'}
                 </div>
                 </Header>
@@ -65,6 +66,14 @@ class SongDetails extends Component{
 
         return(<div className="song-details-wrapper">
             <Form color='green' >
+                <Form.Field>
+
+<Dropzone multiple={false} onDrop={this.props.handlePhotoChange}>
+  {({getRootProps, getInputProps}) => (<div className="image-frame"><Image fluid src={this.props.photo.length ? URL.createObjectURL(this.props.photo[0]) : 'https://react.semantic-ui.com/images/wireframe/image.png'} size='medium' {...getRootProps()} style={{width:'100%'}}/>
+                <input name="photo" type="file" {...getInputProps()}/></div>
+  )}
+</Dropzone>
+                </Form.Field>
                 <Form.Field>
                     <label>Title</label>
                     <input
@@ -114,22 +123,24 @@ class UploadDone extends Component{
         }
 
         let data = new FormData();
-        data.append("title", this.props.title);
+        data.append("name", this.props.title);
         data.append("lyrics", this.props.lyrics);
         data.append("author", this.props.author);
         data.append("artist", this.props.artist);
-        data.append("files", this.props.files);
+        data.append("song", this.props.song[0]);
+        data.append("avatar", this.props.photo[0]);
         data.append("typeid", this.props.type);
+        console.log("FormData: ", data);
+        console.log("Props: ", this.props);
         $.post({
-            url: 'localhost:5000/api/song/postSong',
+            url: 'http://localhost:5000/api/song/postSong',
             data: data,
             cache: false,
             contentType: false,
             processData: false,
-            method: 'POST',
             success: this.props.handleUploadSuccess,
-            error: function(err) {
-                console.log(err);
+            error: function(j, st, err) {
+                console.log(st, err);
             }
         });
 
@@ -167,8 +178,8 @@ class UploadDone extends Component{
 class UploadPage extends Component {
     constructor(props) {
         super(props);
-        this.onDrop = (files) => {
-            this.setState({files})
+        this.onDrop = (song) => {
+            this.setState({song})
         };
         this.state = {
             currentStep: 1,
@@ -176,12 +187,14 @@ class UploadPage extends Component {
             author: '',
             artist: '',
             lyrics: '',
-            files: [],
+            song: [],
+            photo: [],
             success: false,
         };
         this.handleChange = this.handleChange.bind(this);
-        this.handleFilesChange = this.handleFilesChange.bind(this);
+        this.handleSongChange = this.handleSongChange.bind(this);
         this.handleUploadSuccess = this.handleUploadSuccess.bind(this);
+        this.handlePhotoChange = this.handlePhotoChange.bind(this);
         this._next = this._next.bind(this);
         this._prev = this._prev.bind(this);
     }
@@ -201,8 +214,9 @@ class UploadPage extends Component {
       currentStep: currentStep
     })
     }
-    handleFilesChange(acceptedFiles) {
-        this.setState({files: acceptedFiles});
+    handleSongChange(acceptedFiles) {
+        this.setState({song: acceptedFiles});
+        this._next();
     }
     handleChange(event) {
         const {name, value} = event.target;
@@ -210,12 +224,17 @@ class UploadPage extends Component {
             [name]: value
         })
     }
+    handlePhotoChange(photo) {
+        this.setState({
+            photo
+        });
+    }
     handleUploadSuccess(data, textStatus) {
         this.setState({success: true});
     }
     render() {
 
-        // const files = this.state.files.map(file => (
+        // const song = this.state.song.map(file => (
         //     <li key={file.name}>
         //     {file.name} - {file.size} bytes
         //     </li>
@@ -243,15 +262,15 @@ class UploadPage extends Component {
             </Step>
             </Step.Group>
             </div>
-            <UploadBox files={this.state.files} currentStep={this.state.currentStep} handleChange={this.handleChange} handleFilesChange={this.handleFilesChange}/>
-            <SongDetails currentStep={this.state.currentStep} handleChange={this.handleChange} title={this.state.title} author={this.state.author} artist={this.state.artist} lyrics={this.state.lyrics} />
+            <UploadBox song={this.state.song} currentStep={this.state.currentStep} handleChange={this.handleChange} handleSongChange={this.handleSongChange}/>
+            <SongDetails currentStep={this.state.currentStep} photo={this.state.photo} handleChange={this.handleChange} handlePhotoChange={this.handlePhotoChange} title={this.state.title} author={this.state.author} artist={this.state.artist} lyrics={this.state.lyrics} />
             <UploadDone {...this.state}/>
             <div className="nav-panel">
             <Button icon labelPosition='left' onClick={this._prev} disabled={this.state.currentStep === 3}>
             <Icon name='left arrow' />
       Go back
     </Button>
-    <Button icon labelPosition='right' onClick={this._next} disabled={this.state.currentStep === 3 || !this.state.files.length}>
+    <Button icon labelPosition='right' onClick={this._next} disabled={this.state.currentStep === 3 || !this.state.song}>
             {this.state.currentStep === 1 ? 'Continue' : 'Upload'}
       <Icon name='right arrow' />
     </Button>

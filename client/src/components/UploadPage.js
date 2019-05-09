@@ -157,6 +157,7 @@ class UploadDone extends Component{
         data.append("typeid", this.props.type);
         console.log("FormData: ", data);
         console.log("Props: ", this.props);
+        if (!this.props.success) {
         $.post({
             url: 'http://localhost:5000/api/song/postSong',
             data: data,
@@ -168,6 +169,7 @@ class UploadDone extends Component{
                 console.log(st, err);
             }
         });
+        }
 
         return (<div className="upload-done-wrapper">
   <Grid>

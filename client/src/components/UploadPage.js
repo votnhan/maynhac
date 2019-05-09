@@ -115,7 +115,32 @@ class SongDetails extends Component{
         )
     }
 }
-
+class UploadSteps extends Component {
+    render() {
+        const p = this.props.currentStep;
+        return (<div className="step-group">
+            <Step.Group ordered>
+            <Step active={p===1} completed={p>1}>
+            <Step.Content>
+            <Step.Title>Upload</Step.Title>
+            <Step.Description>Upload your songs.</Step.Description>
+            </Step.Content>
+            </Step>
+            <Step active={p===2} completed={p>2} disabled={p<2}>
+            <Step.Content>
+            <Step.Title>Information</Step.Title>
+            <Step.Description>Enter song information</Step.Description>
+            </Step.Content>
+            </Step>
+            <Step active={p===3} disabled={p<3}>
+            <Step.Content>
+            <Step.Title>Upload</Step.Title>
+            </Step.Content>
+            </Step>
+            </Step.Group>
+            </div>)
+    }
+}
 class UploadDone extends Component{
     render(){
         if (this.props.currentStep !== 3) {
@@ -242,30 +267,10 @@ class UploadPage extends Component {
         // ));
         return (
             <section className="upload-container">
-            <div className="step-group">
-            <Step.Group ordered>
-            <Step>
-            <Step.Content>
-            <Step.Title>Upload</Step.Title>
-            <Step.Description>Upload your songs.</Step.Description>
-            </Step.Content>
-            </Step>
-            <Step>
-            <Step.Content>
-            <Step.Title>Information</Step.Title>
-            <Step.Description>Enter song information</Step.Description>
-            </Step.Content>
-            </Step>
-            <Step>
-            <Step.Content>
-            <Step.Title>Upload</Step.Title>
-            </Step.Content>
-            </Step>
-            </Step.Group>
-            </div>
+            <UploadSteps currentStep={this.state.currentStep}/>
             <UploadBox song={this.state.song} currentStep={this.state.currentStep} handleChange={this.handleChange} handleSongChange={this.handleSongChange}/>
             <SongDetails currentStep={this.state.currentStep} photo={this.state.photo} handleChange={this.handleChange} handlePhotoChange={this.handlePhotoChange} title={this.state.title} author={this.state.author} artist={this.state.artist} lyrics={this.state.lyrics} />
-            <UploadDone handleUploadSuccess={this.handleUploadSuccess} {...this.state}/>
+            <UploadDone handleUploadSuccess={this.handleUploadSuccess}{...this.state}/>
             <div className="nav-panel">
             <Button icon labelPosition='left' onClick={this._prev} disabled={this.state.currentStep === 3}>
             <Icon name='left arrow' />

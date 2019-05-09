@@ -31,14 +31,16 @@
     text-align: center;
 }
 
-.song-details {
-    margin: 20%;
-}
-
 .upload-box-wrapper {
     margin: auto 20%;
 }
 
 .song-details-wrapper {
     margin: auto 40%;
+}
+
+
+.upload-done-wrapper {
+    text-align: center;
+    margin: auto 20%;
 }

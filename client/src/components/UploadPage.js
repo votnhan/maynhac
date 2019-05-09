@@ -1,8 +1,8 @@
 import React, {Component} from "react";
 import "../assets/css/UploadPage.css";
-import { Form, Button, Segment, Header, Icon, Step, Label, Container, Grid } from "semantic-ui-react";
+import { Form, Button, Segment, Header, Icon, Step, Label, Container, Grid, Progress, Dropdown } from "semantic-ui-react";
 import Dropzone from 'react-dropzone'
-
+import $ from 'jquery';
 class UploadBox extends Component{
     render(){
         if (this.props.currentStep !== 1) {
@@ -31,7 +31,7 @@ class UploadBox extends Component{
                 <Header icon>
                 <Icon name="upload" />
                 <div>
-                {this.props.files.length ? <ul>this.props.files</ul> :
+                {this.props.files.length ? <ul>{files}</ul> :
                 'No documents are listed for this customer.'}
                 </div>
                 </Header>
@@ -56,6 +56,13 @@ class SongDetails extends Component{
         if (this.props.currentStep !== 2) {
             return null;
         }
+        const options = [
+            {  text: "V-pop", value: 1 },
+            {  text: "K-pop", value: 2 },
+            {  text: "J-pop", value: 3 },
+            {  text: "Western", value: 4 },
+        ]
+
         return(<div className="song-details-wrapper">
             <Form color='green' >
                 <Form.Field>
@@ -85,6 +92,7 @@ class SongDetails extends Component{
                     onChange={this.props.handleChange}
                     />
                 </Form.Field>
+              <Form.Field control={Dropdown} options={options} label='Category' placeholder='Category' name="type" onChange={this.props.handleChange} value={this.props.type} />
                 <Form.Field>
                     <label>Lyrics</label>
                     <input
@@ -105,24 +113,51 @@ class UploadDone extends Component{
             return null;
         }
 
-        return (<div className="upload-done-wrapper">
+        let data = new FormData();
+        data.append("title", this.props.title);
+        data.append("lyrics", this.props.lyrics);
+        data.append("author", this.props.author);
+        data.append("artist", this.props.artist);
+        data.append("files", this.props.files);
+        data.append("typeid", this.props.type);
+        $.post({
+            url: 'localhost:5000/api/song/postSong',
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            method: 'POST',
+            success: this.props.handleUploadSuccess,
+            error: function(err) {
+                console.log(err);
+            }
+        });
 
+        return (<div className="upload-done-wrapper">
   <Grid>
     <Grid.Row>
       <Grid.Column>
-                    <Icon circular color='green' name='checkmark' size='massive'/>
+            { (this.props.success) ? <Icon circular color='green' name='checkmark' size='massive'/> : ""}
       </Grid.Column>
     </Grid.Row>
-
+    <Grid.Row>
+        <Grid.Column>
+        <Progress size="medium" indicating autoSuccess percent={this.props.success ? 100 : 20}/>
+        </Grid.Column>
+    </Grid.Row>
     <Grid.Row>
       <Grid.Column>
                 <Label horizontal size='massive'>
-                    Success!
+                    {this.props.success ?
+                    "Success!" : "Uploading"
+                    }
                 </Label>
       </Grid.Column>
     </Grid.Row>
     <Grid.Row>
-                <Header as="h1">{this.props.files}</Header>
+            <Grid.Column>
+                <Header as="h1"></Header>
+            </Grid.Column>
     </Grid.Row>
   </Grid>
             </div>
@@ -142,9 +177,11 @@ class UploadPage extends Component {
             artist: '',
             lyrics: '',
             files: [],
+            success: false,
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleFilesChange = this.handleFilesChange.bind(this);
+        this.handleUploadSuccess = this.handleUploadSuccess.bind(this);
         this._next = this._next.bind(this);
         this._prev = this._prev.bind(this);
     }
@@ -172,6 +209,9 @@ class UploadPage extends Component {
         this.setState({
             [name]: value
         })
+    }
+    handleUploadSuccess(data, textStatus) {
+        this.setState({success: true});
     }
     render() {
 
@@ -205,13 +245,13 @@ class UploadPage extends Component {
             </div>
             <UploadBox files={this.state.files} currentStep={this.state.currentStep} handleChange={this.handleChange} handleFilesChange={this.handleFilesChange}/>
             <SongDetails currentStep={this.state.currentStep} handleChange={this.handleChange} title={this.state.title} author={this.state.author} artist={this.state.artist} lyrics={this.state.lyrics} />
-            <UploadDone currentStep={this.state.currentStep} title={this.state.title} files={this.state.files}/>
+            <UploadDone {...this.state}/>
             <div className="nav-panel">
             <Button icon labelPosition='left' onClick={this._prev} disabled={this.state.currentStep === 3}>
             <Icon name='left arrow' />
       Go back
     </Button>
-    <Button icon labelPosition='right' onClick={this._next} disabled={this.state.currentStep === 3}>
+    <Button icon labelPosition='right' onClick={this._next} disabled={this.state.currentStep === 3 || !this.state.files.length}>
             {this.state.currentStep === 1 ? 'Continue' : 'Upload'}
       <Icon name='right arrow' />
     </Button>

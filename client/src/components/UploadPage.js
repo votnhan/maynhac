@@ -101,7 +101,7 @@ class SongDetails extends Component{
                     onChange={this.props.handleChange}
                     />
                 </Form.Field>
-              <Form.Field control={Dropdown} options={options} label='Category' placeholder='Category' name="type" onChange={this.props.handleChange} value={this.props.type} />
+              <Form.Field control={Dropdown} options={options} label='Category' placeholder='Category' name="type" onChange={this.props.handleChange} />
                 <Form.Field>
                     <label>Lyrics</label>
                     <input
@@ -187,6 +187,7 @@ class UploadPage extends Component {
             author: '',
             artist: '',
             lyrics: '',
+            type: '',
             song: [],
             photo: [],
             success: false,
@@ -224,9 +225,9 @@ class UploadPage extends Component {
             [name]: value
         })
     }
-    handlePhotoChange(photo) {
+    handlePhotoChange(acceptedFiles) {
         this.setState({
-            photo
+            photo: acceptedFiles
         });
     }
     handleUploadSuccess(data, textStatus) {
@@ -264,7 +265,7 @@ class UploadPage extends Component {
             </div>
             <UploadBox song={this.state.song} currentStep={this.state.currentStep} handleChange={this.handleChange} handleSongChange={this.handleSongChange}/>
             <SongDetails currentStep={this.state.currentStep} photo={this.state.photo} handleChange={this.handleChange} handlePhotoChange={this.handlePhotoChange} title={this.state.title} author={this.state.author} artist={this.state.artist} lyrics={this.state.lyrics} />
-            <UploadDone {...this.state}/>
+            <UploadDone handleUploadSuccess={this.handleUploadSuccess} {...this.state}/>
             <div className="nav-panel">
             <Button icon labelPosition='left' onClick={this._prev} disabled={this.state.currentStep === 3}>
             <Icon name='left arrow' />

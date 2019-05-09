@@ -1,12 +1,12 @@
 import React from "react";
-import { Carousel, Divider } from "antd";
 import "antd/dist/antd.css";
 import "../assets/css/HomePage.css";
+import "../assets/css/MusicCard.css";
 import HomePageService from "../services/HomePageService";
-import { Card, Icon, Image, Button, Label } from "semantic-ui-react";
+import { Carousel } from "antd";
+import { Card, Icon, Image, Button } from "semantic-ui-react";
 import { showSongPlayer, hideSongPlayer } from "../actions/uiActions";
 import { connect } from "react-redux";
-import "../assets/css/MusicCard.css";
 import Slider from "react-slick";
 
 import * as URI from "uri-js";
@@ -59,9 +59,9 @@ class HomePage extends React.Component {
 
   render() {
     const CardExampleImageCard = (obj, i) => (
-      <div className="music-card-div">
+      <div key={i} className="music-card-div">
       
-      <Card key={i} className="music-card-wrapper">
+      <Card  className="music-card-wrapper">
         <Image
           className="music-card-img"
           src="https://github.com/trungnhanuchiha/maynhac/blob/server/client/src/assets/imgs/logo.jpg?raw=true"
@@ -99,7 +99,7 @@ class HomePage extends React.Component {
       dots: false,
       infinite: false,
       speed: 500,
-      slidesToShow: 8,
+      slidesToShow: 6,
       slidesToScroll: 4,
       initialSlide: 0,
       nextArrow: <SamplePrevArrow />,
@@ -110,14 +110,11 @@ class HomePage extends React.Component {
     return (
       <div className="home-page-carousel">
         <Carousel autoplay>{this.getDivImagesAutoPlay()}</Carousel>
-        <div className="home-page-song-list-card">
+        {/* <div className="home-page-song-list-card">
           <Card.Group itemsPerRow={6} className="music-card-div">
           
-          
           </Card.Group>
-        </div>
-        
-        
+        </div> */}
         
         <div className="home-page-slider">
         <h1 className="home-page-h1-left">TOP Popular </h1>

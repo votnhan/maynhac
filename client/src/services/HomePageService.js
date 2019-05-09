@@ -4,7 +4,7 @@ import React from 'react';
 class HomePageService extends React.Component {
 
     handleGetManySong(k, callback) {
-        Service.get('song/topksong', {k})
+        Service.get(`song/topksong/?k=${k}`)
             .then(res => {
                 callback(res.data);
             })

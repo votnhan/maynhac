@@ -9,12 +9,18 @@ class SearchPage extends React.Component {
     constructor(props) {
         super(props);
         this.props = props;
-        this.state = {code: null};
+        this.state = {searchKey: null, update: true, searchCode: null};
     }
 
-    getSearchContent() {
-
+    static getDerivedStateFromProps(nextProps, prevState){ 
+        if (nextProps.location.state.searchKey !== prevState.searchKey) {
+            return {searchKey: nextProps.location.state.searchKey, update: false};
+        }
+        else {
+            return null;
+        }
     }
+
 
     playSong(avatar, name, artist, link) {
         this.props.play(avatar, name, artist, link);
@@ -36,30 +42,43 @@ class SearchPage extends React.Component {
         );
     }
 
-    
-
-    componentDidMount() {
-        const searchKey = this.props.location.state.searchKey;
-        console.log("From search page:")
-        console.log(searchKey);
-        var searchCode = [];
-        SongService.handleSearch(searchKey, res => {
+    loadSearchData() {
+        SongService.handleSearch(this.state.searchKey, res => {
+            console.log("Derived find " + res.length);
+            var searchCode = [<div>{"Find " + res.length + " results"}</div>];
             for (var i = 0 ; i < res.length; ++i) {
-              var {artist, avatar, comment, dateposted, link, lyrics, name,
-              numlike, numlisten, type, unsignedname, __v, _id} = res[i];
-              searchCode.push(this.createSearchItem(avatar, name, artist, link));
+                var {artist, avatar, comment, dateposted, link, lyrics, name,
+                numlike, numlisten, type, unsignedname, __v, _id} = res[i];
+                searchCode.push(this.createSearchItem(avatar, name, artist, link));
             }
+            this.setState({searchCode: searchCode, update: true}); 
         });
-        this.setState({code: searchCode});
     }
 
+    componentDidUpdate() {
+        if (this.state.update === false) {
+            this.loadSearchData();
+        } 
+    }
+
+    componentDidMount() {
+        if (this.state.update === false) {
+            this.loadSearchData();
+        } 
+    }
+    
+
     render() {
+        if (this.state.update === false) {
+            return (
+                <div>Wait a minute</div>
+            )
+        }
         return (
             <div className="ui items" style={{alignContent: "left", textAlign: "left"}}>
-                {this.state.code}
-            </div>
-            
-        );
+            {this.state.searchCode}
+                </div>
+        )
     }
 }
 

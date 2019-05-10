@@ -7,6 +7,7 @@ class UserService extends React.Component {
     handleLogin(username, password, callback) {
         Service.post('user/login', {username: username, password: password})
             .then(res => {
+                localStorage.setItem("x-access-token", res.data);
                 callback(res.data);
             })
             .catch(err => {

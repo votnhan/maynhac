@@ -78,6 +78,7 @@ class SongService extends React.Component {
         const {songId, token} = data
         Service.post('song/reaction', {headers: {'x-access-token': token} ,songId})
         .then( res => {
+            
             callback(res);
         })
         .catch( err => {

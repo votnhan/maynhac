@@ -10,6 +10,22 @@ class SearchPage extends React.Component {
         super(props);
         this.props = props;
         this.state = {code: null};
+
+        const searchKey = this.props.location.state.searchKey;
+        console.log("From search page:")
+        console.log(searchKey);
+        
+        SongService.handleSearch(searchKey, res => {
+            console.log("Number of result " + res.length);
+            var searchCode = [];
+            for (var i = 0 ; i < res.length; ++i) {
+              var {artist, avatar, comment, dateposted, link, lyrics, name,
+              numlike, numlisten, type, unsignedname, __v, _id} = res[i];
+              searchCode.push(this.createSearchItem(avatar, name, artist, link));
+            }
+            this.setState({code: searchCode});
+        });
+        
     }
 
     getSearchContent() {
@@ -39,18 +55,7 @@ class SearchPage extends React.Component {
     
 
     componentDidMount() {
-        const searchKey = this.props.location.state.searchKey;
-        console.log("From search page:")
-        console.log(searchKey);
-        var searchCode = [];
-        SongService.handleSearch(searchKey, res => {
-            for (var i = 0 ; i < res.length; ++i) {
-              var {artist, avatar, comment, dateposted, link, lyrics, name,
-              numlike, numlisten, type, unsignedname, __v, _id} = res[i];
-              searchCode.push(this.createSearchItem(avatar, name, artist, link));
-            }
-        });
-        this.setState({code: searchCode});
+        
     }
 
     render() {

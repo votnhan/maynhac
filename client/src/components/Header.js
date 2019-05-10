@@ -174,6 +174,7 @@ class Header extends React.Component {
 
   onSearch = e => {
     e.preventDefault();
+    console.log("Search " + this.state.searchKey);
     this.setState({ activeItem: 'search' });
     history.push({pathname:`/search`, state: {searchKey: this.state.searchKey}});
     console.log(this.state.searchKey);

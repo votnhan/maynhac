@@ -14,6 +14,7 @@ import RootReducer from "./reducers/rootReducer";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {compose} from "redux";
+import SearchPage from './components/SearchPage';
 import * as uiActions from "./actions/uiActions";
 
 class App extends Component {
@@ -30,6 +31,7 @@ class App extends Component {
           <Route path="/playlist" component={PlaylistPage} />
           <Route path="/top10" component={TopPage} />
           <Route path="/upload" component={UploadPage} />
+          <Route path="/search" component={SearchPage} />
         </div>
       </Router>
     );

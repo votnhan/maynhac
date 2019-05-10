@@ -14,12 +14,15 @@
     "react-modal": "^3.8.1",
     "react-redux": "^7.0.3",
     "react-scripts": "3.0.0",
+    "react-slick": "^0.24.0",
     "react-soundplayer": "^1.0.4",
     "redux": "^4.0.1",
     "redux-persist": "^5.10.0",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.86.0",
-    "sweetalert": "^2.1.2"
+    "slick-carousel": "^1.8.1",
+    "sweetalert": "^2.1.2",
+    "uri-js": "^4.2.2"
   },
   "scripts": {
     "start": "react-scripts start",

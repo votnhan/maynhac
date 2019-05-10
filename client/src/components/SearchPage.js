@@ -13,7 +13,7 @@ class SearchPage extends React.Component {
     }
 
     static getDerivedStateFromProps(nextProps, prevState){ 
-        if (nextProps.location.state.searchKey !== prevState.searchKey) {
+        if (nextProps.location.state !== undefined && nextProps.location.state.searchKey !== prevState.searchKey) {
             return {searchKey: nextProps.location.state.searchKey, update: false};
         }
         else {

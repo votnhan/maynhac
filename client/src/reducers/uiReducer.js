@@ -19,7 +19,14 @@ export default function uiReducer(state = initialState, action) {
       };
     case types.HIDE_SONG_PLAYER:
       return { showPlayer: false }; 
-
+    case types.PLAY_SONG:
+      return {
+        showPlayer: true,
+        nowPlayingName: action.payload.name,
+        nowPlayingLink: action.payload.link,
+        nowPlayingArtist: action.payload.artist,
+        nowPlayingAvatar: action.payload.avatar,
+      }
     default:
       return state;
   }

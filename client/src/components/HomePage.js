@@ -66,7 +66,7 @@ class HomePage extends React.Component {
           className="music-card-img"
           src="https://github.com/trungnhanuchiha/maynhac/blob/server/client/src/assets/imgs/logo.jpg?raw=true"
         />
-        {/* <Image src={obj.avatar}/> */}
+        <Image src={obj.avatar}/>
 
         <Button.Group className="music-card-button" size="large">
           <Button

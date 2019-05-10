@@ -38,7 +38,7 @@
 
 .music-card-div .music-card-wrapper:hover .music-card-button {
     display: table-cell;
-    
+
 }
 
 .slick-next:before {
@@ -53,6 +53,22 @@
     content: '⟨' !important;
 }
 
-.home-page-h1-left{
+.home-page-h1-left {
     text-align: left
+}
+
+.music-card-name {
+    display: block;
+    width: 120px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.music-card-artist {
+    display: block;
+    width: 120px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }

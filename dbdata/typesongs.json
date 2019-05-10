@@ -1,0 +1,4 @@
+{"_id":{"$oid":"5ccaf3bc772ea4202024e2b6"},"name":"Rock","typeid":1}
+{"_id":{"$oid":"5ccaf3ff772ea4202024e2b7"},"name":"Dance","typeid":2}
+{"_id":{"$oid":"5ccaf41d772ea4202024e2b8"},"name":"Pop","typeid":3}
+{"_id":{"$oid":"5ccaf46c772ea4202024e2b9"},"name":"Folk","typeid":4}

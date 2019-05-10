@@ -62,11 +62,11 @@ class HomePage extends React.Component {
       <div key={i} className="music-card-div">
       
       <Card  className="music-card-wrapper">
-        <Image
+        {/* <Image
           className="music-card-img"
-          src="https://github.com/trungnhanuchiha/maynhac/blob/server/client/src/assets/imgs/logo.jpg?raw=true"
-        />
-        <Image src={obj.avatar}/>
+          src=""
+        /> */}
+        <Image className="music-card-img" src={obj.avatar} alt="https://github.com/trungnhanuchiha/maynhac/blob/server/client/src/assets/imgs/logo.jpg?raw=true"/>
 
         <Button.Group className="music-card-button" size="large">
           <Button
@@ -87,11 +87,11 @@ class HomePage extends React.Component {
             </Button.Content>
           </Button>
         </Button.Group>
-
+ 
         <Card.Content>
-          <Card.Header>{obj.name}</Card.Header>
+          <Card.Header className="music-card-name">{obj.name}</Card.Header>
         </Card.Content>
-        <Card.Content extra>{obj.artist}</Card.Content>
+        <Card.Content className="music-card-artist" extra>{obj.artist}</Card.Content>
       </Card>
       </div> 
     );

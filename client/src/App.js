@@ -10,6 +10,7 @@ import TopPage from "./components/TopPage";
 import UploadPage from "./components/UploadPage";
 import history from  './history';
 import FooterPlayer from "./components/FooterPlayer";
+import Footer from "./components/Footer";
 import RootReducer from "./reducers/rootReducer";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -32,6 +33,8 @@ class App extends Component {
           <Route path="/top10" component={TopPage} />
           <Route path="/upload" component={UploadPage} />
           <Route path="/search" component={SearchPage} />
+
+          <Route path="/" component={Footer}/>
         </div>
       </Router>
     );

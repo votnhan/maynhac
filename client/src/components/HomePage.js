@@ -1,9 +1,9 @@
 import React from "react";
-import { Carousel, Divider } from "antd";
+import { Carousel } from "antd";
 import "antd/dist/antd.css";
 import "../assets/css/HomePage.css";
 import HomePageService from "../services/HomePageService";
-import { Card, Icon, Image, Button, Label } from "semantic-ui-react";
+import { Card, Icon, Image, Button } from "semantic-ui-react";
 import { showSongPlayer, hideSongPlayer } from "../actions/uiActions";
 import { connect } from "react-redux";
 import "../assets/css/MusicCard.css";

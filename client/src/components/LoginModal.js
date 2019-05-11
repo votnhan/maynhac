@@ -11,7 +11,6 @@ import '../assets/vendor/select2/select2.min.css';
 import '../assets/vendor/daterangepicker/daterangepicker.css';
 import '../assets/css/LoginModal.css';
 import UserService from '../services/UserService';
-import UserInfo from '../models/UserInfo';
 import {connect} from 'react-redux';
 
 
@@ -110,6 +109,7 @@ class LoginModal extends React.Component {
     if (this.state.isLogin === true) {
       UserService.handleLogin(this.state.username, this.state.pass, (e) => {
         this.props.onUserLogin(this.state.username, e);
+        this.closeModal();
       });
     }
     else {

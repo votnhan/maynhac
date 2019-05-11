@@ -2,14 +2,10 @@ import React from "react";
 import "../assets/css/Header.css";
 import logo from "../assets/imgs/logo.jpg";
 import LoginModal from "./LoginModal";
-import SongService from "../services/SongService";
 import "semantic-ui-css/semantic.min.css";
-import { Button, Icon, Menu } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import { Icon, Menu } from "semantic-ui-react";
 import history from "../history";
 import {connect} from 'react-redux';
-import ReactDOM from 'react-dom';
-import SearchPage from './SearchPage';
 
 class Header extends React.Component {
   constructor(props) {
@@ -28,16 +24,13 @@ class Header extends React.Component {
 
   createUserDropDownButton = (username) => {
       this.setState({isUpdated: true});
-      if (username != undefined && username !== '') {
+      if (username !== undefined && username !== '') {
         return (
             <div className="header-user-menu">
                     <img src={logo} alt="User" />
                     <ul>
                       <li>
-                        <a href="true">{username}</a>
-                      </li>
-                      <li>
-                        <a href="true">Payments</a>
+                        <a href="true" onClick={this.onUsernameClicked}>{username}</a>
                       </li>
                       <li>
                         <a href="true" onClick={this.onLogoutClicked} className="highlight">
@@ -77,7 +70,10 @@ class Header extends React.Component {
     }
   }
 
-  
+  onUsernameClicked = (e) => {
+    e.preventDefault();
+    history.push('/user');
+  }
 
   onInputChanged = e => {
     this.setState({ searchKey: e.target.value });

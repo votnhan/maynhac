@@ -1,6 +1,6 @@
 import React from "react";
 import "../assets/css/UploadPage.css";
-import { Button, Segment, Header, Icon } from "semantic-ui-react";
+import { Segment, Header, Icon } from "semantic-ui-react";
 class UploadPage extends React.Component {
   render() {
     return (

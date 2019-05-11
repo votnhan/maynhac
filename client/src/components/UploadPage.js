@@ -61,10 +61,10 @@ class SongDetails extends Component{
             return null;
         }
         const options = [
-            {  text: "V-pop", value: 1 },
-            {  text: "K-pop", value: 2 },
-            {  text: "J-pop", value: 3 },
-            {  text: "Western", value: 4 },
+            {  text: "Rock", value: 1 },
+            {  text: "Dance", value: 2 },
+            {  text: "Pop", value: 3 },
+            {  text: "Folk", value: 4 },
         ]
 
         return(<div className="song-details-wrapper">

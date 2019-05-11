@@ -7,9 +7,9 @@ import "semantic-ui-css/semantic.min.css";
 import { Button, Icon, Menu } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import history from "../history";
-import {connect} from 'react-redux';
-import ReactDOM from 'react-dom';
-import SearchPage from './SearchPage';
+import { connect } from "react-redux";
+import ReactDOM from "react-dom";
+import SearchPage from "./SearchPage";
 
 class Header extends React.Component {
   constructor(props) {
@@ -26,41 +26,45 @@ class Header extends React.Component {
     this.loginModal = React.createRef();
   }
 
-  createUserDropDownButton = (username) => {
-      console.log('Create user button');
-      console.log(username);
-      if (username != undefined && username !== '') {
-        return (
-            <div className="header-user-menu">
-                    <img src={logo} alt="User" />
-                    <ul>
-                      <li>
-                        <a href="true">{username}</a>
-                      </li>
-                      <li>
-                        <a href="true">Payments</a>
-                      </li>
-                      <li>
-                        <a href="true" onClick={this.onLogoutClicked} className="highlight">
-                          Logout
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-          );
-      }
-      else {
-          return <a href="true" className="logout-button" onClick={this.onLoginClicked}>
+  createUserDropDownButton = username => {
+    console.log("Create user button");
+    console.log(username);
+    if (username != undefined && username !== "") {
+      return (
+        <div className="header-user-menu">
+          <img src={logo} alt="User" />
+          <ul>
+            <li>
+              <a href="true">{username}</a>
+            </li>
+            <li>
+              <a href="true">Payments</a>
+            </li>
+            <li>
+              <a
+                href="true"
+                onClick={this.onLogoutClicked}
+                className="highlight"
+              >
+                Logout
+              </a>
+            </li>
+          </ul>
+        </div>
+      );
+    } else {
+      return (
+        <a href="true" className="logout-button" onClick={this.onLoginClicked}>
           Login
         </a>
-      }
-      
-  }
+      );
+    }
+  };
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-        buttonCode: this.createUserDropDownButton(nextProps.username)
-        });
+      buttonCode: this.createUserDropDownButton(nextProps.username)
+    });
   }
 
   onInputChanged = e => {
@@ -174,31 +178,33 @@ class Header extends React.Component {
 
   onSearch = e => {
     e.preventDefault();
-    this.setState({ activeItem: 'search' });
-    history.push({pathname:`/search`, state: {searchKey: this.state.searchKey}});
+    this.setState({ activeItem: "search" });
+    history.push({
+      pathname: `/search`,
+      state: { searchKey: this.state.searchKey }
+    });
     console.log(this.state.searchKey);
   };
 
-  onLogoutClicked = (e) => {
-      e.preventDefault();
+  onLogoutClicked = e => {
+    e.preventDefault();
     this.props.onUserLogout();
-  }
-
-
+  };
 }
 
 const mapStateToProps = state => {
-    return {
-      ...state
-    };
-  }
+  return {
+    ...state
+  };
+};
 
-  const mapDispatchToProps = dispatch => {
-    return  {
-      onUserLogout: () => dispatch({type: 'LOGOUT'}) 
-    }; 
-  
-  }
+const mapDispatchToProps = dispatch => {
+  return {
+    onUserLogout: () => dispatch({ type: "LOGOUT" })
+  };
+};
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Header);

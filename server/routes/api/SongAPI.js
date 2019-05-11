@@ -14,8 +14,8 @@ const verifyToken = require('../../middlewares/verifyToken');
 const {uploadSongAWS} = require('../../middlewares/uploadFile');
 const router = express.Router();
 
-router.post('/postSong',[ verifyToken, uploadSongAWS] ,(req, res, next) => {
-    const username  = req.username;
+router.post('/postSong',[ /* verifyToken,*/ uploadSongAWS] ,(req, res, next) => {
+    const username  = "vtrungnhan"/* req.username */;
     const {name, lyrics, typeid, author, artist} = req.body;
     const unsignedname = utilSong.getSongName(name);
     const link = req.urlSong;
@@ -30,7 +30,7 @@ router.post('/postSong',[ verifyToken, uploadSongAWS] ,(req, res, next) => {
                 }
             )
             .catch(err => {
-                console.log(err); 
+                console.log(err);
                 res.status(500).send(err)
             })
         }
@@ -204,9 +204,9 @@ router.post('/reaction', verifyToken, (req, res, next) => {
                     }
                 );
             }
-            
+
         )
-        .catch( 
+        .catch(
             err => {
                 console.log(err);
                 res.status(500).send(err);
@@ -215,7 +215,7 @@ router.post('/reaction', verifyToken, (req, res, next) => {
 });
 
 router.post('/comment', verifyToken, (req, res, next) => {
-    
+
     const {content, commentator ,songId} = req.body;
     const comment = {
         "content": content,

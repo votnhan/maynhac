@@ -80,11 +80,6 @@ router.post('/updateAlbum', verifyToken, (req, res, next) => {
 
 
 
-router.post('/addSongtoAlbum', verifyToken, (req, res, next) => {
-    const username = req.username;
-    
-
-});
 
 
 

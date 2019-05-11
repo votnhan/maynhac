@@ -6,6 +6,8 @@
 .pnp.js
 
 /server/.env
+/server/middlewares/credentials.json
+/server/middlewares/token.json
 
 # testing
 /coverage

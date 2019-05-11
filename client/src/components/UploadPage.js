@@ -1,8 +1,11 @@
 import React, {Component} from "react";
 import "../assets/css/UploadPage.css";
 import { Image, Form, Button, Segment, Header, Icon, Step, Label, Container, Grid, Progress, Dropdown } from "semantic-ui-react";
-import Dropzone from 'react-dropzone'
+import Dropzone from 'react-dropzone';
 import $ from 'jquery';
+import {connect} from 'react-redux';
+import SongService from '../services/SongService';
+
 class UploadBox extends Component{
     render(){
         if (this.props.currentStep !== 1) {
@@ -158,17 +161,9 @@ class UploadDone extends Component{
         console.log("FormData: ", data);
         console.log("Props: ", this.props);
         if (!this.props.success) {
-        $.post({
-            url: 'http://localhost:5000/api/song/postSong',
-            data: data,
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: this.props.handleUploadSuccess,
-            error: function(j, st, err) {
-                console.log(st, err);
-            }
-        });
+                SongService.handleUploadSong(data, (result) => {
+                // Handle success 
+            });
         }
 
         return (<div className="upload-done-wrapper">
@@ -272,7 +267,7 @@ class UploadPage extends Component {
             <UploadSteps currentStep={this.state.currentStep}/>
             <UploadBox song={this.state.song} currentStep={this.state.currentStep} handleChange={this.handleChange} handleSongChange={this.handleSongChange}/>
             <SongDetails currentStep={this.state.currentStep} photo={this.state.photo} handleChange={this.handleChange} handlePhotoChange={this.handlePhotoChange} title={this.state.title} author={this.state.author} artist={this.state.artist} lyrics={this.state.lyrics} />
-            <UploadDone handleUploadSuccess={this.handleUploadSuccess}{...this.state}/>
+            <UploadDone handleUploadSuccess={this.handleUploadSuccess}{...this.state} token={this.props.token}/>
             <div className="nav-panel">
             <Button icon labelPosition='left' onClick={this._prev} disabled={this.state.currentStep === 3}>
             <Icon name='left arrow' />
@@ -294,4 +289,10 @@ class UploadPage extends Component {
         };
     }
 
-    export default UploadPage;
+const mapStateToProps = state => {
+    return {
+        token: state.UserReducer.jwt
+    };
+}
+
+export default connect(mapStateToProps)(UploadPage);

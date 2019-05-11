@@ -4,9 +4,23 @@ import React from 'react';
 
 class SongService extends React.Component {
 
+    handleUploadSong(song, callback){
+        const headers= {'x-access-token': localStorage.getItem('x-access-token'), 'Content-Type': 'multipart/form-data'};
+        Service.post('song/postSong', song, {headers: headers}).then(
+            res => {
+                console.log(res.data);
+                callback(res.data);
+            }
+        )
+        .catch( err => {
+            console.log(err);
+        })
+
+    }
     handleSearch(key, callback) {
         Service.post('song/searchSong', {key})
             .then(res => {
+                console.log(res.data);
                 callback(res.data);
             })
             .catch(err => {
@@ -78,6 +92,7 @@ class SongService extends React.Component {
         const {songId, token} = data
         Service.post('song/reaction', {headers: {'x-access-token': token} ,songId})
         .then( res => {
+            
             callback(res);
         })
         .catch( err => {

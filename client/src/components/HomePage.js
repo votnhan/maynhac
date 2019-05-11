@@ -26,7 +26,7 @@ class HomePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      numberOfSong: 10,
+      numberOfSong: 50,
       listSong: [],
       ImagesAutoPlay: []
     };

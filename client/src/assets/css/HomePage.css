@@ -15,9 +15,14 @@
 .home-page-song-list-card{
   z-index: 1;
   position: relative;
-  margin: 30px;
+ 
 }
 
 .song-card{
   padding: 20px;
+}
+
+
+.home-page-slider{
+  margin: 60px 250px 60px 250px;
 }

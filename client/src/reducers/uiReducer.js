@@ -4,7 +4,7 @@ const initialState = {
   showPlayer: false,
   nowPlayingName: "",
   nowPlayingLink: "",
-  nowPlayingArtist: ""
+  nowPlayingArtist: "",
 };
 
 export default function uiReducer(state = initialState, action) {

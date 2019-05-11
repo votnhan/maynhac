@@ -6,3 +6,4 @@ export const PAUSE_PLAYER = 'PAUSE_PALYER';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const PLAY_SONG = 'PLAY_SONG';
+export const SONG_INFO = 'SONG_INFO';

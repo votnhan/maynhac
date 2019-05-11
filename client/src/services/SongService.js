@@ -7,6 +7,7 @@ class SongService extends React.Component {
     handleSearch(key, callback) {
         Service.post('song/searchSong', {key})
             .then(res => {
+                console.log(res.data);
                 callback(res.data);
             })
             .catch(err => {

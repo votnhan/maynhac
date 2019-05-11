@@ -1,7 +1,6 @@
 import React from "react";
 import "../assets/css/Header.css";
 import logo from "../assets/imgs/logo.jpg";
-import UserInfo from "../models/UserInfo";
 import LoginModal from "./LoginModal";
 import SongService from "../services/SongService";
 import "semantic-ui-css/semantic.min.css";
@@ -9,6 +8,8 @@ import { Button, Icon, Menu } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import history from "../history";
 import {connect} from 'react-redux';
+import ReactDOM from 'react-dom';
+import SearchPage from './SearchPage';
 
 class Header extends React.Component {
   constructor(props) {
@@ -172,10 +173,10 @@ class Header extends React.Component {
   };
 
   onSearch = e => {
+    console.log('ahihi');
     e.preventDefault();
-    SongService.handleSearch(this.state.searchKey, res => {
-      console.log(res);
-    });
+    this.setState({ activeItem: 'search' });
+    history.push({pathname:`/search`, state: {searchKey: this.state.searchKey}});
     console.log(this.state.searchKey);
   };
 

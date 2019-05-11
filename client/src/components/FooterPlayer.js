@@ -68,7 +68,8 @@ class FooterPlayer extends React.Component {
             singer: this.props.nowPlayingArtist,
             cover:
               "https://github.com/trungnhanuchiha/maynhac/blob/server/client/src/assets/imgs/logo.jpg?raw=true",
-            musicSrc: this.props.nowPlayingLink
+            //musicSrc: this.props.nowPlayingLink
+            musicSrc:"https://docs.google.com/uc?export=download&id=1G-LYZKweCJyfA2DC2NficqMePJmT0LA4"
           }
         ]
       };

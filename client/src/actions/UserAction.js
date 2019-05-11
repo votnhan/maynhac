@@ -11,6 +11,6 @@ export function login(obj){
 
 export function logout(){
     return {
-        type:types.LOgOUT
+        type:types.LOGOUT
     }
 }

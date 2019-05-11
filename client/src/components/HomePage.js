@@ -9,8 +9,10 @@ import { showSongPlayer, hideSongPlayer } from "../actions/uiActions";
 import { connect } from "react-redux";
 import Slider from "react-slick";
 import history from "../history";
-
+import { getSongInfo } from "../actions/getSongInfoAction";
 import * as URI from "uri-js";
+import handleGetSongbyId from "../services/SongService";
+import SongService from "../services/SongService";
 
 function SamplePrevArrow(props) {
   const { className, style, onClick } = props;
@@ -86,17 +88,22 @@ class HomePage extends React.Component {
   }
 
   handleSongInfo(obj) {
+    SongService.handleGetSongbyId(obj._id, res => {
+      console.log("newObj_id ", res.data);
+
+      this.props.getSongInfo(res.data)
+    })
+    
+
     history.push(`/info/${obj.name}`);
+    console.log(history);
   }
 
   render() {
     const CardExampleImageCard = (obj, i) => (
       <div key={i} className="music-card-div">
         <Card className="music-card-wrapper">
-          {/* <Image
-          className="music-card-img"
-          src=""
-        /> */}
+          
           <Image
             className="music-card-img"
             src={obj.avatar}
@@ -123,10 +130,10 @@ class HomePage extends React.Component {
             </Button>
           </Button.Group>
 
-          <Card.Content>
+          <Card.Content onClick={() => this.handleSongInfo(obj)} className="music-card-content">
             <Card.Header
               className="music-card-name"
-              onClick={() => this.handleSongInfo(obj)}
+              
             >
               {obj.name}
             </Card.Header>
@@ -204,7 +211,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     showSongPlayer: obj => dispatch(showSongPlayer(obj)),
-    hideSongPlayer: () => dispatch(hideSongPlayer())
+    hideSongPlayer: () => dispatch(hideSongPlayer()),
+    getSongInfo: obj => dispatch(getSongInfo(obj))
   };
 }
 

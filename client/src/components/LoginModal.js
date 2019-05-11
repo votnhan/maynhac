@@ -73,8 +73,6 @@ class LoginModal extends React.Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    console.log("Receiving " );
-    console.log(nextProps);
     if (nextProps.isOpen !== prevState.modalIsOpen) {
       return ({modalIsOpen: nextProps.isOpen});
     }
@@ -108,9 +106,7 @@ class LoginModal extends React.Component {
   }
 
   onSubmit = (e) => {
-    console.log(this.state);
     e.preventDefault();
-    console.log("Submit");
     if (this.state.isLogin === true) {
       UserService.handleLogin(this.state.username, this.state.pass, (e) => {
         this.props.onUserLogin(this.state.username, e);

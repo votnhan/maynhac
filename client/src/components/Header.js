@@ -27,8 +27,6 @@ class Header extends React.Component {
   }
 
   createUserDropDownButton = (username) => {
-      console.log('Create user button');
-      console.log(username);
       this.setState({isUpdated: true});
       if (username != undefined && username !== '') {
         return (
@@ -61,6 +59,9 @@ class Header extends React.Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.user.username !== prevState.username) {
       return ({username: nextProps.user.username, isUpdated: false});
+    }
+    else {
+      return null;
     }
   }
 
@@ -178,7 +179,6 @@ class Header extends React.Component {
   }
 
   onSearchClicked = e => {
-    console.log(document.getElementById("searchInput"));
   };
 
   onLoginClicked = e => {
@@ -188,7 +188,6 @@ class Header extends React.Component {
 
   onSearch = e => {
     e.preventDefault();
-    console.log("Search " + this.state.searchKey);
     this.setState({ activeItem: 'search' });
     history.push({pathname:`/search`, state: {searchKey: this.state.searchKey}});
   };

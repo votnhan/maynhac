@@ -44,7 +44,6 @@ class SearchPage extends React.Component {
 
     loadSearchData() {
         SongService.handleSearch(this.state.searchKey, res => {
-            console.log("Derived find " + res.length);
             var searchCode = [<div>{"Find " + res.length + " results"}</div>];
             for (var i = 0 ; i < res.length; ++i) {
                 var {artist, avatar, comment, dateposted, link, lyrics, name,

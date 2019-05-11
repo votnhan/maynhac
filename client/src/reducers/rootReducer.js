@@ -3,7 +3,7 @@ import uiReducer from "./uiReducer";
 import UserReducer from "./UserReducer";
 
 const rootReducer = combineReducers({
-  uiReducer, UserReducer
+  uiReducer: uiReducer, user: UserReducer
 });
 
 export default rootReducer;

@@ -15,18 +15,21 @@ class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      buttonCode: this.createUserDropDownButton(props.username),
+      buttonCode: this.createUserDropDownButton(""),
       playlistCode: null,
       popup: null,
       searchKey: "",
       openModal: false,
-      activeItem: "home"
+      activeItem: "home",
+      username: "",
+      isUpdated: false
     };
   }
 
   createUserDropDownButton = (username) => {
       console.log('Create user button');
       console.log(username);
+      this.setState({isUpdated: true});
       if (username != undefined && username !== '') {
         return (
             <div className="header-user-menu">
@@ -55,13 +58,25 @@ class Header extends React.Component {
       
   }
 
-
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-        buttonCode: this.createUserDropDownButton(nextProps.username)
-        });
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.user.username !== prevState.username) {
+      return ({username: nextProps.user.username, isUpdated: false});
+    }
   }
+
+  componentDidUpdate() {
+    if (this.state.isUpdated === false) {
+      this.setState({buttonCode: this.createUserDropDownButton(this.state.username)});
+    }
+  }
+
+  componentDidMount() {
+    if (this.state.isUpdated === false) {
+      this.setState({buttonCode: this.createUserDropDownButton(this.state.username)});
+    }
+  }
+
+  
 
   onInputChanged = e => {
     this.setState({ searchKey: e.target.value });

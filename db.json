@@ -54,6 +54,9 @@
         "name":"String",
         "typeid":"Number"
     },
+    "typelocation":{
+
+    },
     "homepage":{
         "_id":"autocreate - String",
         "link_image":"String"

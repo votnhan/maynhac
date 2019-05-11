@@ -173,6 +173,7 @@ class Header extends React.Component {
   };
 
   onSearch = e => {
+    console.log('ahihi');
     e.preventDefault();
     console.log("Search " + this.state.searchKey);
     this.setState({ activeItem: 'search' });

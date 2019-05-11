@@ -39,7 +39,6 @@ class LoginModal extends React.Component {
     };
     this.props = props;
     this.openModal = this.openModal.bind(this);
-    this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
   }
 
@@ -73,25 +72,23 @@ class LoginModal extends React.Component {
     , this.createField("name", "Name", "Name is required")]});
   }
 
-  componentWillReceiveProps(nextProps) {
-    
-    this.setState({
-        modalIsOpen: nextProps.isOpen
-    })
-  
+  static getDerivedStateFromProps(nextProps, prevState) {
+    console.log("Receiving " + nextProps.isOpen);
+    if (nextProps.isOpen !== prevState.modalIsOpen) {
+      return ({modalIsOpen: nextProps.isOpen});
+    }
+    else {
+      return null;
+    }
   }
  
   openModal() {
     this.setState({modalIsOpen: true});
   }
- 
-  afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    // this.subtitle.style.color = '#f00';
-  }
- 
+
   closeModal() {
     this.setState({modalIsOpen: false});
+    this.props.onCloseModal();
   }
 
   onSignUpClicked = (e) => {
@@ -152,6 +149,8 @@ class LoginModal extends React.Component {
           onAfterOpen={this.afterOpenModal}
           onRequestClose={this.closeModal}
           style={customStyles}
+          shouldCloseOnOverlayClick={true}
+          shouldCloseOnEsc={true}
           contentLabel="Example Modal"
         >
 			<div className="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
@@ -160,12 +159,12 @@ class LoginModal extends React.Component {
 						{this.state.title}
 					</span>
 
-					<a href className="btn-face m-b-20">
+					<a href="true"className="btn-face m-b-20">
 						<i className="fa fa-facebook-official"></i>
 						Facebook
 					</a>
 
-					<a href className="btn-google m-b-20">
+					<a href="true"className="btn-google m-b-20">
 						<img src={icongoogle} alt="GOOGLE"/>
 						Google
 					</a>
@@ -183,7 +182,7 @@ class LoginModal extends React.Component {
 					</div>
 
                     <div className="w-full text-center p-t-30">
-						<a href onClick={this.onSuggestClicked} className="txt2 bo1">
+						<a href="true"onClick={this.onSuggestClicked} className="txt2 bo1">
 							{this.state.suggest}
 						</a>
 					</div>

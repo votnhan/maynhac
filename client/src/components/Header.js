@@ -22,8 +22,6 @@ class Header extends React.Component {
       openModal: false,
       activeItem: "home"
     };
-
-    this.loginModal = React.createRef();
   }
 
   createUserDropDownButton = (username) => {
@@ -57,6 +55,8 @@ class Header extends React.Component {
       
   }
 
+
+
   componentWillReceiveProps(nextProps) {
     this.setState({
         buttonCode: this.createUserDropDownButton(nextProps.username)
@@ -65,7 +65,6 @@ class Header extends React.Component {
 
   onInputChanged = e => {
     this.setState({ searchKey: e.target.value });
-    this.setState({ openModal: false });
   };
 
   handleItemClick = (e, { name }) => {
@@ -157,7 +156,7 @@ class Header extends React.Component {
           </div>
         </div>
         <div>
-          <LoginModal ref={this.loginModal} isOpen={this.state.openModal} />
+          <LoginModal onCloseModal={() => this.setState({openModal: false})} isOpen={this.state.openModal} />
         </div>
       </header>
     );
@@ -177,7 +176,6 @@ class Header extends React.Component {
     console.log("Search " + this.state.searchKey);
     this.setState({ activeItem: 'search' });
     history.push({pathname:`/search`, state: {searchKey: this.state.searchKey}});
-    console.log(this.state.searchKey);
   };
 
   onLogoutClicked = (e) => {

@@ -1,9 +1,9 @@
 import React from "react";
+import { Carousel } from "antd";
 import "antd/dist/antd.css";
 import "../assets/css/HomePage.css";
 import "../assets/css/MusicCard.css";
 import HomePageService from "../services/HomePageService";
-import { Carousel } from "antd";
 import { Card, Icon, Image, Button } from "semantic-ui-react";
 import { showSongPlayer, hideSongPlayer } from "../actions/uiActions";
 import { connect } from "react-redux";
@@ -26,7 +26,7 @@ class HomePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      numberOfSong: 10,
+      numberOfSong: 50,
       listSong: [],
       ImagesAutoPlay: []
     };

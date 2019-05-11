@@ -13,6 +13,8 @@ const fileUpload = require('express-fileupload');
 const routes = require('./routes');
 const config = require('./config');
 
+console.log(process.env.AWS_ACCESS_KEY);
+
 const app = express();
 app.use(cors());
 

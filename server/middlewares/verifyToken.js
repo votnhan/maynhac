@@ -1,8 +1,7 @@
 const jwt =  require('jsonwebtoken');
 
 module.exports = function(req, res, next){
-    const token = req.headers['x-access-token']
-    
+    const token = req.headers['x-access-token'];
 
     if (token === undefined){
         return next({status: 403, message: 'Token is not provided'});

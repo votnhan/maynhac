@@ -2,43 +2,35 @@ import React from "react";
 import "../assets/css/Header.css";
 import logo from "../assets/imgs/logo.jpg";
 import LoginModal from "./LoginModal";
-import SongService from "../services/SongService";
 import "semantic-ui-css/semantic.min.css";
-import { Button, Icon, Menu } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import { Icon, Menu } from "semantic-ui-react";
 import history from "../history";
 import {connect} from 'react-redux';
-import ReactDOM from 'react-dom';
-import SearchPage from './SearchPage';
 
 class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      buttonCode: this.createUserDropDownButton(props.username),
+      buttonCode: this.createUserDropDownButton(""),
       playlistCode: null,
       popup: null,
       searchKey: "",
       openModal: false,
-      activeItem: "home"
+      activeItem: "home",
+      username: "",
+      isUpdated: false
     };
-
-    this.loginModal = React.createRef();
   }
 
   createUserDropDownButton = (username) => {
-      console.log('Create user button');
-      console.log(username);
-      if (username != undefined && username !== '') {
+      this.setState({isUpdated: true});
+      if (username !== undefined && username !== '') {
         return (
             <div className="header-user-menu">
                     <img src={logo} alt="User" />
                     <ul>
                       <li>
-                        <a href="true">{username}</a>
-                      </li>
-                      <li>
-                        <a href="true">Payments</a>
+                        <a href="true" onClick={this.onUsernameClicked}>{username}</a>
                       </li>
                       <li>
                         <a href="true" onClick={this.onLogoutClicked} className="highlight">
@@ -57,15 +49,34 @@ class Header extends React.Component {
       
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-        buttonCode: this.createUserDropDownButton(nextProps.username)
-        });
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.user.username !== prevState.username) {
+      return ({username: nextProps.user.username, isUpdated: false});
+    }
+    else {
+      return null;
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.state.isUpdated === false) {
+      this.setState({buttonCode: this.createUserDropDownButton(this.state.username)});
+    }
+  }
+
+  componentDidMount() {
+    if (this.state.isUpdated === false) {
+      this.setState({buttonCode: this.createUserDropDownButton(this.state.username)});
+    }
+  }
+
+  onUsernameClicked = (e) => {
+    e.preventDefault();
+    history.push('/user');
   }
 
   onInputChanged = e => {
     this.setState({ searchKey: e.target.value });
-    this.setState({ openModal: false });
   };
 
   handleItemClick = (e, { name }) => {
@@ -157,14 +168,13 @@ class Header extends React.Component {
           </div>
         </div>
         <div>
-          <LoginModal ref={this.loginModal} isOpen={this.state.openModal} />
+          <LoginModal onCloseModal={() => this.setState({openModal: false})} isOpen={this.state.openModal} />
         </div>
       </header>
     );
   }
 
   onSearchClicked = e => {
-    console.log(document.getElementById("searchInput"));
   };
 
   onLoginClicked = e => {
@@ -175,10 +185,8 @@ class Header extends React.Component {
   onSearch = e => {
     console.log('ahihi');
     e.preventDefault();
-    console.log("Search " + this.state.searchKey);
     this.setState({ activeItem: 'search' });
     history.push({pathname:`/search`, state: {searchKey: this.state.searchKey}});
-    console.log(this.state.searchKey);
   };
 
   onLogoutClicked = (e) => {

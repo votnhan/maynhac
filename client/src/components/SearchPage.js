@@ -3,6 +3,7 @@ import React from 'react';
 import SongService from '../services/SongService';
 import * as types from '../constants/type';
 import {connect} from 'react-redux';
+import ListSong from './ListSong';
 
 class SearchPage extends React.Component {
 
@@ -13,7 +14,7 @@ class SearchPage extends React.Component {
     }
 
     static getDerivedStateFromProps(nextProps, prevState){ 
-        if (nextProps.location.state.searchKey !== prevState.searchKey) {
+        if (nextProps.location.state !== undefined && nextProps.location.state.searchKey !== prevState.searchKey) {
             return {searchKey: nextProps.location.state.searchKey, update: false};
         }
         else {
@@ -28,12 +29,12 @@ class SearchPage extends React.Component {
 
     createSearchItem(avatar, name, artist, link) {
         return (
-        <div className="item">
-            <a className="ui tiny image">
-                <img src={avatar}/>
+        <div className="item" style={{maxHeight: "5%"}}>
+            <a href="true" className="ui tiny image">
+                <img src={avatar} alt=""/>
             </a>
             <div className="content">
-                <a className="header" onClick={(e) => this.playSong(avatar, name, artist, link)}>{name}</a>
+                <a className="header" href="true" onClick={(e) => this.playSong(avatar, name, artist, link)}>{name}</a>
                 <div className="description">
                     <p>{artist}</p>
                 </div>
@@ -44,14 +45,8 @@ class SearchPage extends React.Component {
 
     loadSearchData() {
         SongService.handleSearch(this.state.searchKey, res => {
-            console.log("Derived find " + res.length);
-            var searchCode = [<div>{"Find " + res.length + " results"}</div>];
-            for (var i = 0 ; i < res.length; ++i) {
-                var {artist, avatar, comment, dateposted, link, lyrics, name,
-                numlike, numlisten, type, unsignedname, __v, _id} = res[i];
-                searchCode.push(this.createSearchItem(avatar, name, artist, link));
-            }
-            this.setState({searchCode: searchCode, update: true}); 
+            var searchCode = [<div>{"Found " + res.length + " results"}</div>];
+            this.setState({searchCode: [searchCode, <ListSong items={res}></ListSong>], update: true}); 
         });
     }
 

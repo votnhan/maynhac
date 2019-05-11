@@ -1,4 +1,6 @@
-import * as types from "../constants/type"
+import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
+import storage from "redux-persist/lib/storage";
+import { persistReducer } from "redux-persist";
 
 const initalState = {
     username: '',
@@ -27,4 +29,11 @@ const reducer = (state = initalState, action) => {
     }
 }
 
-export default reducer;
+const userPersistConfig = {
+    key: 'user',
+    storage: storage, 
+    stateReconciler: autoMergeLevel2
+  }
+  
+
+export default persistReducer(userPersistConfig, reducer);

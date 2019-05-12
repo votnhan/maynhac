@@ -1,31 +1,34 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-  Image,
-  Grid,
-  Segment,
-  Icon,
-  Label,
-  Button,
-  Header,
-  Item,
-  Container,
-  Divider
-} from "semantic-ui-react";
+import { Image, Grid, Icon, Button, Header } from "semantic-ui-react";
 import "../assets/css/songInfoPage.css";
 import "../assets/css/MusicCard.css";
 import * as URI from "uri-js";
 import { showSongPlayer } from "../actions/uiActions";
 import CommentPart from "./Comment";
 import RecommendPart from "./Recommend";
-class SongInfoPage extends React.Component {
+import SongService from "../services/SongService";
+
+class SongInfoPage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      like: false
+    };
+  }
   handlePlaySong(obj) {
     const newObj = { ...obj, link: URI.serialize(URI.parse(obj.link)) };
     this.props.showSongPlayer(newObj);
   }
 
   handleLikeSong(obj) {
-    console.log("like this", obj._id);
+    this.setState({ like: !this.state.like });
+    const data = {
+        songId: obj._id,
+    }
+    SongService.handleReaction(data, res =>{
+        console.log("like this", res.data);
+    });
   }
 
   render() {
@@ -85,10 +88,12 @@ class SongInfoPage extends React.Component {
                 <div>
                   <Button
                     animated="vertical"
-                    color="red"
+                    color={this.state.like ? "red" : "grey"}
                     onClick={() => this.handleLikeSong(this.props)}
                   >
-                    <Button.Content hidden>Like </Button.Content>
+                    <Button.Content hidden>
+                      {this.state.like ? "Unlike" : "Like"}{" "}
+                    </Button.Content>
                     <Button.Content visible>
                       <Icon name="like" />
                     </Button.Content>

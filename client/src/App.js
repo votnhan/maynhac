@@ -17,6 +17,7 @@ import {compose} from "redux";
 import SearchPage from './components/SearchPage';
 import UserPage from './components/UserPage';
 import * as uiActions from "./actions/uiActions";
+import PlaylistDetailPage from './components/PlaylistDetailPage';
 
 class App extends Component {
   render() {
@@ -34,6 +35,7 @@ class App extends Component {
           <Route path="/upload" component={UploadPage} />
           <Route path="/search" component={SearchPage} />
           <Route path="/user" component={UserPage} />
+          <Route path="/playlistDetail" component={PlaylistDetailPage}/>
         </div>
       </Router>
     );

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import "../assets/css/UserPage.css";
 import PlaylistService from "../services/PlaylistService";
-import ListPlaylists from './ListPlaylists';
+import Playlists from './Playlists';
 
 
 class UserPage extends Component {
@@ -63,7 +63,8 @@ class UserPage extends Component {
           playlistsCode = <div className="ui active inline loader"></div>;
         }
         else {
-          playlistsCode = <ListPlaylists/>;
+          console.log(this.state.playlists);
+          playlistsCode = <Playlists data={this.state.playlists.data}/>;
         }
         return playlistsCode;
       }

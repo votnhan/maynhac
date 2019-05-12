@@ -1,23 +1,10 @@
-import React, {
-  Component
-} from "react";
-import {
-  connect
-} from "react-redux";
-import {
-  Image,
-  Grid,
-  Icon,
-  Button,
-  Header,
-  Form
-} from "semantic-ui-react";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Image, Grid, Icon, Button, Header, Form } from "semantic-ui-react";
 import "../assets/css/songInfoPage.css";
 import "../assets/css/MusicCard.css";
 import * as URI from "uri-js";
-import {
-  showSongPlayer
-} from "../actions/uiActions";
+import { showSongPlayer } from "../actions/uiActions";
 import CommentPart from "./Comment";
 import RecommendPart from "./Recommend";
 import SongService from "../services/SongService";
@@ -31,24 +18,26 @@ class SongInfoPage extends Component {
       numListen: 0,
       listCmt: []
     };
-    SongService.handleGetStatusOfSongForUser({
-      songId: this.props._id
-    }, res => {
-      console.log("firstload", res);
-      this.setState({
-        like: res.status
-      });
-    });
+    SongService.handleGetStatusOfSongForUser(
+      {
+        songId: this.props._id
+      },
+      res => {
+        console.log("firstload", res);
+        this.setState({
+          like: res.status
+        });
+      }
+    );
     SongService.handleGetSongbyId(this.props._id, res => {
       console.log("return res", res);
       this.setState({
         numLike: res.data.numlike,
         numListen: res.data.numlisten + 1
-      })
+      });
     });
-    console.log("construct state", this.state)
+    console.log("construct state", this.state);
   }
-
 
   handlePlaySong(obj) {
     const newObj = {
@@ -69,7 +58,6 @@ class SongInfoPage extends Component {
         like: true,
         numLike: this.state.numLike + 1
       });
-
     }
 
     const data = {
@@ -81,173 +69,103 @@ class SongInfoPage extends Component {
   }
 
   render() {
-    return ( <
-      div >
-      <
-      Grid celled >
-      <
-      Grid.Row >
-      <
-      Grid.Column width = {
-        4
-      }
-      className = "music-card-div" >
-      <
-      Image src = {
-        this.props.avatar
-      }
-      className = "music-card-img" / >
-      <
-      /Grid.Column> <
-      Grid.Column width = {
-        12
-      }
-      className = "info-right-col" >
-      <
-      Grid.Row >
-      <
-      Grid.Column width = {
-        1
-      } >
-      <
-      Button circular size = "huge"
-      color = "orange"
-      icon = "play"
-      onClick = {
-        () => this.handlePlaySong(this.props)
-      }
-      /> <
-      /Grid.Column> <
-      Grid.Column width = {
-        15
-      } >
-      <
-      Header content = {
-        this.props.name
-      }
-      textAlign = "left"
-      size = "huge"
-      className = "info-name" /
-      >
-      <
-      /Grid.Column> <
-      /Grid.Row> <
-      Grid.Row >
-      <
-      h3 className = "info-h3" > {
-        this.props.artist
-      } < /h3> <
-      /Grid.Row> <
-      Grid.Row >
-      <
-      div className = "info-null-div" / >
-      <
-      /Grid.Row> <
-      Grid.Row >
-      <
-      h4 > Lyric: < /h4> <div> {this.props.lyrics} </div >
-      <
-      /Grid.Row> <
-      /Grid.Column> <
-      /Grid.Row> <
-      Grid.Row >
-      <
-      Grid.Column width = {
-        10
-      } >
-      <
-      div className = "info-like-share-report" >
-      <
-      div >
-      <
-      Button animated = "vertical"
-      color = {
-        this.state.like ? "red" : "grey"
-      }
-      onClick = {
-        () => this.handleLikeSong(this.props)
-      } >
-      <
-      Button.Content hidden > {
-        this.state.like ? "Liked" : "Like"
-      } <
-      /Button.Content> <
-      Button.Content visible >
-      <
-      Icon name = "like" / >
-      <
-      /Button.Content> <
-      /Button> <
-      Button animated = "vertical"
-      color = "green" >
-      <
-      Button.Content hidden > Share < /Button.Content> <
-      Button.Content visible >
-      <
-      Icon name = "share" / >
-      <
-      /Button.Content> <
-      /Button> <
-      Button animated = "vertical"
-      color = "olive" >
-      <
-      Button.Content hidden > Lyrics < /Button.Content> <
-      Button.Content visible >
-      <
-      Icon name = "edit outline" / >
-      <
-      /Button.Content> <
-      /Button> <
-      Button animated = "vertical"
-      color = "yellow" >
-      <
-      Button.Content hidden > Queue < /Button.Content> <
-      Button.Content visible >
-      <
-      Icon name = "add" / >
-      <
-      /Button.Content> <
-      /Button> <
-      /div> <
-      div >
-      <
-      span className = "info-like-listen" >
-      <
-      Icon name = "like" / > {
-        this.state.numLike
-      } <
-      /span> <
-      span className = "info-like-listen" >
-      <
-      Icon name = "headphones" / > {
-        this.state.numListen
-      } <
-      /span> <
-      Button animated = "vertical"
-      color = "black" >
-      <
-      Button.Content hidden > Report! < /Button.Content> <
-      Button.Content visible >
-      <
-      Icon name = "flag" / >
-      <
-      /Button.Content> <
-      /Button> <
-      /div> <
-      /div> <
-      CommentPart / >
-      <
-      /Grid.Column> <
-      Grid.Column width = {
-        6
-      } >
-      <
-      RecommendPart / >
-      <
-      /Grid.Column> <
-      /Grid.Row> <
-      /Grid> <
-      /div>
+    return (
+      <div>
+        <Grid celled>
+          <Grid.Row>
+            <Grid.Column width={4} className="music-card-div">
+              <Image src={this.props.avatar} className="music-card-img" />
+            </Grid.Column>{" "}
+            <Grid.Column width={12} className="info-right-col">
+              <Grid.Row>
+                <Grid.Column width={1}>
+                  <Button
+                    circular
+                    size="huge"
+                    color="orange"
+                    icon="play"
+                    onClick={() => this.handlePlaySong(this.props)}
+                  />{" "}
+                </Grid.Column>{" "}
+                <Grid.Column width={15}>
+                  <Header
+                    content={this.props.name}
+                    textAlign="left"
+                    size="huge"
+                    className="info-name"
+                  />
+                </Grid.Column>{" "}
+              </Grid.Row>{" "}
+              <Grid.Row>
+                <h3 className="info-h3"> {this.props.artist} </h3>{" "}
+              </Grid.Row>{" "}
+              <Grid.Row>
+                <div className="info-null-div" />
+              </Grid.Row>{" "}
+              <Grid.Row>
+                <h4> Lyric: </h4> <div> {this.props.lyrics} </div>
+              </Grid.Row>{" "}
+            </Grid.Column>{" "}
+          </Grid.Row>{" "}
+          <Grid.Row>
+            <Grid.Column width={10}>
+              <div className="info-like-share-report">
+                <div>
+                  <Button
+                    animated="vertical"
+                    color={this.state.like ? "red" : "grey"}
+                    onClick={() => this.handleLikeSong(this.props)}
+                  >
+                    <Button.Content hidden>
+                      {" "}
+                      {this.state.like ? "Liked" : "Like"}{" "}
+                    </Button.Content>{" "}
+                    <Button.Content visible>
+                      <Icon name="like" />
+                    </Button.Content>{" "}
+                  </Button>{" "}
+                  <Button animated="vertical" color="green">
+                    <Button.Content hidden> Share </Button.Content>{" "}
+                    <Button.Content visible>
+                      <Icon name="share" />
+                    </Button.Content>{" "}
+                  </Button>{" "}
+                  <Button animated="vertical" color="olive">
+                    <Button.Content hidden> Lyrics </Button.Content>{" "}
+                    <Button.Content visible>
+                      <Icon name="edit outline" />
+                    </Button.Content>{" "}
+                  </Button>{" "}
+                  <Button animated="vertical" color="yellow">
+                    <Button.Content hidden> Queue </Button.Content>{" "}
+                    <Button.Content visible>
+                      <Icon name="add" />
+                    </Button.Content>{" "}
+                  </Button>{" "}
+                </div>{" "}
+                <div>
+                  <span className="info-like-listen">
+                    <Icon name="like" /> {this.state.numLike}{" "}
+                  </span>{" "}
+                  <span className="info-like-listen">
+                    <Icon name="headphones" /> {this.state.numListen}{" "}
+                  </span>{" "}
+                  <Button animated="vertical" color="black">
+                    <Button.Content hidden> Report! </Button.Content>{" "}
+                    <Button.Content visible>
+                      <Icon name="flag" />
+                    </Button.Content>{" "}
+                  </Button>{" "}
+                </div>{" "}
+              </div>{" "}
+              <CommentPart />
+            </Grid.Column>{" "}
+            <Grid.Column width={6}>
+              <RecommendPart />
+            </Grid.Column>{" "}
+          </Grid.Row>{" "}
+        </Grid>{" "}
+      </div>
     );
   }
 }
@@ -271,7 +189,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     showSongPlayer: obj => dispatch(showSongPlayer(obj))
-
   };
 }
 

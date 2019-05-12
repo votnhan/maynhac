@@ -1,10 +1,10 @@
 import React from "react";
 import { Carousel } from "antd";
 import "antd/dist/antd.css";
-import "../assets/css/HomePage.css";
+import "../assets/css/Recommend.css";
 import "../assets/css/MusicCard.css";
 import HomePageService from "../services/HomePageService";
-import { Card, Icon, Image, Button } from "semantic-ui-react";
+import { Card, Icon, Image, Button, CardGroup } from "semantic-ui-react";
 import { showSongPlayer, hideSongPlayer } from "../actions/uiActions";
 import { connect } from "react-redux";
 import Slider from "react-slick";
@@ -24,7 +24,7 @@ function SamplePrevArrow(props) {
   );
 }
 
-class HomePage extends React.Component {
+class RecommendPart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -34,51 +34,14 @@ class HomePage extends React.Component {
       listSongTypeFolk: [],
       listSongTypeRock: [],
       listSongNew: [],
-      ImagesAutoPlay: []
     };
   }
-
-  getDivImagesAutoPlay() {
-    return this.state.ImagesAutoPlay.map((object, idx) => {
-      return <img src={object} key={idx} alt="null" />;
-    });
-  }
-
   componentWillMount() {
-    HomePageService.handleGetImagesAutoPlay(res => {
-      this.setState({ ImagesAutoPlay: res });
-    });
-    // HomePageService.handleGetManySong(this.state.numberOfSong, res => {
-    //   this.setState({ listSong: res });
-
-    // });
-    HomePageService.handleGetKSongByTypeID(this.state.numberOfSong, 3, res => {
+    HomePageService.handleGetKSongByTypeID(12, 3, res => {
       this.setState({ listSongTypePop: res });
     });
 
-    HomePageService.handleGetKSongByTypeID(this.state.numberOfSong, 2, res => {
-      this.setState({ listSongTypeDance: res });
-    });
-
-    HomePageService.handleGetKSongByTypeID(this.state.numberOfSong, 4, res => {
-      this.setState({ listSongTypeFolk: res });
-    });
-
-    HomePageService.handleGetKSongByTypeID(this.state.numberOfSong, 1, res => {
-      this.setState({ listSongTypeRock: res });
-    });
-
-    //get random type, 'cause folk is empty so remove it
-    let k = Math.floor(Math.random() * Math.floor(4)) + 1;
-    k === 4 ? k-- : (k = k);
-
-    HomePageService.handleGetNewKSongByTypeID(
-      this.state.numberOfSong,
-      k,
-      res => {
-        this.setState({ listSongNew: res });
-      }
-    );
+    
   }
 
   handlePlaySong(obj) {
@@ -147,8 +110,8 @@ class HomePage extends React.Component {
       dots: false,
       infinite: false,
       speed: 500,
-      slidesToShow: 6,
-      slidesToScroll: 4,
+      slidesToShow: 3,
+      slidesToScroll: 2,
       initialSlide: 0,
       nextArrow: <SamplePrevArrow />,
       prevArrow: <SamplePrevArrow />
@@ -156,48 +119,19 @@ class HomePage extends React.Component {
 
     return (
       <div className="home-page-carousel">
-        <Carousel autoplay>{this.getDivImagesAutoPlay()}</Carousel>
-        {/* <div className="home-page-song-list-card">
-          <Card.Group itemsPerRow={6} className="music-card-div">
+        
+        <div className="home-page-slider">
+          <h1 className="home-page-h1-left">Related tracks </h1>
+          <CardGroup >
+              {this.state.listSongTypePop.map((object, idx) =>
+              CardExampleImageCard(object, idx)
+            )}
+          </CardGroup>
+            
           
-          </Card.Group>
-        </div> */}
-
-        <div className="home-page-slider">
-          <h1 className="home-page-h1-left">CHILL </h1>
-          <Slider {...settings}>
-            {this.state.listSongTypePop.map((object, idx) =>
-              CardExampleImageCard(object, idx)
-            )}
-          </Slider>
         </div>
 
-        <div className="home-page-slider">
-          <h1 className="home-page-h1-left">DANCE - PARTY </h1>
-          <Slider {...settings}>
-            {this.state.listSongTypeDance.map((object, idx) =>
-              CardExampleImageCard(object, idx)
-            )}
-          </Slider>
-        </div>
-
-        <div className="home-page-slider">
-          <h1 className="home-page-h1-left">ROCK </h1>
-          <Slider {...settings}>
-            {this.state.listSongTypeRock.map((object, idx) =>
-              CardExampleImageCard(object, idx)
-            )}
-          </Slider>
-        </div>
-
-        <div className="home-page-slider">
-          <h1 className="home-page-h1-left">NEW & HOT </h1>
-          <Slider {...settings}>
-            {this.state.listSongNew.map((object, idx) =>
-              CardExampleImageCard(object, idx)
-            )}
-          </Slider>
-        </div>
+        
       </div>
     );
   }
@@ -218,4 +152,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(HomePage);
+)(RecommendPart);

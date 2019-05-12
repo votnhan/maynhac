@@ -13,7 +13,8 @@ class SongInfoPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      like: false
+      like: false,
+      listCmt: [],
     };
   }
   handlePlaySong(obj) {
@@ -27,7 +28,7 @@ class SongInfoPage extends Component {
         songId: obj._id,
     }
     SongService.handleReaction(data, res =>{
-        console.log("like this", res.data);
+        console.log("like this", res);
     });
   }
 
@@ -131,7 +132,7 @@ class SongInfoPage extends Component {
                   </Button>
                 </div>
               </div>
-              <CommentPart />
+              <CommentPart/>
             </Grid.Column>
 
             <Grid.Column width={6}>
@@ -154,7 +155,8 @@ function mapStateToProps(state) {
     numListen: state.songInfo.numListen,
     songType: state.songInfo.songType,
     lyrics: state.songInfo.lyrics,
-    datePosted: state.songInfo.datePosted
+    datePosted: state.songInfo.datePosted,
+    listCmt: state.songInfo.listCmt
   };
 }
 

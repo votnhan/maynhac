@@ -10,6 +10,7 @@ const initialState = {
   songType: "",
   lyrics: "",
   datePosted: "",
+  listCmt: []
 };
 
 export default function songInfo(state = initialState, action) {
@@ -25,7 +26,8 @@ export default function songInfo(state = initialState, action) {
         numListen: action.numListen,
         songType: action.songType,
         lyrics: action.lyrics,
-        datePosted: action.datePosted
+        datePosted: action.datePosted,
+        listCmt: action.listCmt
       };
 
     default:

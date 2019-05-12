@@ -12,6 +12,7 @@ export function getSongInfo(obj) {
     numLike: obj.numlike,
     numListen: obj.numlisten,
     lyrics: obj.lyrics,
-    datePosted: obj.dateposted
+    datePosted: obj.dateposted,
+    listCmt: obj.comment
   };
 }

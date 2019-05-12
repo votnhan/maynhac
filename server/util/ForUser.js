@@ -11,10 +11,10 @@ function getObjectReaction(reactions, songid) {
 }
 
 function getUser(username, res, callback){
-    User.findOne({username}, (err, user) => {
+    User.findOne({username},(err, user) => {
         if(err){
             console.log(err);
-            res.status(500).send(err);
+            return res.status(500).send(err);
         }
         callback(user);
     });

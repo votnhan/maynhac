@@ -24,6 +24,7 @@ class SongInfoPage extends Component {
 
   handleLikeSong(obj) {
     this.setState({ like: !this.state.like });
+    console.log(obj._id);
     const data = {
         songId: obj._id,
     }

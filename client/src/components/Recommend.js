@@ -38,7 +38,7 @@ class RecommendPart extends React.Component {
   }
   componentWillMount() {
     HomePageService.handleGetKSongByTypeID(12, 3, res => {
-      this.setState({ listSongTypePop: res });
+      this.setState({ listSongTypePop: res.songs });
     });
 
     

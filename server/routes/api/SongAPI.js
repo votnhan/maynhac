@@ -169,16 +169,10 @@ router.post('/removeSonginPlaylist', verifyToken, (req, res, next) => {
 });
 
 router.post('/reaction', verifyToken, (req, res, next) => {
-    const username = req.username
-    const {songId} = req.body
-    utilUser.getUser(username, res,(data) => {
-        if (err){
-            console.log(err);
-            return res.status(500).send(err);
-        }
-        if(!data){
-            return res.status(404).send('Not found username.');
-        }
+    const username = req.username;
+    const {songId} = req.body;
+    console.log(req.body);
+    utilUser.getUser(username, res, (data) => {
         var reactions = data.reaction;
         var reactObj = utilUser.getObjectReaction(reactions, songId);
         var status = true;

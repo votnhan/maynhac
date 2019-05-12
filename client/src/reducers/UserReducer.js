@@ -2,7 +2,10 @@ import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
 import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
 import * as types from '../constants/type';
+<<<<<<< HEAD
 
+=======
+>>>>>>> lh
 const initalState = {
     username: '',
     jwt: ''

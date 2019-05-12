@@ -1,0 +1,30 @@
+@import "https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css";
+
+
+.ui.placeholder.segment.playlist {
+    background-color: #0a7065;
+}
+
+img.playlist {
+    max-width: 25%;
+}
+
+.ui.button.playlist {
+    position: relative;
+    float: right;
+}
+
+.icon.big.playlist {
+    position: relative;
+    float: left;
+}
+
+.plus.square.icon.big.playlist {
+    position: relative;
+    float: right;
+}
+.minus.square.icon.playlist {
+    position: relative;
+    float: right;
+    padding-right: 20px;
+}

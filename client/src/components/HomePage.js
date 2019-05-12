@@ -36,15 +36,6 @@ class HomePage extends React.Component {
       listSongNew: [],
       ImagesAutoPlay: []
     };
-  }
-
-  getDivImagesAutoPlay() {
-    return this.state.ImagesAutoPlay.map((object, idx) => {
-      return <img src={object} key={idx} alt="null" />;
-    });
-  }
-
-  componentWillMount() {
     HomePageService.handleGetImagesAutoPlay(res => {
       this.setState({ ImagesAutoPlay: res });
     });
@@ -80,6 +71,13 @@ class HomePage extends React.Component {
       }
     );
   }
+
+  getDivImagesAutoPlay() {
+    return this.state.ImagesAutoPlay.map((object, idx) => {
+      return <img src={object} key={idx} alt="null" />;
+    });
+  }
+
 
   handlePlaySong(obj) {
     const newObj = { ...obj, link: URI.serialize(URI.parse(obj.link)) };

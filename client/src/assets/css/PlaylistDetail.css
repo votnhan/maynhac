@@ -1,29 +1,29 @@
 @import "https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css";
 
 
-.ui.placeholder.segment.playlist {
+.playlist .ui.placeholder.segment {
     background-color: #0a7065;
 }
 
-img.playlist {
+.playlist img {
     max-width: 25%;
 }
 
-.ui.button.playlist {
+.playlist .ui.button {
     position: relative;
     float: right;
 }
 
-.icon.big.playlist {
+.playlist .icon.big {
     position: relative;
     float: left;
 }
 
-.plus.square.icon.big.playlist {
+.playlist .plus.square.icon.big {
     position: relative;
     float: right;
 }
-.minus.square.icon.playlist {
+.playlist .minus.square.icon {
     position: relative;
     float: right;
     padding-right: 20px;

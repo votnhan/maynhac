@@ -4,7 +4,6 @@ import SongService from '../services/SongService';
 import * as types from '../constants/type';
 import {connect} from 'react-redux';
 import ListSong from './ListSong';
-import '../assets/css/Common.css';
 
 class SearchPage extends React.Component {
 

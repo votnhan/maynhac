@@ -14,14 +14,14 @@ class PlaylistDetailPage extends Component {
     createSongItem = (song) => {
         return (
             <div className="item">
-                <i class="play circle icon big playlist"></i>
+                <i class="playlist play circle icon big "></i>
                 <img className="ui avatar image" src="/images/avatar2/small/lindsay.png"/>
                 <div className="content">
                 Lindsay
                 </div>
                 <div className="right floated content">
-                <i class="plus square icon big playlist"></i>
-                <i class="minus square icon big playlist"></i>
+                <i class="playlist plus square icon big "></i>
+                <i class="playlist minus square icon big "></i>
                 </div>
                 
             </div>
@@ -36,7 +36,7 @@ class PlaylistDetailPage extends Component {
         return (
             <div className="container">
                 <div>
-                    <div className="ui placeholder segment playlist" >
+                    <div className="playlist ui placeholder segment" >
                         <img src={cover} className="playlist"/>
                         <h3>{this.state.data.name}</h3>
                     </div>

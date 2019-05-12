@@ -78,8 +78,8 @@ class UserPage extends Component {
     render() {
         var code = this.loadCode();
         return (
-            <div className="container">
-                    <div className="left">
+            <div className="user container">
+                    <div className="user left">
                     <div className="ui secondary vertical pointing menu">
                       {this.createMenuItem("Songs", false)}
                       {this.createMenuItem("Playlists", false)}
@@ -89,7 +89,7 @@ class UserPage extends Component {
 
                     </div>
 
-                    <div className="right">
+                    <div className="user right">
                     {code}
                     </div>
             </div>

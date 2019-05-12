@@ -57,9 +57,9 @@ class SongService extends React.Component {
 
     handleContributeLyrics(data, callback){
         const {songId, lyrics} = data
-        Service.post('song/contributeLyrics', {songId, lyrics})
+        Service.post('song/contributeLyrics', data)
         .then( res => {
-            callback(res);
+            callback(res.data);
         })
         .catch( err => {
             console.log(err);
@@ -67,10 +67,11 @@ class SongService extends React.Component {
     }
 
     handleAddSongToPlaylist(data, callback){
-        const {idsong, idplaylist, token} = data
-        Service.post('song/addSongtoPlaylist', {headers: {'x-access-token': token}, idsong, idplaylist})
+        const {idsong, idplaylist} = data
+        const token = localStorage.getItem('x-access-token');
+        Service.post('song/addSongtoPlaylist', data, {headers: {'x-access-token': token}})
         .then( res => {
-            callback(res);
+            callback(res.data);
         })
         .catch( err => {
             console.log(err);
@@ -78,10 +79,11 @@ class SongService extends React.Component {
     }
     
     handleRemoveSonginPlaylist(data, callback){
-        const {idsong, idplaylist, token} = data
-        Service.post('song/removeSonginPlaylist', {headers: {'x-access-token': token} ,idsong, idplaylist})
+        const {idsong, idplaylist} = data
+        const token = localStorage.getItem('x-access-token');
+        Service.post('song/removeSonginPlaylist', data, {headers: {'x-access-token': token}})
         .then( res =>{
-            callback(res);
+            callback(res.data);
         })
         .catch( err => {
             console.log(err);
@@ -91,9 +93,9 @@ class SongService extends React.Component {
     handleReaction(data, callback){
         const {songId} = data;
         const token = localStorage.getItem('x-access-token');
-        Service.post('song/reaction', {songId}, {headers: {'x-access-token': token} })
+        Service.post('song/reaction', data, {headers: {'x-access-token': token}})
         .then( res => {
-            callback(res);
+            callback(res.data);
         })
         .catch( err => {
             console.log(err);
@@ -101,10 +103,23 @@ class SongService extends React.Component {
     }
 
     handleCommentSong(data, callback){
-        const {content, commentator, songId, token} = data;
-        Service.post('song/comment', {headers: {'x-access-token': token} ,content, commentator, songId})
+        const {content, commentator, songId} = data;
+        const token = localStorage.getItem('x-access-token');
+        Service.post('song/comment', data, {headers: {'x-access-token': token}})
         .then( res=> {
-            callback(res);
+            callback(res.data);
+        })
+        .catch( err => {
+            console.log(err);
+        });
+    }
+
+    handleGetStatusOfSongForUser(data, callback){
+        const {songId} = data;
+        const token = localStorage.getItem('x-access-token');
+        Service.get(`song/StatusOfSongsForUser/?songId=${songId}`, {headers: {'x-access-token': token}})
+        .then( res => {
+            callback(res.data);
         })
         .catch( err => {
             console.log(err);

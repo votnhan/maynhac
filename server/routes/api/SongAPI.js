@@ -171,7 +171,6 @@ router.post('/removeSonginPlaylist', verifyToken, (req, res, next) => {
 router.post('/reaction', verifyToken, (req, res, next) => {
     const username = req.username;
     const {songId} = req.body;
-    console.log(req.body);
     utilUser.getUser(username, res, (data) => {
         var reactions = data.reaction;
         var reactObj = utilUser.getObjectReaction(reactions, songId);
@@ -336,6 +335,21 @@ router.get('/SongsbyTypeCountryid', (req, res) => {
             res.status(200).send({typename:typecountryname, songs: data});
         });
 
+    });
+});
+
+router.get('/StatusOfSongsForUser', verifyToken, (req, res, next) => {
+    const username = req.username;
+    const {songId} = req.query;
+    utilUser.getUser(username, res, (user) => {
+        var reactresult = {'songid':songId, 'status':false};
+        user.reaction.forEach(element => {
+            if(element.songid == songId){
+                reactresult['status'] = element.status;
+                return ;
+            }
+        });
+        res.status(200).send(reactresult);
     });
 });
 

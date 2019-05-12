@@ -4,6 +4,7 @@ export function getSongInfo(obj) {
   console.log("show song detail", obj);
   return {
     type: types.SONG_INFO,
+    _id: obj._id,
     name: obj.name,
     link: obj.link,
     artist: obj.artist,

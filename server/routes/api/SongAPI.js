@@ -171,7 +171,6 @@ router.post('/removeSonginPlaylist', verifyToken, (req, res, next) => {
 router.post('/reaction', verifyToken, (req, res, next) => {
     const username = req.username;
     const {songId} = req.body;
-    console.log(req.body);
     utilUser.getUser(username, res, (data) => {
         var reactions = data.reaction;
         var reactObj = utilUser.getObjectReaction(reactions, songId);

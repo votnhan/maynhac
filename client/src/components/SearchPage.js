@@ -23,7 +23,8 @@ class SearchPage extends React.Component {
     }
 
 
-    playSong(avatar, name, artist, link) {
+    playSong(e, avatar, name, artist, link) {
+        e.preventDefault();
         this.props.play(avatar, name, artist, link);
     }
 
@@ -34,7 +35,7 @@ class SearchPage extends React.Component {
                 <img src={avatar} alt=""/>
             </a>
             <div className="content">
-                <a className="header" href="true" onClick={(e) => this.playSong(avatar, name, artist, link)}>{name}</a>
+                <a className="header" href="true" onClick={(e) => this.playSong(e, avatar, name, artist, link)}>{name}</a>
                 <div className="description">
                     <p>{artist}</p>
                 </div>

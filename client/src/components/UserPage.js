@@ -22,6 +22,7 @@ class UserPage extends Component {
     }
 
     loadPlaylists = () => {
+      console.log("Load playlist");
       // TODO: Load code for playlists here
         var token = this.props.user.jwt;
         PlaylistService.handleGetMyPlaylists({token}, (res) => {

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import * as types from '../constants/type';
 import {connect} from 'react-redux';
 import "../assets/css/ListSong.css";
+import SongSearchItem from './SongSearchItem';
 
 class ListSong extends Component {
 
@@ -14,22 +15,6 @@ class ListSong extends Component {
         this.props.play(avatar, name, artist, link);
     }
 
-    createSearchItem(avatar, name, artist, link) {
-        return (
-        <div className="item" style={{maxHeight: "5%"}}>
-            <div className="ui tiny image list-song">
-
-                <img src={avatar} alt=""/>
-            </div>
-            <div className="content">
-                <div className="header list-song"  onClick={(e) => this.playSong(avatar, name, artist, link)}>{name}</div>
-                <div className="description">
-                    <p>{artist}</p>
-                </div>
-            </div>
-        </div>
-        );
-    }
 
     static getDerivedStateFromProps(nextProps, prevState){ 
         if (nextProps.items !== prevState.items) {
@@ -44,7 +29,8 @@ class ListSong extends Component {
         var searchCode = [];
         for (var i = 0 ; i < this.state.items.length; ++i) {
             var {artist, avatar, link, name} = this.state.items[i];
-            searchCode.push(this.createSearchItem(avatar, name, artist, link));
+            var item = <SongSearchItem name={name} avatar={avatar} artist={artist} link={link}/>
+            searchCode.push(item);
         }
         return searchCode;
     }

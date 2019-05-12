@@ -12,7 +12,6 @@ const router = express.Router();
 router.get('/Playlist', verifyToken, (req, res, next) => {
     const username = req.username;
     utilUser.getUser(username, res, (data) => {
-        data => {
             const playlistIds = data.listplaylists;
             Playlist.find({_id: {$in: playlistIds}}).then(
                 playlist => {
@@ -23,7 +22,6 @@ router.get('/Playlist', verifyToken, (req, res, next) => {
                 console.log(err);
                 res.status(500).send(err);
             });
-        }
     });
 });
 

@@ -4,10 +4,10 @@ import { Server } from 'https';
 
 class PlaylistService extends React.Component {
     handleGetMyPlaylists(data,callback){
-        const token = localStorage.getItem('x-access-token');
+        const {token} = data;
         Service.get('playlist/Playlist', {headers: {'x-access-token': token}})
         .then( res =>{
-            callback(res.data);
+            callback(res);
         })
         .catch( err =>{
             console.log(err);
@@ -15,11 +15,10 @@ class PlaylistService extends React.Component {
     }
 
     handleCreatePlaylist(data, callback){
-        const {name, description, typeid} = data;
-        const token = localStorage.getItem('x-access-token');
-        Service.post('playlist/createPlaylist', data, {headers: {'x-access-token': token}})
+        const {name, description, typeid, token} = data;
+        Service.post('playlist/createPlaylist', {headers: {'x-access-token': token}, name, description, typeid})
         .then( res => {
-            callback(res.data);
+            callback(res);
         })
         .catch( err => {
             console.log(err);
@@ -27,11 +26,10 @@ class PlaylistService extends React.Component {
     } 
     
     handRemovePlaylist(data, callback){
-        const {playlistId} = data;
-        const token = localStorage.getItem('x-access-token');
-        Service.post('playlist/deletePlaylist', data,{headers: {'x-access-token': token}})
+        const {playlistId, token} = data;
+        Service.post('playlist/deletePlaylist', {headers: {'x-access-token': token}, playlistId})
         .then( res => {
-            callback(res.data);
+            callback(res);
         })
         .catch( err => {
             console.log(err);
@@ -39,11 +37,10 @@ class PlaylistService extends React.Component {
     }
 
     handleUpdatePlaylist(data, callback){
-        const {name, description, type, idplaylist} = data;
-        const token = localStorage.getItem('x-access-token');
-        Service.post('playlist/updatePlaylist', data,{headers: {'x-access-token': token}})
+        const {name, description, type, idplaylist, token} = data;
+        Service.post('playlist/updatePlaylist', {headers: {'x-access-token': token}, name, description, type, idplaylist})
         .then( res => {
-            callback(res.data);
+            callback(res);
         })
         .catch( err => {
             console.log(err);

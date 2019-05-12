@@ -9,13 +9,9 @@ const logo =
 
 class CommentPart extends React.Component {
 
-  componentDidMount(){
-      console.log("listcmt", this.props.listCmt)
-  }
-
   render() {
     const CmtCard = (obj, i) => (
-      <Comment>
+      <Comment key={i}>
         <Comment.Avatar src={logo} />
         <Comment.Content>
           <Comment.Author as="a"> {obj.commentator} </Comment.Author>

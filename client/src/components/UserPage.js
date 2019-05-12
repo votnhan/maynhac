@@ -25,7 +25,7 @@ class UserPage extends Component {
 
     createMenuItem = (name, isActive) => {
       return (
-        <a name={name} href="true" onClick={this.onItemSelected} className={this.getClass(name)}>{name}</a>
+        <a name={name} onClick={this.onItemSelected} className={this.getClass(name)}>{name}</a>
       );
     }
 

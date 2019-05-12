@@ -18,6 +18,7 @@ class ListSong extends Component {
         return (
         <div className="item" style={{maxHeight: "5%"}}>
             <div className="ui tiny image list-song">
+
                 <img src={avatar} alt=""/>
             </div>
             <div className="content">

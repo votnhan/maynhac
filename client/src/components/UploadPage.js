@@ -61,10 +61,10 @@ class SongDetails extends Component{
             return null;
         }
         const options = [
-            {  text: "V-pop", value: 1 },
-            {  text: "K-pop", value: 2 },
-            {  text: "J-pop", value: 3 },
-            {  text: "Western", value: 4 },
+            {  text: "Rock", value: 1 },
+            {  text: "Dance", value: 2 },
+            {  text: "Pop", value: 3 },
+            {  text: "Folk", value: 4 },
         ]
 
         return(<div className="song-details-wrapper">
@@ -104,7 +104,7 @@ class SongDetails extends Component{
                     onChange={this.props.handleChange}
                     />
                 </Form.Field>
-              <Form.Field control={Dropdown} options={options} label='Category' placeholder='Category' name="type" onChange={this.props.handleChange} />
+              <Form.Field control={Dropdown} options={options} label='Category' placeholder='Category' name="type" onChange={this.props.handleDropdownChange} />
                 <Form.Field>
                     <label>Lyrics</label>
                     <input
@@ -158,11 +158,10 @@ class UploadDone extends Component{
         data.append("song", this.props.song[0]);
         data.append("avatar", this.props.photo[0]);
         data.append("typeid", this.props.type);
-        console.log("FormData: ", data);
-        console.log("Props: ", this.props);
         if (!this.props.success) {
                 SongService.handleUploadSong(data, (result) => {
-                // Handle success 
+                    // Handle success
+                    this.props.handleUploadSuccess();
             });
         }
 
@@ -218,6 +217,7 @@ class UploadPage extends Component {
         this.handleSongChange = this.handleSongChange.bind(this);
         this.handleUploadSuccess = this.handleUploadSuccess.bind(this);
         this.handlePhotoChange = this.handlePhotoChange.bind(this);
+        this.handleDropdownChange = this.handleDropdownChange.bind(this);
         this._next = this._next.bind(this);
         this._prev = this._prev.bind(this);
     }
@@ -247,6 +247,11 @@ class UploadPage extends Component {
             [name]: value
         })
     }
+    handleDropdownChange(event, data) {
+        this.setState({
+            type: data.value
+        });
+    }
     handlePhotoChange(acceptedFiles) {
         this.setState({
             photo: acceptedFiles
@@ -266,7 +271,7 @@ class UploadPage extends Component {
             <section className="upload-container">
             <UploadSteps currentStep={this.state.currentStep}/>
             <UploadBox song={this.state.song} currentStep={this.state.currentStep} handleChange={this.handleChange} handleSongChange={this.handleSongChange}/>
-            <SongDetails currentStep={this.state.currentStep} photo={this.state.photo} handleChange={this.handleChange} handlePhotoChange={this.handlePhotoChange} title={this.state.title} author={this.state.author} artist={this.state.artist} lyrics={this.state.lyrics} />
+            <SongDetails handleDropdownChange={this.handleDropdownChange} currentStep={this.state.currentStep} type={this.state.type} photo={this.state.photo} handleChange={this.handleChange} handlePhotoChange={this.handlePhotoChange} title={this.state.title} author={this.state.author} artist={this.state.artist} lyrics={this.state.lyrics} />
             <UploadDone handleUploadSuccess={this.handleUploadSuccess}{...this.state} token={this.props.token}/>
             <div className="nav-panel">
             <Button icon labelPosition='left' onClick={this._prev} disabled={this.state.currentStep === 3}>

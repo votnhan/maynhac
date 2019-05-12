@@ -37,6 +37,7 @@ class SongInfoPage extends Component {
         like: !this.state.like,
         numLike: this.state.numLike + 1
       });
+
     }
 
     console.log("obj-id", this.props._id);

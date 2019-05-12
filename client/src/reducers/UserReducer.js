@@ -1,7 +1,7 @@
 import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
 import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
-import * as types from "../constants/type"
+import * as types from '../constants/type';
 
 const initalState = {
     username: '',
@@ -17,7 +17,7 @@ const reducer = (state = initalState, action) => {
         }
     }
     else if (action.type === types.LOGOUT) {
-        return { 
+        return {
             ...state,
             username: '',
             jwt: ''
@@ -32,9 +32,9 @@ const reducer = (state = initalState, action) => {
 
 const userPersistConfig = {
     key: 'user',
-    storage: storage, 
+    storage: storage,
     stateReconciler: autoMergeLevel2
   }
-  
+
 
 export default persistReducer(userPersistConfig, reducer);

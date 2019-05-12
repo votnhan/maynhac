@@ -110,6 +110,18 @@ class SongService extends React.Component {
             console.log(err);
         });
     }
+
+    handleGetStatusOfSongForUser(data, callback){
+        const songId = data;
+        const token = localStorage.getItem('x-access-token');
+        Service.get(`song/StatusOfSongsForUser/?songId=${songId}`, {headers: {'x-access-token': token}})
+        .then( res => {
+            callback(res.data);
+        })
+        .catch( err => {
+            console.log(err);
+        });
+    }
 }
 
 export default (new SongService());

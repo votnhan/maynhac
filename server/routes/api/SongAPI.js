@@ -339,6 +339,21 @@ router.get('/SongsbyTypeCountryid', (req, res) => {
     });
 });
 
+router.get('/StatusOfSongsForUser', verifyToken, (req, res, next) => {
+    const username = req.username;
+    const {songId} = req.query;
+    utilUser.getUser(username, res, (user) => {
+        var reactresult = {'songid':songId, 'status':false};
+        user.reaction.forEach(element => {
+            if(element.songid == songId){
+                reactresult['status'] = element.status;
+                return ;
+            }
+        });
+        res.status(200).send(reactresult);
+    });
+});
+
 
 
 

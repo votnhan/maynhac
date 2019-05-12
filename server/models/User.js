@@ -23,10 +23,13 @@ const UserSchema = new Schema({
     listmusicsposted: [String],
     listplaylists:[String],
     listalbums: [String],
+    
     reaction:[{
         songid:String,
         status:Boolean
     }]
+
+    
 });
 
 const User = mongoose.model("User", UserSchema);

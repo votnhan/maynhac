@@ -1,3 +1,6 @@
+const {TypeSong} = require('../models/TypeSong');
+const {TypeCountry} = require('../models/TypeCountry');
+
 function getSongName(unsignedname) {
     unsignedname = unsignedname.toLowerCase();
 
@@ -14,4 +17,25 @@ function getSongName(unsignedname) {
     return unsignedname;
 }
 
-module.exports = {getSongName}
+function getTypeOfSong(typeid, res, callback){
+    TypeSong.findOne({typeid}, (err, data) => {
+        if(err){
+            console.log(err);
+            return res.status(500).send(err);
+        }
+        callback(data.name);
+    });
+
+}
+
+function getTypeCountryOfSong(typeid, res, callback){
+    TypeCountry.findOne({typeid}, (err, data) => {
+        if(err){
+            console.log(err);
+            return res.status(500).send(err);
+        }
+        callback(data.name);
+    });
+}
+
+module.exports = {getSongName, getTypeOfSong, getTypeCountryOfSong}

@@ -53,19 +53,19 @@ class HomePage extends React.Component {
 
     // });
     HomePageService.handleGetKSongByTypeID(this.state.numberOfSong, 3, res => {
-      this.setState({ listSongTypePop: res });
+      this.setState({ listSongTypePop: res.songs });
     });
 
     HomePageService.handleGetKSongByTypeID(this.state.numberOfSong, 2, res => {
-      this.setState({ listSongTypeDance: res });
+      this.setState({ listSongTypeDance: res.songs });
     });
 
     HomePageService.handleGetKSongByTypeID(this.state.numberOfSong, 4, res => {
-      this.setState({ listSongTypeFolk: res });
+      this.setState({ listSongTypeFolk: res.songs });
     });
 
     HomePageService.handleGetKSongByTypeID(this.state.numberOfSong, 1, res => {
-      this.setState({ listSongTypeRock: res });
+      this.setState({ listSongTypeRock: res.songs });
     });
 
     //get random type, 'cause folk is empty so remove it
@@ -76,7 +76,7 @@ class HomePage extends React.Component {
       this.state.numberOfSong,
       k,
       res => {
-        this.setState({ listSongNew: res });
+        this.setState({ listSongNew: res.songs });
       }
     );
   }

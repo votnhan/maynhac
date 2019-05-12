@@ -17,7 +17,7 @@ const reducer = (state = initalState, action) => {
         }
     }
     else if (action.type === types.LOGOUT) {
-        return { 
+        return {
             ...state,
             username: '',
             jwt: ''
@@ -32,9 +32,9 @@ const reducer = (state = initalState, action) => {
 
 const userPersistConfig = {
     key: 'user',
-    storage: storage, 
+    storage: storage,
     stateReconciler: autoMergeLevel2
   }
-  
+
 
 export default persistReducer(userPersistConfig, reducer);

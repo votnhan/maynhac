@@ -1,0 +1,31 @@
+.info-h3 {
+  margin-top: '2em';
+  padding: '2em 0em';
+  text-align: left;
+}
+
+.info-right-col {
+  padding-left: 35px !important;
+  box-shadow: 0 0 0 0 #ffffff !important;
+}
+
+.info-center {
+  margin-top: 10px;
+  text-align: center;
+  display: block !important;
+}
+
+.info-like-share-report {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between !important;
+}
+
+.info-like-listen{
+  margin: 0px 10px 0px 10px;
+}
+
+.info-cover{
+  max-width: 100% !important;
+  width: 100% !important;
+}

@@ -13,6 +13,27 @@ class HomePageService extends React.Component {
             });
     }
 
+    handleGetKSongByTypeID(k, id, callback) {
+        Service.get(`song/topkSongByTypeid/?typeid=${id}&&k=${k}`)
+        .then(res => {
+            callback(res.data);
+        } )
+        .catch(err => {
+            console.log(err);
+        });
+    }
+
+    handleGetNewKSongByTypeID(k, id, callback) {
+        Service.get(`song/topNewkSongByTypeid/?typeid=${id}&&k=${k}`)
+        .then(res => {
+            console.log("type = "+ id + " k= "+k);
+            callback(res.data);
+        } )
+        .catch(err => {
+            console.log(err);
+        });
+    }
+
     handleGetImagesAutoPlay(callback) {
         Service.get('homepage/defaultPage')
             .then(res => {

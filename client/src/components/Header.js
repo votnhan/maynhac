@@ -5,7 +5,9 @@ import LoginModal from "./LoginModal";
 import "semantic-ui-css/semantic.min.css";
 import { Icon, Menu } from "semantic-ui-react";
 import history from "../history";
-import {connect} from 'react-redux';
+import { connect } from "react-redux";
+import ReactDOM from "react-dom";
+import SearchPage from "./SearchPage";
 
 class Header extends React.Component {
   constructor(props) {
@@ -45,9 +47,9 @@ class Header extends React.Component {
           return <a href="true" className="logout-button" onClick={this.onLoginClicked}>
           Login
         </a>
-      }
       
-  }
+    }
+  };
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.user.username !== prevState.username) {
@@ -189,26 +191,25 @@ class Header extends React.Component {
     history.push({pathname:`/search`, state: {searchKey: this.state.searchKey}});
   };
 
-  onLogoutClicked = (e) => {
-      e.preventDefault();
+  onLogoutClicked = e => {
+    e.preventDefault();
     this.props.onUserLogout();
-  }
-
-
+  };
 }
 
 const mapStateToProps = state => {
-    return {
-      ...state
-    };
-  }
+  return {
+    ...state
+  };
+};
 
-  const mapDispatchToProps = dispatch => {
-    return  {
-      onUserLogout: () => dispatch({type: 'LOGOUT'}) 
-    }; 
-  
-  }
+const mapDispatchToProps = dispatch => {
+  return {
+    onUserLogout: () => dispatch({ type: "LOGOUT" })
+  };
+};
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Header);

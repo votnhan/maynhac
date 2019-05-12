@@ -91,9 +91,8 @@ class SongService extends React.Component {
     handleReaction(data, callback){
         const {songId} = data;
         const token = localStorage.getItem('x-access-token');
-        Service.post('song/reaction', {songId},{headers: {'x-access-token': token}})
+        Service.post('song/reaction', {songId}, {headers: {'x-access-token': token} })
         .then( res => {
-            
             callback(res);
         })
         .catch( err => {

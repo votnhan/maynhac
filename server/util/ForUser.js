@@ -1,3 +1,5 @@
+const {User} = require('../models/User');
+
 function getObjectReaction(reactions, songid) {
     for (let i = 0; i < reactions.length; i++) {
         const element = reactions[i];
@@ -8,4 +10,15 @@ function getObjectReaction(reactions, songid) {
     return;
 }
 
-module.exports = {getObjectReaction};
+function getUser(username, res, callback){
+    User.findOne({username}, (err, user) => {
+        if(err){
+            console.log(err);
+            res.status(500).send(err);
+        }
+        callback(user);
+    });
+}
+
+
+module.exports = {getObjectReaction, getUser};

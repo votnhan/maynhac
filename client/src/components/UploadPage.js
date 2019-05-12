@@ -291,7 +291,7 @@ class UploadPage extends Component {
 
 const mapStateToProps = state => {
     return {
-        token: state.UserReducer.jwt
+        token: state.user.jwt
     };
 }
 

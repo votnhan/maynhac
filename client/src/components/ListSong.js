@@ -15,7 +15,7 @@ class ListSong extends Component {
 
     createSearchItem(avatar, name, artist, link) {
         return (
-        <div className="item" style={{maxHeight: "5%"}}>
+        <div className="item" style={{maxHeight: "5%"}} >
             <a href="true" className="ui tiny image">
                 <img src={avatar} alt=""/>
             </a>

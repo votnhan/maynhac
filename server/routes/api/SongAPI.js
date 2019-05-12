@@ -120,11 +120,7 @@ router.post('/contributeLyrics', (req, res) => {
 router.post('/addSongtoPlaylist', verifyToken,(req, res, next) => {
     const username = req.username;
     const {idsong, idplaylist} = req.body;
-    User.findOne({username}, (err, user) => {
-        if(err){
-            console.log(err);
-            return res.status(500).send(err);
-        }
+    utilUser.getUser(username, res, (user) => {
         var listplaylists = user.listplaylists;
         if (listplaylists.includes(idplaylist)){
             Playlist.findOne({_id:idplaylist}, (err, data) => {
@@ -155,11 +151,7 @@ router.post('/addSongtoPlaylist', verifyToken,(req, res, next) => {
 router.post('/removeSonginPlaylist', verifyToken, (req, res, next) => {
     const {idsong, idplaylist} = req.body;
     const username = req.username;
-    User.findOne({username}, (err, user) => {
-        if(err){
-            console.log(err);
-            return res.status(500).send(err);
-        }
+    utilUser.getUser(username, res,(user) => {
         var listplaylists = user.listplaylists;
         if(listplaylists.includes(idplaylist)){
             Playlist.findOneAndUpdate({_id: idplaylist}, {$pull: {songs: idsong}}, {new: true}, (err, data) => {
@@ -179,7 +171,7 @@ router.post('/removeSonginPlaylist', verifyToken, (req, res, next) => {
 router.post('/reaction', verifyToken, (req, res, next) => {
     const username = req.username
     const {songId} = req.body
-    User.findOne({username}, (err, data) => {
+    utilUser.getUser(username, res,(data) => {
         if (err){
             console.log(err);
             return res.status(500).send(err);
@@ -276,25 +268,24 @@ router.get('/topkSongByTypeid', (req, res) => {
             console.log(err);
             return res.status(500).send(err);
         }
-        res.status(200).send(data.slice(0,k));
+        utilSong.getTypeOfSong(typeid, res, (typesongname) => {
+            res.status(200).send({typename: typesongname, songs: data.slice(0,k)} );
+        });
+        
     });
 
 });
 
 router.get('/topNewkSongByTypeid', (req, res) => {
     const {k, typeid} = req.query;
-    Song.find({type:typeid}, (err, data) => {
-        var result = []
-        const aday = 24*3600*1000
-        data.forEach( Element => {
-            var dateindb = new Date(Element.dateposted);
-            var datenow = Date.now();
-            if((datenow - dateindb) < aday){
-                result.push(Element);
-            }
+    Song.find({type:typeid}).sort({dateposted: -1}).exec((err, data) => {
+        if (err){
+            console.log(err);
+            return res.status(500).send(err);
+        }
+        utilSong.getTypeOfSong(typeid, res, (typesongname) => {
+            res.status(200).send({typename: typesongname, songs: data.slice(0,k)});
         });
-        var resultAfterSort = result.sort((x,y) => {return x.numlisten < y.numlisten});
-        res.status(200).send(resultAfterSort.slice(0,k));
     });
 
 });
@@ -307,25 +298,25 @@ router.get('/topkSongByTypeCountryid', (req, res) => {
             console.log(err);
             return res.status(500).send(err);
         }
-        res.status(200).send(data.slice(0,k));
+        utilSong.getTypeCountryOfSong(typecountryid, res, (typecountryname) => {
+            res.status(200).send({typename: typecountryname, songs: data.slice(0,k)});
+        });
+        
     });
-
 });
 
 router.get('/topNewkSongByCountryid', (req, res) => {
     const {k, typecountryid} = req.query;
-    Song.find({typecountry:typecountryid}, (err, data) => {
-        var result = []
-        const aday = 24*3600*1000
-        data.forEach( Element => {
-            var dateindb = new Date(Element.dateposted);
-            var datenow = Date.now();
-            if((datenow - dateindb) < aday){
-                result.push(Element);
-            }
+    Song.find({typecountry:typecountryid}).sort({dateposted: -1}).exec((err, data) => {
+        if(err){
+            console.log(err);
+            return res.status(500).send(err);
+        }
+
+        utilSong.getTypeCountryOfSong(typecountryid, res, (typecountryname) => {
+            res.status(200).send({typename: typecountryname, songs: data.slice(0,k)});
         });
-        var resultAfterSort = result.sort((x,y) => {return x.numlisten < y.numlisten});
-        res.status(200).send(resultAfterSort.slice(0,k));
+
     });
 
 });
@@ -347,16 +338,14 @@ router.get('/SongsbyTypeCountryid', (req, res) => {
             console.log(err);
             return res.status(404).send(err);
         }
-        TypeCountry.findOne({typeid:typecountryid}, (err, typecountry) => {
-            if(err){
-                console.log(err);
-                return res.status(404).send(err);
-            }
-            res.status(200).send({typename:typecountry.name, songs: data});
+        utilSong.getTypeCountryOfSong(typecountryid, res,(typecountryname) => {
+            res.status(200).send({typename:typecountryname, songs: data});
         });
 
     });
 });
+
+
 
 
 

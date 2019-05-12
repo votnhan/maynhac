@@ -35,13 +35,9 @@ class RecommendPart extends React.Component {
       listSongTypeRock: [],
       listSongNew: [],
     };
-  }
-  componentWillMount() {
     HomePageService.handleGetKSongByTypeID(12, 3, res => {
       this.setState({ listSongTypePop: res.songs });
     });
-
-    
   }
 
   handlePlaySong(obj) {
@@ -62,6 +58,7 @@ class RecommendPart extends React.Component {
   }
 
   render() {
+    
     const CardExampleImageCard = (obj, i) => (
       <div key={i} className="music-card-div">
         <Card className="music-card-wrapper">

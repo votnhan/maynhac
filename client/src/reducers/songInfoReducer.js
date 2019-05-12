@@ -1,6 +1,7 @@
 import * as types from "../constants/type";
 
 const initialState = {
+  _id:"",
   songName: "",
   songLink: "",
   songArtist: "",
@@ -18,6 +19,7 @@ export default function songInfo(state = initialState, action) {
     case types.SONG_INFO:
     console.log("obj in reducer ", action)
       return {
+        _id: action._id,
         songName: action.name,
         songLink: action.link,
         songArtist: action.artist,

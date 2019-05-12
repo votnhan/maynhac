@@ -29,3 +29,13 @@
   max-width: 100% !important;
   width: 100% !important;
 }
+
+.info-name{
+  max-width: 100% !important;
+  width: 100% !important;
+  margin-top: 7px !important;
+}
+
+.info-null-div{
+  height: 50px;
+}

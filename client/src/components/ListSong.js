@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import * as types from '../constants/type';
 import {connect} from 'react-redux';
+import "../assets/css/ListSong.css";
 
 class ListSong extends Component {
 
@@ -15,12 +16,13 @@ class ListSong extends Component {
 
     createSearchItem(avatar, name, artist, link) {
         return (
-        <div className="item" style={{maxHeight: "5%"}} >
-            <a href="true" className="ui tiny image">
+        <div className="item" style={{maxHeight: "5%"}}>
+            <div className="ui tiny image list-song">
+
                 <img src={avatar} alt=""/>
-            </a>
+            </div>
             <div className="content">
-                <a className="header" onClick={(e) => this.playSong(avatar, name, artist, link)}>{name}</a>
+                <div className="header list-song"  onClick={(e) => this.playSong(avatar, name, artist, link)}>{name}</div>
                 <div className="description">
                     <p>{artist}</p>
                 </div>

@@ -13,13 +13,10 @@ import FooterPlayer from "./components/FooterPlayer";
 import Footer from "./components/Footer";
 import { connect } from "react-redux";
 import UserPage from './components/UserPage';
-<<<<<<< HEAD
 import SongInfoPage from "./components/SongInfoPage";
 import SearchPage from "./components/SearchPage";
-=======
 import * as uiActions from "./actions/uiActions";
 import PlaylistDetailPage from './components/PlaylistDetailPage';
->>>>>>> lh
 
 class App extends Component {
   render() {
@@ -36,12 +33,9 @@ class App extends Component {
           <Route path="/upload" component={UploadPage} />
           <Route path="/search" component={SearchPage} />
           <Route path="/user" component={UserPage} />
-<<<<<<< HEAD
           <Route path="/info/:song" component={SongInfoPage} />
           <Route path="/" component={Footer} />
-=======
           <Route path="/playlistDetail" component={PlaylistDetailPage}/>
->>>>>>> lh
         </div>
       </Router>
     );

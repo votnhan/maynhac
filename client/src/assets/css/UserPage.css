@@ -1,16 +1,16 @@
-.container {
+.user .container {
     align-content: left;
     text-align: left;
     padding-bottom: 5%;
 }
 
-.left {
+.user .left {
     width: 30%;
     position: relative;
     float: left;
 }
 
-.right {
+.user .right {
     width: 70%;
     position: relative;
     float: right;

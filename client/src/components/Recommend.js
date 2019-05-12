@@ -120,7 +120,7 @@ class RecommendPart extends React.Component {
     return (
       <div className="home-page-carousel">
         
-        <div className="home-page-slider">
+        <div className="recommend-slider">
           <h1 className="home-page-h1-left">Related tracks </h1>
           <CardGroup >
               {this.state.listSongTypePop.map((object, idx) =>

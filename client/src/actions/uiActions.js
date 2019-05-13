@@ -17,3 +17,11 @@ export function hideSongPlayer() {
     type: types.HIDE_SONG_PLAYER,
   };
 }
+
+export function addSongToQueue(obj) {
+  console.log("action obj", obj)
+  return {
+    type: types.ADD_SONG_TO_QUEUE,
+    songToAdd: obj,
+  };
+}

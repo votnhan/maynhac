@@ -8,6 +8,7 @@ import history from "../history";
 import { connect } from "react-redux";
 import ReactDOM from "react-dom";
 import SearchPage from "./SearchPage";
+import { message } from "antd";
 
 class Header extends React.Component {
   constructor(props) {
@@ -194,6 +195,7 @@ class Header extends React.Component {
   onLogoutClicked = e => {
     e.preventDefault();
     this.props.onUserLogout();
+    message.info("Logout Successfully")
   };
 }
 

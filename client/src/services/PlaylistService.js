@@ -3,8 +3,8 @@ import React from 'react'
 import { Server } from 'https';
 
 class PlaylistService extends React.Component {
-    handleGetMyPlaylists(data,callback){
-        const {token} = data;
+    handleGetMyPlaylists(data, callback){
+        const token = localStorage.getItem('x-access-token');
         Service.get('playlist/Playlist', {headers: {'x-access-token': token}})
         .then( res =>{
             callback(res);
@@ -16,7 +16,8 @@ class PlaylistService extends React.Component {
 
     handleCreatePlaylist(data, callback){
         const {name, description, typeid, token} = data;
-        Service.post('playlist/createPlaylist', {headers: {'x-access-token': token}, name, description, typeid})
+        console.log(token);
+        Service.post('playlist/createPlaylist', {name, description, typeid} ,{headers: {'x-access-token': token}})
         .then( res => {
             callback(res);
         })
@@ -27,7 +28,7 @@ class PlaylistService extends React.Component {
     
     handRemovePlaylist(data, callback){
         const {playlistId, token} = data;
-        Service.post('playlist/deletePlaylist', {headers: {'x-access-token': token}, playlistId})
+        Service.post('playlist/deletePlaylist',{playlistId} ,{headers: {'x-access-token': token}})
         .then( res => {
             callback(res);
         })
@@ -38,7 +39,7 @@ class PlaylistService extends React.Component {
 
     handleUpdatePlaylist(data, callback){
         const {name, description, type, idplaylist, token} = data;
-        Service.post('playlist/updatePlaylist', {headers: {'x-access-token': token}, name, description, type, idplaylist})
+        Service.post('playlist/updatePlaylist', {name, description, type, idplaylist} ,{headers: {'x-access-token': token}})
         .then( res => {
             callback(res);
         })

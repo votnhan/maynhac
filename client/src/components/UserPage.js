@@ -78,7 +78,7 @@ class UserPage extends Component {
     render() {
         var code = this.loadCode();
         return (
-            <div className="user container">
+            <div className="user container" style={{paddingTop: "10px"}}>
                     <div className="user left">
                     <div className="ui secondary vertical pointing menu">
                       {this.createMenuItem("Songs", false)}

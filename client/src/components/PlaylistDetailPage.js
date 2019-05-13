@@ -20,8 +20,8 @@ class PlaylistDetailPage extends Component {
                 Lindsay
                 </div>
                 <div className="right floated content">
-                <i class="playlist plus square icon big "></i>
-                <i class="playlist minus square icon big "></i>
+                <i class="plus square icon big "></i>
+                <i class="minus square icon big "></i>
                 </div>
                 
             </div>
@@ -36,8 +36,8 @@ class PlaylistDetailPage extends Component {
         return (
             <div className="container">
                 <div>
-                    <div className="playlist ui placeholder segment" >
-                        <img src={cover} className="playlist"/>
+                    <div className="ui placeholder segment" style={{backgroundColor: "#004655"}}>
+                        <img src={cover} style={{maxWidth: "25%", width: "25%"}}/>
                         <h3>{this.state.data.name}</h3>
                     </div>
                 </div>

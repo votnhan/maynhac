@@ -28,8 +28,8 @@ class ListSong extends Component {
     render() {
         var searchCode = [];
         for (var i = 0 ; i < this.state.items.length; ++i) {
-            var {artist, avatar, link, name} = this.state.items[i];
-            var item = <SongSearchItem name={name} avatar={avatar} artist={artist} link={link}/>
+            var {artist, avatar, link, name, _id} = this.state.items[i];
+            var item = <SongSearchItem name={name} _id={_id} avatar={avatar} artist={artist} link={link}/>
             searchCode.push(item);
         }
         return searchCode;

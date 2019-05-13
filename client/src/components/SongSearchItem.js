@@ -3,16 +3,30 @@ import "../assets/css/ListSong.css";
 import * as types from '../constants/type';
 import {connect} from 'react-redux';
 import Popup from 'reactjs-popup';
+import SongAddModal from './SongAddModal';
 
 
 class SongSearchItem extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {modalIsOpen: false};
+    }
 
     playSong = (e) => {
         this.props.play(this.props.avatar, this.props.name, this.props.artist, this.props.link)
     }
 
+    addSong = (e) => {
+        this.setState({modalIsOpen: true});
+    }
+
+    closeAddSong = () => {
+        this.setState({modalIsOpen: false});
+    }
+
     render() {
-        var trigger = <input style={{position: "relative", float: "right"}}>Info</input>
+        var trigger = <div style={{position: "relative", float: "right"}}><i className="list alternate icon"></i></div>
         return (
             <div className="item" style={{maxHeight: "5%"}}>
                 <div className="ui mini image list-song">
@@ -25,9 +39,15 @@ class SongSearchItem extends Component {
                         <p>{this.props.artist}</p>
                     </div>
                 </div>
-                <Popup trigger={trigger} position="right center">
-                    <div>Popup content here !!</div>
+                <Popup closeOnDocumentClick  trigger={trigger} position="right center">
+                    <div>
+                    
+                        <div onClick={this.playSong}><i onClick={this.playSong} className="play circle icon"></i>Play this song</div>
+                        <div onClick={this.addSong}><i className="plus square icon"></i>Add</div>
+                        <div><i className="podcast icon"></i>Add to current playlist</div>
+                    </div>
                 </Popup>
+                <SongAddModal closeModal={this.closeAddSong} isOpen={this.state.modalIsOpen} songItem={this.props._id}/>
             </div>
         );
     }

@@ -131,7 +131,7 @@ class SongAddModal extends Component {
                                 
                                 
                                 PlaylistService.handleCreatePlaylist(data, (res) => {
-                                    console.log(res);
+                                    this.setState({loadPlaylist: false});
                                 });
 
                             }

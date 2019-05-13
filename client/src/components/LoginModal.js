@@ -12,6 +12,7 @@ import '../assets/vendor/daterangepicker/daterangepicker.css';
 import '../assets/css/LoginModal.css';
 import UserService from '../services/UserService';
 import {connect} from 'react-redux';
+import { GoogleLogin } from 'react-google-login';
 
 
  
@@ -108,6 +109,9 @@ class LoginModal extends React.Component {
     e.preventDefault();
     if (this.state.isLogin === true) {
       UserService.handleLogin(this.state.username, this.state.pass, (e) => {
+        UserService.handleMe(this.state.username, (e) => {
+          console.log(e);
+        });
         this.props.onUserLogin(this.state.username, e);
         this.closeModal();
       });
@@ -136,8 +140,31 @@ class LoginModal extends React.Component {
       </div>
     )
   }
+
+  responseGoogle = (e) => {
+    var name = e.profileObj.givenName + e.profileObj.familyName;
+    var mail = e.profileObj.email;
+    var username = mail;
+    var password = e.profileObj.googleId;
+    UserService.handleSignup(name, mail, username, password, (res) => {
+      console.log(res);
+      UserService.handleLogin(mail, password, (e) => {
+        this.props.onUserLogin(mail, e);
+        this.closeModal();
+      });
+    });
+
+    UserService.handleLogin(mail, password, (e) => {
+      this.props.onUserLogin(mail, e);
+      this.closeModal();
+    });
+
+    
+  }
  
   render() {
+
+
     return (
       <div>
         <Modal
@@ -160,10 +187,19 @@ class LoginModal extends React.Component {
 						Facebook
 					</a>
 
-					<a href="true"className="btn-google m-b-20">
-						<img src={icongoogle} alt="GOOGLE"/>
-						Google
-					</a>
+          <GoogleLogin
+            clientId="1000014012495-m55k852so9i525hviu7dlevc9n8gtqm9.apps.googleusercontent.com"
+            render={renderProps => (
+              <div onClick={renderProps.onClick} disabled={renderProps.disabled}  className="btn-google m-b-20">
+                <img src={icongoogle} alt="GOOGLE"/>
+                Google
+              </div>
+            )}
+            buttonText="Login"
+            onSuccess={this.responseGoogle}
+            cookiePolicy={'single_host_origin'}
+          />
+					
 
           {this.state.additionalField}
 					

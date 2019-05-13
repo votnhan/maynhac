@@ -353,7 +353,26 @@ router.get('/StatusOfSongsForUser', verifyToken, (req, res, next) => {
     });
 });
 
+router.get('/ReactionsOfUser', verifyToken, (req, res, next) => {
+    const username = req.username;
+    utilUser.getUser(username, res, (user) => {
+        var songids = []
+        user.reaction.forEach( element => {
+            if (element.status){
+                songids.push(element.songid);
+            }
+        });
 
+        Song.find({_id: {$in: songids}}, (err, songs) => {
+            if(err){
+                console.log(err);
+                return res.status(500).send(err);
+            }
+            res.status(200).send(songs);
+        });
+
+    });
+});
 
 
 

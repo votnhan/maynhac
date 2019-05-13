@@ -32,8 +32,9 @@ class UserService extends React.Component {
             })
             .catch(err => {
                 console.log(err);
-            });
+        });
     }
+
 }
 
 export default (new UserService());

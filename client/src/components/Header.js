@@ -53,7 +53,7 @@ class Header extends React.Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.user.username !== prevState.username) {
-      return ({username: nextProps.user.username, isUpdated: false});
+      return ({username: nextProps.user.username, name: nextProps.user.name, isUpdated: false});
     }
     else {
       return null;
@@ -62,13 +62,13 @@ class Header extends React.Component {
 
   componentDidUpdate() {
     if (this.state.isUpdated === false) {
-      this.setState({buttonCode: this.createUserDropDownButton(this.state.username)});
+      this.setState({buttonCode: this.createUserDropDownButton(this.state.name)});
     }
   }
 
   componentDidMount() {
     if (this.state.isUpdated === false) {
-      this.setState({buttonCode: this.createUserDropDownButton(this.state.username)});
+      this.setState({buttonCode: this.createUserDropDownButton(this.state.name)});
     }
   }
 

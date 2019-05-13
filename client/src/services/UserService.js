@@ -25,8 +25,9 @@ class UserService extends React.Component {
             });
     }
 
-    handleMe(username, callback) {
-        Service.get('user/me', {username: username})
+    handleMe(callback) {
+        const token = localStorage.getItem('x-access-token');
+        Service.get('user/me', {headers: {'x-access-token': token}})
             .then(res => {
                 callback(res.data);
             })

@@ -109,11 +109,12 @@ class LoginModal extends React.Component {
     e.preventDefault();
     if (this.state.isLogin === true) {
       UserService.handleLogin(this.state.username, this.state.pass, (e) => {
-        UserService.handleMe(this.state.username, (e) => {
-          console.log(e);
+        UserService.handleMe((res) => {
+          console.log(res);
+          this.props.onUserLogin(this.state.username, e, res.name);
+          this.closeModal();
         });
-        this.props.onUserLogin(this.state.username, e);
-        this.closeModal();
+        
       });
     }
     else {
@@ -142,20 +143,21 @@ class LoginModal extends React.Component {
   }
 
   responseGoogle = (e) => {
-    var name = e.profileObj.givenName + e.profileObj.familyName;
+    var name = e.profileObj.givenName + ' ' + e.profileObj.familyName;
     var mail = e.profileObj.email;
     var username = mail;
     var password = e.profileObj.googleId;
+    console.log(name);
     UserService.handleSignup(name, mail, username, password, (res) => {
       console.log(res);
       UserService.handleLogin(mail, password, (e) => {
-        this.props.onUserLogin(mail, e);
+        this.props.onUserLogin(mail, e, name);
         this.closeModal();
       });
     });
 
     UserService.handleLogin(mail, password, (e) => {
-      this.props.onUserLogin(mail, e);
+      this.props.onUserLogin(mail, e, name);
       this.closeModal();
     });
 
@@ -235,7 +237,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return  {
-    onUserLogin: (username, jwt) => dispatch({type: 'LOGIN', payload: {username, jwt}}) 
+    onUserLogin: (username, jwt, name) => dispatch({type: 'LOGIN', payload: {username, jwt, name}}) 
   }; 
 
 }

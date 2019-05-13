@@ -15,6 +15,8 @@ import { connect } from "react-redux";
 import UserPage from './components/UserPage';
 import SongInfoPage from "./components/SongInfoPage";
 import SearchPage from "./components/SearchPage";
+import * as uiActions from "./actions/uiActions";
+import PlaylistDetailPage from './components/PlaylistDetailPage';
 
 class App extends Component {
   render() {
@@ -33,6 +35,7 @@ class App extends Component {
           <Route path="/user" component={UserPage} />
           <Route path="/info/:song" component={SongInfoPage} />
           <Route path="/" component={Footer} />
+          <Route path="/playlistDetail" component={PlaylistDetailPage}/>
         </div>
       </Router>
     );

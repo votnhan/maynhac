@@ -23,30 +23,15 @@ class SearchPage extends React.Component {
     }
 
 
-    playSong(avatar, name, artist, link) {
+    playSong(e, avatar, name, artist, link) {
+        e.preventDefault();
         this.props.play(avatar, name, artist, link);
-    }
-
-    createSearchItem(avatar, name, artist, link) {
-        return (
-        <div className="item" style={{maxHeight: "5%"}}>
-            <a className="ui tiny image">
-                <img src={avatar} alt=""/>
-            </a>
-            <div className="content">
-                <a className="header"  onClick={(e) => this.playSong(avatar, name, artist, link)}>{name}</a>
-                <div className="description">
-                    <p>{artist}</p>
-                </div>
-            </div>
-        </div>
-        );
     }
 
     loadSearchData() {
         SongService.handleSearch(this.state.searchKey, res => {
-            var searchCode = [<div>{"Found " + res.length + " results"}</div>];
-            this.setState({searchCode: [searchCode, <ListSong items={res}></ListSong>], update: true}); 
+            var searchCode = [<div key="search-numres">{"Found " + res.length + " results"}</div>];
+            this.setState({searchCode: [searchCode, <ListSong key="search-res" items={res}></ListSong>], update: true}); 
         });
     }
 
@@ -70,9 +55,12 @@ class SearchPage extends React.Component {
             )
         }
         return (
-            <div className="ui items" style={{alignContent: "left", textAlign: "left"}}>
+            <div className="container">
+                <div className="ui items" style={{alignContent: "left", textAlign: "left"}}>
             {this.state.searchCode}
                 </div>
+            </div>
+            
         )
     }
 }

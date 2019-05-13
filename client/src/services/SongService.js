@@ -125,6 +125,17 @@ class SongService extends React.Component {
             console.log(err);
         });
     }
+
+    handleGetSongsReacted(data, callback){
+        const {token} = data ;
+        Service.get('song/ReactionsOfUser', {headers: {'x-access-token': token}})
+        .then(res => {
+            callback(res.data);
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    }
 }
 
 export default (new SongService());

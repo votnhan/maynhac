@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import cover from '../assets/imgs/playlist_cover.png';
 import "../assets/css/UserPage.css";
-import "../assets/css/PlaylistDetail.css";
+import SongSearchItem from './SongSearchItem';
+import SongService from '../services/SongService';
 
 class PlaylistDetailPage extends Component {
 
@@ -11,30 +12,46 @@ class PlaylistDetailPage extends Component {
         console.log(this.state.data)
     }
 
-    createSongItem = (song) => {
-        return (
-            <div className="item">
-                <i class="playlist play circle icon big "></i>
-                <img className="ui avatar image" src="/images/avatar2/small/lindsay.png"/>
-                <div className="content">
-                Lindsay
-                </div>
-                <div className="right floated content">
-                <i class="plus square icon big "></i>
-                <i class="minus square icon big "></i>
-                </div>
-                
-            </div>
-        );
+    componentDidMount() {
+        if (this.state.songsUpdate !== true) {
+            this.loadSong();
+        }
     }
 
-    render() {
-        var songs = [];
-        for (var i = 0 ; i < this.state.data.songs.length; ++i) {
-            songs.push(this.createSongItem(this.state.data.songs[i]));
+    componentDidUpdate() {
+        if (this.state.songsUpdate !== true) {
+            this.loadSong();
         }
+    }
+
+    loadSong() {
+        var code = [];
+        for (var i = 0 ; i < this.state.data.songs.length; ++i) {
+            SongService.handleGetSongbyId(this.state.data.songs[i], (res)=> {
+                var {name, _id, avatar, link, artist} = res.data;
+                code.push(<SongSearchItem name={name} _id={_id} avatar={avatar} artist={artist} link={link}/>);
+                if (i >= this.state.data.songs.length - 1) {
+                    this.setState({songsCode: code, songsUpdate: true});
+                    return;
+                }
+            })
+        }
+        this.setState({songsCode: code, songsUpdate: true});
+    }
+
+    getSong() {
+        if (this.state.songsUpdate !== true) {
+            return <div>Wait a minute</div>
+        }
+        else {
+            return this.state.songsCode;
+        }
+    }
+
+
+    render() {
         return (
-            <div className="container">
+            <div className="container" style={{paddingBottom: "5%"}}>
                 <div>
                     <div className="ui placeholder segment" style={{backgroundColor: "#004655"}}>
                         <img src={cover} style={{maxWidth: "25%", width: "25%"}}/>
@@ -48,9 +65,9 @@ class PlaylistDetailPage extends Component {
                     </button>
                 </div>
                 <div>
-                    <div className="ui middle aligned divided list">
+                    <div className="ui items">
                         {/* Items */}
-                        {songs}
+                        {this.getSong()}
                     </div>
                 </div>
                 

@@ -24,7 +24,7 @@ class SongAddModal extends Component {
 
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps.isOpen !== prevState.isOpen) {
-          return ({isOpen: nextProps.isOpen});
+          return ({isOpen: nextProps.isOpen, loadPlaylist: false});
         }
         else {
           return null;
@@ -51,9 +51,9 @@ class SongAddModal extends Component {
         var className = "item";
         var click = (e) => this.onItemClicked(e, item);
         for (var i = 0 ; i < item.songs.length ; ++i) {
-            if (item.songs[i]._id === this.props.songItem) {
+            if (item.songs[i] === this.props.songItem) {
                 className = "item active";
-                click = null;
+                click = (e) => {e.preventDefault()};
             }
         }
         return (

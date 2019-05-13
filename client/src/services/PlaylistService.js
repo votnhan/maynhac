@@ -3,7 +3,7 @@ import React from 'react'
 import { Server } from 'https';
 
 class PlaylistService extends React.Component {
-    handleGetMyPlaylists(data,callback){
+    handleGetMyPlaylists(data, callback){
         const token = localStorage.getItem('x-access-token');
         Service.get('playlist/Playlist', {headers: {'x-access-token': token}})
         .then( res =>{

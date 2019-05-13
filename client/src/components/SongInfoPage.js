@@ -4,10 +4,11 @@ import { Image, Grid, Icon, Button, Header, Form } from "semantic-ui-react";
 import "../assets/css/songInfoPage.css";
 import "../assets/css/MusicCard.css";
 import * as URI from "uri-js";
-import { showSongPlayer } from "../actions/uiActions";
+import { showSongPlayer, addSongToQueue } from "../actions/uiActions";
 import CommentPart from "./Comment";
 import RecommendPart from "./Recommend";
 import SongService from "../services/SongService";
+import { message } from 'antd';
 
 class SongInfoPage extends Component {
   constructor(props) {
@@ -66,6 +67,19 @@ class SongInfoPage extends Component {
     SongService.handleReaction(data, res => {
       console.log("like this", res);
     });
+  }
+
+  handleAddSongToQueue(obj){
+    console.log("obj", obj)
+    const song = {
+      name: obj.name,
+      singer: obj.artist,
+      cover: obj.avatar,
+      musicSrc: obj.link
+
+    };
+    this.props.addSongToQueue(song)
+    message.success("\"" + song.name +  "\" Added to now playing");
   }
 
   render() {
@@ -136,7 +150,11 @@ class SongInfoPage extends Component {
                       <Icon name="edit outline" />
                     </Button.Content>{" "}
                   </Button>{" "}
-                  <Button animated="vertical" color="yellow">
+                  <Button
+                    animated="vertical"
+                    color="yellow"
+                    onClick={() => this.handleAddSongToQueue(this.props)}
+                  >
                     <Button.Content hidden> Queue </Button.Content>{" "}
                     <Button.Content visible>
                       <Icon name="add" />
@@ -188,7 +206,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    showSongPlayer: obj => dispatch(showSongPlayer(obj))
+    showSongPlayer: obj => dispatch(showSongPlayer(obj)),
+    addSongToQueue: obj => dispatch(addSongToQueue(obj))
   };
 }
 

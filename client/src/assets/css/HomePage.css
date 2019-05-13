@@ -1,28 +1,28 @@
-@import "~slick-carousel/slick/slick.css";
-@import "~slick-carousel/slick/slick-theme.css";
+@import "~slick-carousel/slick/slick.css" ;
+@import "~slick-carousel/slick/slick-theme.css" ;
 .ant-carousel .slick-slide {
-    text-align: center;
-    height: 100%;
-    line-height: 160px;
-    background: #364d79;
-    overflow: hidden;
+    text-align: center !important;
+    height: 100% ;
+    line-height: 160px ;
+    background: #364d79 ;
+    overflow: hidden ;
   }
   
   .ant-carousel .slick-slide h3 {
-    color: #fff;
+    color: #fff ;
   }
 
 .home-page-song-list-card{
-  z-index: 1;
-  position: relative;
+  z-index: 1 ;
+  position: relative ;
  
 }
 
 .song-card{
-  padding: 20px;
+  padding: 20px ;
 }
 
 
 .home-page-slider{
-  margin: 60px 250px 60px 250px;
+  margin: 60px 250px 60px 250px ;
 }

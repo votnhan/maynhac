@@ -20,11 +20,6 @@ const options = {
   ],
 
   playIndex: 0,
-  toggleMode: true,
-  preload: false,
-  glassBg: false,
-  remember: false,
-  remove: true,
   defaultPosition: {
     top: 300,
     left: 120
@@ -35,22 +30,9 @@ const options = {
   once: true,
   autoPlay: true,
   showMiniProcessBar: false,
-  drag: true,
-  seeked: true,
-  showProgressLoadBar: true,
-  showPlay: true,
-  showReload: false,
-  showDownload: true
 };
 
 class FooterPlayer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      params: options
-    };
-  }
-
   handleStop() {
     console.log("stop !");
     this.props.hideSongPlayer();
@@ -73,14 +55,18 @@ class FooterPlayer extends React.Component {
         ]
       };
 
-      console.log(data);
+      if (this.props.songQueue.length !== 0) {
+        data = {...data, audioLists: this.props.songQueue}
+        console.log("vo day duoc ne`", data);
+
+      }
       
       return (
         <div className="sticky-floating-footer">
-          <Button className="order-front" onClick={() => this.handleStop()}>
+          {/* <Button className="order-front" onClick={() => this.handleStop()}>
             <Icon name="stop"/>
             
-          </Button>
+          </Button> */}
           <ReactJkMusicPlayer
             className="order-behind"
             {...data}
@@ -98,7 +84,8 @@ function mapStateToProps(state) {
     showPlayer: state.uiReducer.showPlayer,
     nowPlayingName: state.uiReducer.nowPlayingName,
     nowPlayingLink: state.uiReducer.nowPlayingLink,
-    nowPlayingArtist: state.uiReducer.nowPlayingArtist
+    nowPlayingArtist: state.uiReducer.nowPlayingArtist,
+    songQueue: state.uiReducer.songQueue,
 
   };
 }

@@ -7,3 +7,4 @@ export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const PLAY_SONG = 'PLAY_SONG';
 export const SONG_INFO = 'SONG_INFO';
+export const ADD_SONG_TO_QUEUE = 'ADD_SONG_TO_QUEUE';

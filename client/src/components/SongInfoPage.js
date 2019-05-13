@@ -38,6 +38,7 @@ class SongInfoPage extends Component {
       });
     });
     console.log("construct state", this.state);
+    message.info(this.props.name);
   }
 
   handlePlaySong(obj) {
@@ -46,6 +47,7 @@ class SongInfoPage extends Component {
       link: URI.serialize(URI.parse(obj.link))
     };
     this.props.showSongPlayer(newObj);
+    message.success("Now playing \" "+ obj.name + "\"");
   }
 
   handleLikeSong(obj) {
@@ -79,7 +81,7 @@ class SongInfoPage extends Component {
 
     };
     this.props.addSongToQueue(song)
-    message.success("\"" + song.name +  "\" Added to now playing");
+    message.success("\"" + song.name +  "\" is Added to now playing");
   }
 
   render() {

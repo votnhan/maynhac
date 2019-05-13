@@ -81,12 +81,12 @@ class HomePage extends React.Component {
   handlePlaySong(obj) {
     const newObj = { ...obj, link: URI.serialize(URI.parse(obj.link)) };
     this.props.showSongPlayer(newObj);
+    message.success("Now playing \" "+ obj.name + "\"");
   }
 
   handleSongInfo(obj) {
     SongService.handleGetSongbyId(obj._id, res => {
       console.log("newObj_id ", res.data);
-
       this.props.getSongInfo(res.data);
     });
 
@@ -103,7 +103,7 @@ class HomePage extends React.Component {
       musicSrc: obj.link
     };
     this.props.addSongToQueue(song);
-    message.success('"' + song.name + '" Added to now playing');
+    message.success("\"" + obj.name + "\" is Added to now playing") 
   }
 
   render() {

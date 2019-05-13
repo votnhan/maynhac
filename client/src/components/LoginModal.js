@@ -12,6 +12,7 @@ import '../assets/vendor/daterangepicker/daterangepicker.css';
 import '../assets/css/LoginModal.css';
 import UserService from '../services/UserService';
 import {connect} from 'react-redux';
+import { message } from 'antd';
 
 
  
@@ -110,6 +111,7 @@ class LoginModal extends React.Component {
       UserService.handleLogin(this.state.username, this.state.pass, (e) => {
         this.props.onUserLogin(this.state.username, e);
         this.closeModal();
+        message.success("Login Successfully")
       });
     }
     else {

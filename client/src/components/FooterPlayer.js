@@ -5,7 +5,7 @@ import { hideSongPlayer } from "../actions/uiActions";
 import { Button, Icon } from "semantic-ui-react";
 import ReactJkMusicPlayer from "react-jinke-music-player";
 import "react-jinke-music-player/assets/index.css";
-
+import {message} from "antd";
 
 const options = {
   //audio lists model
@@ -38,10 +38,9 @@ class FooterPlayer extends React.Component {
     this.props.hideSongPlayer();
   }
 
-
   render() {
+    let t ;
     if (this.props.showPlayer) {
-      console.log("LINK HERE: "+ this.props.nowPlayingLink);
       let data = {
         ...options,
         audioLists: [

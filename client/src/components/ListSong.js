@@ -29,10 +29,12 @@ class ListSong extends Component {
         var searchCode = [];
         for (var i = 0 ; i < this.state.items.length; ++i) {
             var {artist, avatar, link, name, _id} = this.state.items[i];
-            var item = <SongSearchItem name={name} _id={_id} avatar={avatar} artist={artist} link={link}/>
+            var item = <SongSearchItem key={_id} name={name} _id={_id} avatar={avatar} artist={artist} link={link}/>
             searchCode.push(item);
         }
-        return searchCode;
+        return (
+            searchCode
+        );
     }
 }
 

@@ -22,7 +22,6 @@ class UserPage extends Component {
     }
 
     loadPlaylists = () => {
-      console.log("Load playlist");
       // TODO: Load code for playlists here
         var token = this.props.user.jwt;
         PlaylistService.handleGetMyPlaylists({token}, (res) => {
@@ -64,7 +63,6 @@ class UserPage extends Component {
           playlistsCode = <div className="ui active inline loader"></div>;
         }
         else {
-          console.log(this.state.playlists);
           playlistsCode = <Playlists data={this.state.playlists.data}/>;
         }
         return playlistsCode;

@@ -30,8 +30,8 @@ class SearchPage extends React.Component {
 
     loadSearchData() {
         SongService.handleSearch(this.state.searchKey, res => {
-            var searchCode = [<div>{"Found " + res.length + " results"}</div>];
-            this.setState({searchCode: [searchCode, <ListSong items={res}></ListSong>], update: true}); 
+            var searchCode = [<div key="search-numres">{"Found " + res.length + " results"}</div>];
+            this.setState({searchCode: [searchCode, <ListSong key="search-res" items={res}></ListSong>], update: true}); 
         });
     }
 

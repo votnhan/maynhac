@@ -10,7 +10,7 @@ class SongSearchItem extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {modalIsOpen: false};
+        this.state = {modalIsOpen: false, visibility: "hidden", color: "white"};
     }
 
     playSong = (e) => {
@@ -25,10 +25,18 @@ class SongSearchItem extends Component {
         this.setState({modalIsOpen: false});
     }
 
+    onMouseEnter = (e) => {
+        this.setState({visibility: "visible", color: "#f2f7ff"});
+    }
+
+    onMouseLeave = (e) => {
+        this.setState({visibility: "hidden", color: "white"});
+    }
+
     render() {
-        var trigger = <div style={{position: "relative", float: "right"}}><i className="list alternate icon"></i></div>
+        var trigger = <div style={{position: "relative", float: "right", visibility: this.state.visibility}}><i className="list alternate big icon"></i></div>
         return (
-            <div className="item" style={{maxHeight: "5%"}}>
+            <div onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} className="item" style={{maxHeight: "5%", verticalAlign: "middle", backgroundColor: this.state.color}}>
                 <div className="ui mini image list-song">
     
                     <img src={this.props.avatar} alt=""/>

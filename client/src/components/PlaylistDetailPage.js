@@ -9,7 +9,6 @@ class PlaylistDetailPage extends Component {
     constructor(props) {
         super(props);
         this.state = {data: props.location.state.data};
-        console.log(this.state.data)
     }
 
     componentDidMount() {
@@ -26,17 +25,19 @@ class PlaylistDetailPage extends Component {
 
     loadSong() {
         var code = [];
+        var response = (res, i) => {
+            var {name, _id, avatar, link, artist} = res.data;
+            code.push(<SongSearchItem key={_id} name={name} _id={_id} avatar={avatar} artist={artist} link={link}/>);
+            if (i >= this.state.data.songs.length - 1) {
+                this.setState({songsCode: code, songsUpdate: true});
+                return;
+            }
+        }
         for (var i = 0 ; i < this.state.data.songs.length; ++i) {
             SongService.handleGetSongbyId(this.state.data.songs[i], (res)=> {
-                var {name, _id, avatar, link, artist} = res.data;
-                code.push(<SongSearchItem name={name} _id={_id} avatar={avatar} artist={artist} link={link}/>);
-                if (i >= this.state.data.songs.length - 1) {
-                    this.setState({songsCode: code, songsUpdate: true});
-                    return;
-                }
-            })
+                response(res, i);
+            });
         }
-        this.setState({songsCode: code, songsUpdate: true});
     }
 
     getSong() {
@@ -54,7 +55,7 @@ class PlaylistDetailPage extends Component {
             <div className="container" style={{paddingBottom: "5%"}}>
                 <div>
                     <div className="ui placeholder segment" style={{backgroundColor: "#004655"}}>
-                        <img src={cover} style={{maxWidth: "25%", width: "25%"}}/>
+                        <img alt="" src={cover} style={{maxWidth: "25%", width: "25%"}}/>
                         <h3>{this.state.data.name}</h3>
                     </div>
                 </div>

@@ -19,7 +19,7 @@ class SongAddModal extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {isOpen: false, loadPlaylist: false};
+        this.state = {isOpen: false, loadPlaylist: false, newPlaylistName: ""};
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -57,7 +57,7 @@ class SongAddModal extends Component {
             }
         }
         return (
-            <a href="true" onClick={click} className={className}>
+            <a key={item._id} href="true" onClick={click} className={className}>
                 {item.name}
                 <div className="ui label">{item.songs.length}</div>
             </a>    
@@ -103,6 +103,44 @@ class SongAddModal extends Component {
         }
         return this.state.playlistCode;
     }
+    onAddPlaylistInputChanged = (e) => {
+        this.setState({newPlaylistName: e.target.value});
+    }
+
+    onAddPlaylistKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            if (this.state.newPlaylistName !== '') {
+                // TODO: Check for duplicate playlist name
+
+                var token = this.props.user.jwt;
+                var duplicate = false;
+                PlaylistService.handleGetMyPlaylists({token}, (res) => {
+                    for (var i = 0 ; i < res.data.length ; ++i) {
+                        if (res.data[i].name === this.state.newPlaylistName) {
+                            duplicate = true;
+                        }
+
+                        if (i >= res.data.length - 1) {
+                            if (duplicate !== true) {
+                                // Can add
+                                var name = this.state.newPlaylistName;
+                                var description = "Description";
+                                var typeid = 2;
+                                var token = this.props.user.token;
+                                var data = {name, description, typeid, token}
+                                
+                                
+                                PlaylistService.handleCreatePlaylist(data, (res) => {
+                                    console.log(res);
+                                });
+
+                            }
+                        }
+                    }
+                });
+            }
+        }
+    }
 
     render() {
         return (
@@ -116,6 +154,13 @@ class SongAddModal extends Component {
                 {/* List playlists */}
                 <div className="ui vertical menu">
                     {this.getPlaylist()}
+                </div>
+                {/* Add playlist */}
+                <div className="item">
+                    <div className="ui transparent icon input">
+                    <input onKeyDown={this.onAddPlaylistKeyDown} onChange={this.onAddPlaylistInputChanged} type="text" placeholder="New playlist..."/>
+                    <i className="plus square icon"></i>
+                    </div>
                 </div>
             </Modal>
         )

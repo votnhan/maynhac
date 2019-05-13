@@ -30,10 +30,10 @@ router.post('/createPlaylist', verifyToken, (req, res, next) => {
     const username = req.username;
     let newPlaylist = new Playlist({name, description, type:typeid } );
     newPlaylist.save().then(
-        data => {
-            const idplaylist = data._id;
+        result => {
+            const idplaylist = result._id;
             User.update({username}, {$push: {listplaylists: idplaylist}}).then(
-                data =>  {res.status(200).send(newPlaylist); }
+                data =>  {res.status(200).send(result); }
             )
             .catch(err => {
                 console.log(err); 

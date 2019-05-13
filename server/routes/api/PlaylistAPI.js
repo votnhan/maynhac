@@ -102,9 +102,7 @@ router.get('/SongsOfPlaylist', verifyToken, (req, res, next) => {
         }
 
     });
-
 });
-
 
 
 module.exports = router;

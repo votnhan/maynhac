@@ -12,11 +12,8 @@ import '../assets/vendor/daterangepicker/daterangepicker.css';
 import '../assets/css/LoginModal.css';
 import UserService from '../services/UserService';
 import {connect} from 'react-redux';
-<<<<<<< HEAD
 import { GoogleLogin } from 'react-google-login';
-=======
 import { message } from 'antd';
->>>>>>> 51897153830bb8fe22be4498cad4461fc74ec3e7
 
 
  
@@ -113,18 +110,12 @@ class LoginModal extends React.Component {
     e.preventDefault();
     if (this.state.isLogin === true) {
       UserService.handleLogin(this.state.username, this.state.pass, (e) => {
-<<<<<<< HEAD
         UserService.handleMe((res) => {
           console.log(res);
           this.props.onUserLogin(this.state.username, e, res.name);
           this.closeModal();
         });
         
-=======
-        this.props.onUserLogin(this.state.username, e);
-        this.closeModal();
-        message.success("Login Successfully")
->>>>>>> 51897153830bb8fe22be4498cad4461fc74ec3e7
       });
     }
     else {

@@ -1,0 +1,13 @@
+.common-full-container {
+    align-content: left;
+    text-align: left;
+    padding-bottom: 5%;
+}
+
+.common-padded-container {
+    align-content: left;
+    text-align: left;
+    padding-bottom: 5%;
+    padding-left: 5%;
+    padding-right: 5%;
+}

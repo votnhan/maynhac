@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 import "../assets/css/UserPage.css";
 import PlaylistService from "../services/PlaylistService";
 import Playlists from './Playlists';
+import UserSong from './UserSong';
+
 
 
 class UserPage extends Component {
@@ -66,6 +68,9 @@ class UserPage extends Component {
           playlistsCode = <Playlists data={this.state.playlists.data}/>;
         }
         return playlistsCode;
+      }
+      else if (this.state.activeItem === "Songs") {
+        return <UserSong/>
       }
       return (
         <div>Choose another option</div>

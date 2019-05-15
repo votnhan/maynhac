@@ -71,6 +71,10 @@ class SongInfoPage extends Component {
     });
   }
 
+  componentDidMount() {
+    window.scrollTo(0, 0)
+  }
+
   handleAddSongToQueue(obj){
     console.log("obj", obj)
     const song = {

@@ -16,7 +16,7 @@ import UserPage from './components/UserPage';
 import SongInfoPage from "./components/SongInfoPage";
 import SearchPage from "./components/SearchPage";
 import * as uiActions from "./actions/uiActions";
-import PlaylistDetailPage from './components/PlaylistDetailPage';
+import PlaylistDetailPage from './components/user/PlaylistDetailPage';
 
 class App extends Component {
   render() {

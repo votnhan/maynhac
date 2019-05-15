@@ -9,6 +9,12 @@ const logo =
 
 class CommentPart extends React.Component {
 
+  constructor(props) {
+    super(props);
+    console.log(props);
+    this.state = {comment: ""};
+  }
+
 
   render() {
     const CmtCard = (obj, i) => (
@@ -34,7 +40,7 @@ class CommentPart extends React.Component {
               </Grid.Column>
               <Grid.Column width={12}>
                 <Form.Field>
-                  <input placeholder="Write a comment here..." />
+                  <input onChange={this.onCommentEdit} placeholder="Write a comment here..." />
                 </Form.Field>
               </Grid.Column>
 
@@ -45,6 +51,8 @@ class CommentPart extends React.Component {
                   icon="edit"
                   primary
                   className="cmt-add-reply"
+                  onClick={this.onCommentSubmit}
+
                 />
               </Grid.Column>
             </Grid>
@@ -54,17 +62,28 @@ class CommentPart extends React.Component {
         <Header as="h3" dividing>
           Comments
         </Header>
-        {this.props.listCmt.map((object, idx) => CmtCard(object, idx))}
+        {this.props.comments.map((object, idx) => CmtCard(object, idx))}
       </Comment.Group>
     );
+  }
+
+  onCommentSubmit = (e) => {
+    var data = {content: this.state.comment, commentator: this.props.user.username, songId: this.props._id};
+    SongService.handleCommentSong(data, (res) => {
+      console.log(res);
+    })
+  }
+
+  onCommentEdit = (e) => {
+    this.setState({comment: e.target.value});
   }
 }
 
 
 function mapStateToProps(state) {
     return {
-      
-      listCmt: state.songInfo.listCmt
+      listCmt: state.songInfo.listCmt,
+      ...state
     };
   }
   

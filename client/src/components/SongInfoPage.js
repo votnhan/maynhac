@@ -39,6 +39,7 @@ class SongInfoPage extends Component {
     });
     console.log("construct state", this.state);
     message.info(this.props.name);
+    console.log(this.props);
   }
 
   handlePlaySong(obj) {
@@ -179,7 +180,7 @@ class SongInfoPage extends Component {
                   </Button>
                 </div>
               </div>
-              <CommentPart />
+              <CommentPart comments={this.props.listCmt}/>
             </Grid.Column>
             <Grid.Column width={6}>
               <RecommendPart />

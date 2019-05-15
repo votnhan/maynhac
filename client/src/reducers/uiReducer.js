@@ -43,6 +43,20 @@ export default function uiReducer(state = initialState, action) {
       return {
         ...state, songQueue: [...state.songQueue, action.songToAdd]
       }
+    case types.PLAY_PLAYLIST:
+    var queue = []
+    for (var i = 0 ; i < action.listSong.length; ++i) {
+      queue.push({
+        name: action.listSong[i].name,
+        singer: action.listSong[i].artist,
+        cover: action.listSong[i].avatar,
+        musicSrc: action.listSong[i].link
+      })
+    }
+    return {
+      ...state,
+      songQueue: queue
+    }
     default:
       return state;
   }

@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
-import cover from '../assets/imgs/playlist_cover.png';
-import "../assets/css/UserPage.css";
-import SongSearchItem from './SongSearchItem';
-import SongService from '../services/SongService';
+import cover from '../../assets/imgs/playlist_cover.png';
+import "../../assets/css/UserPage.css";
+import SongSearchItem from '../search/SongSearchItem';
+import SongService from '../../services/SongService';
+import { playPlaylist } from "../../actions/uiActions";
+import { connect } from "react-redux";
 
 class PlaylistDetailPage extends Component {
 
@@ -49,6 +51,19 @@ class PlaylistDetailPage extends Component {
         }
     }
 
+    onPlayAll = (e) => {
+        for (var i = 0 ; i < this.state.data.songs.length; ++i) {
+            var data = [];
+            SongService.handleGetSongbyId(this.state.data.songs[i], (res)=> {
+                data.push(res.data);
+                if (i >= this.state.data.songs.length - 1) {
+                    this.props.playPlaylist(data);
+                }
+            });
+        }
+        
+    }
+
 
     render() {
         return (
@@ -61,7 +76,7 @@ class PlaylistDetailPage extends Component {
                 </div>
 
                 <div className="ui segment">
-                    <button className="ui primary button">
+                    <button onClick={this.onPlayAll} className="ui primary button">
                     Play all
                     </button>
                 </div>
@@ -79,4 +94,19 @@ class PlaylistDetailPage extends Component {
     }
 }
 
-export default PlaylistDetailPage;
+
+function mapStateToProps(state) {
+    return {};
+  }
+  
+  function mapDispatchToProps(dispatch) {
+    return {
+      playPlaylist: obj => dispatch(playPlaylist(obj)),
+    };
+  }
+  
+  export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(PlaylistDetailPage);
+  

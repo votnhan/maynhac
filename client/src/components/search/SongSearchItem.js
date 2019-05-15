@@ -1,10 +1,15 @@
 import React, {Component} from 'react';
-import "../assets/css/ListSong.css";
-import * as types from '../constants/type';
+import "../../assets/css/ListSong.css";
+import * as types from '../../constants/type';
 import {connect} from 'react-redux';
 import Popup from 'reactjs-popup';
-import SongAddModal from './SongAddModal';
-import SongService from '../services/SongService';
+import SongAddModal from '../user/SongAddModal';
+import SongService from '../../services/SongService';
+import { getSongInfo } from "../../actions/getSongInfoAction";
+import { showSongPlayer, hideSongPlayer, addSongToQueue } from "../../actions/uiActions";
+import history from "../../history";
+import * as URI from "uri-js";
+import { Carousel, message } from "antd";
 
 
 class SongSearchItem extends Component {
@@ -15,7 +20,23 @@ class SongSearchItem extends Component {
     }
 
     playSong = (e) => {
-        this.props.play(this.props.avatar, this.props.name, this.props.artist, this.props.link)
+        SongService.handleGetSongbyId(this.props._id, res => {
+            var obj = res.data;
+            const newObj = {...obj , link: URI.serialize(URI.parse(this.props.link)) };
+            this.props.showSongPlayer(newObj);
+            message.success("Now playing \" "+ this.props.name + "\"");
+          });
+        
+    }
+    addToQueue = (e) => {
+        const song = {
+            name: this.props.name,
+            singer: this.props.artist,
+            cover: this.props.avatar,
+            musicSrc: this.props.link
+          };
+          this.props.addSongToQueue(song);
+          message.success("\"" + this.props.name + "\" is Added to now playing") 
     }
 
     addSong = (e) => {
@@ -42,6 +63,15 @@ class SongSearchItem extends Component {
         })
     }
 
+    showInfo = (e) => {
+        SongService.handleGetSongbyId(this.props._id, res => {
+            this.props.getSongInfo(res.data);
+          });
+        history.push(`/info/${this.props.name}`);
+        console.log(history);
+    }
+    
+
     render() {
         var trigger = <div style={{position: "relative", float: "right", visibility: this.state.visibility}}><i className="list alternate big icon"></i></div>
         return (
@@ -51,7 +81,7 @@ class SongSearchItem extends Component {
                     <img src={this.props.avatar} alt=""/>
                 </div>
                 <div className="content">
-                    <div className="header list-song"  onClick={this.playSong}>{this.props.name}</div>
+                    <div className="header list-song"  onClick={this.showInfo}>{this.props.name}</div>
                     <div className="description" style={{paddingTop: "0px", marginTop: "0px"}}>
                         <p>{this.props.artist}</p>
                     </div>
@@ -59,9 +89,9 @@ class SongSearchItem extends Component {
                 <Popup closeOnDocumentClick  trigger={trigger} position="right center">
                     <div>
                     
-                        <div onClick={this.playSong}><i onClick={this.playSong} className="play circle icon"></i>Play this song</div>
+                        <div onClick={this.playSong}><i className="play circle icon"></i>Play this song</div>
                         <div onClick={this.addSong}><i className="plus square icon"></i>Add</div>
-                        <div><i className="podcast icon"></i>Add to current playlist</div>
+                        <div onClick={this.addToQueue}><i className="podcast icon"></i>Add to current playlist</div>
                         <div onClick={this.likeSong}><i className="heart icon"></i>Like</div>
                     </div>
                 </Popup>
@@ -77,7 +107,10 @@ function mapStateToProps(state) {
   
   function mapDispatchToProps(dispatch) {
     return {
-      play: (avatar, name, artist, link) => dispatch({type: types.PLAY_SONG, payload: {avatar, name, artist, link}})
+      play: (avatar, name, artist, link) => dispatch({type: types.PLAY_SONG, payload: {avatar, name, artist, link}}),
+        getSongInfo: obj => dispatch(getSongInfo(obj)),
+        showSongPlayer: obj => dispatch(showSongPlayer(obj)),
+        addSongToQueue: obj => dispatch(addSongToQueue(obj))
     };
   }
   

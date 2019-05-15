@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import SongService from '../services/SongService';
+import SongService from '../../services/SongService';
 import {connect} from 'react-redux';
-import ListSong from './ListSong';
-import '../assets/css/common.css';
+import ListSong from '../search/ListSong';
+import '../../assets/css/common.css';
 
 
 class UserSong extends Component {

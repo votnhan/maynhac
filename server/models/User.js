@@ -27,8 +27,15 @@ const UserSchema = new Schema({
     reaction:[{
         songid:String,
         status:Boolean
-    }]
+    }],
 
+    history: [{
+        songid:String,
+        timelisten: {
+            type:Date,
+            default: () => new Date().toISOString()
+        }
+    }]
     
 });
 

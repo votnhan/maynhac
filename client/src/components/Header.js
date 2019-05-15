@@ -8,6 +8,7 @@ import history from "../history";
 import { connect } from "react-redux";
 import ReactDOM from "react-dom";
 import SearchPage from "./SearchPage";
+import { message } from "antd";
 
 class Header extends React.Component {
   constructor(props) {
@@ -53,7 +54,7 @@ class Header extends React.Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.user.username !== prevState.username) {
-      return ({username: nextProps.user.username, isUpdated: false});
+      return ({username: nextProps.user.username, name: nextProps.user.name, isUpdated: false});
     }
     else {
       return null;
@@ -62,13 +63,13 @@ class Header extends React.Component {
 
   componentDidUpdate() {
     if (this.state.isUpdated === false) {
-      this.setState({buttonCode: this.createUserDropDownButton(this.state.username)});
+      this.setState({buttonCode: this.createUserDropDownButton(this.state.name)});
     }
   }
 
   componentDidMount() {
     if (this.state.isUpdated === false) {
-      this.setState({buttonCode: this.createUserDropDownButton(this.state.username)});
+      this.setState({buttonCode: this.createUserDropDownButton(this.state.name)});
     }
   }
 
@@ -194,6 +195,7 @@ class Header extends React.Component {
   onLogoutClicked = e => {
     e.preventDefault();
     this.props.onUserLogout();
+    message.info("Logout Successfully")
   };
 }
 

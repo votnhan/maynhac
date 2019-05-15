@@ -131,11 +131,24 @@ class SongAddModal extends Component {
                                 
                                 
                                 PlaylistService.handleCreatePlaylist(data, (res) => {
-                                    console.log(res);
+                                    this.setState({loadPlaylist: false});
                                 });
 
                             }
                         }
+                    }
+
+                    if (res.data.length === 0) {
+                        var name = this.state.newPlaylistName;
+                        var description = "Description";
+                        var typeid = 2;
+                        var token = this.props.user.jwt;
+                        var data = {name, description, typeid, token}
+                        
+                        
+                        PlaylistService.handleCreatePlaylist(data, (res) => {
+                            this.setState({loadPlaylist: false});
+                        });
                     }
                 });
             }

@@ -12,14 +12,16 @@ const reducer = (state = initalState, action) => {
         return {
             ...state,
             username: action.payload.username,
-            jwt: action.payload.jwt
+            jwt: action.payload.jwt,
+            name: action.payload.name
         }
     }
     else if (action.type === types.LOGOUT) {
         return {
             ...state,
             username: '',
-            jwt: ''
+            jwt: '',
+            name: ''
         }
     }
     else {

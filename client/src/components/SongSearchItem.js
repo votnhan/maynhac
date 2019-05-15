@@ -4,6 +4,7 @@ import * as types from '../constants/type';
 import {connect} from 'react-redux';
 import Popup from 'reactjs-popup';
 import SongAddModal from './SongAddModal';
+import SongService from '../services/SongService';
 
 
 class SongSearchItem extends Component {
@@ -33,6 +34,14 @@ class SongSearchItem extends Component {
         this.setState({visibility: "hidden", color: "white"});
     }
 
+    likeSong = (e) => {
+        var songId = this.props._id;
+        console.log(songId);
+        SongService.handleReaction({songId}, (res) => {
+            console.log(res);
+        })
+    }
+
     render() {
         var trigger = <div style={{position: "relative", float: "right", visibility: this.state.visibility}}><i className="list alternate big icon"></i></div>
         return (
@@ -53,6 +62,7 @@ class SongSearchItem extends Component {
                         <div onClick={this.playSong}><i onClick={this.playSong} className="play circle icon"></i>Play this song</div>
                         <div onClick={this.addSong}><i className="plus square icon"></i>Add</div>
                         <div><i className="podcast icon"></i>Add to current playlist</div>
+                        <div onClick={this.likeSong}><i className="heart icon"></i>Like</div>
                     </div>
                 </Popup>
                 <SongAddModal closeModal={this.closeAddSong} isOpen={this.state.modalIsOpen} songItem={this.props._id}/>

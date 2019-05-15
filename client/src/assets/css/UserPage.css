@@ -5,13 +5,13 @@
 }
 
 .user .left {
-    width: 30%;
+    width: 20%;
     position: relative;
     float: left;
 }
 
 .user .right {
-    width: 70%;
+    width: 80%;
     position: relative;
     float: right;
 }

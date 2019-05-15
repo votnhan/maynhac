@@ -9,6 +9,7 @@ const logo =
 
 class CommentPart extends React.Component {
 
+
   render() {
     const CmtCard = (obj, i) => (
       <Comment key={i}>

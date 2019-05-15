@@ -56,7 +56,6 @@ class FooterPlayer extends React.Component {
 
       if (this.props.songQueue.length !== 0) {
         data = {...data, audioLists: this.props.songQueue}
-        console.log("vo day duoc ne`", data);
 
       }
       

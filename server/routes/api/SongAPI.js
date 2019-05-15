@@ -5,9 +5,9 @@ const jwt = require('jsonwebtoken');
 const {User} = require('../../models/User');
 const {Song} = require('../../models/Song');
 const {Playlist} = require('../../models/Playlist');
-
 const {TypeSong} = require('../../models/TypeSong');
-const {TypeCountry, TypeCountrySchema} = require('../../models/TypeCountry');
+const {TypeCountry} = require('../../models/TypeCountry');
+
 const utilUser = require('../../util/ForUser');
 const utilSong = require('../../util/ForSong');
 
@@ -105,6 +105,19 @@ router.get('/SongbyId', (req, res) => {
         res.status(200).send(data);
     });
 });
+
+
+router.post('/SongbyIds', (req, res) => {
+    const {songIds} = req.body;
+    Song.find({_id: {$in: songIds}}, (err, songs) => {
+        if(err){
+            console.log(err);
+            return res.status(500).send(err);
+        }
+        res.status(200).send(songs);
+    });
+});
+
 
 router.post('/contributeLyrics', (req, res) => {
     const {songId, lyrics} = req.body;
@@ -370,9 +383,25 @@ router.get('/ReactionsOfUser', verifyToken, (req, res, next) => {
             }
             res.status(200).send(songs);
         });
+    });
+});
+
+router.get('/noteHistory', verifyToken, (req, res, next) => {
+    const username = req.username;
+    const {songid} = req.query;
+    const historylisten = {'songid':songid}
+    User.findOneAndUpdate({username}, {$push:{history: historylisten}}, {new: true}, (err, result) => {
+        if(err){
+            console.log(err);
+            return res.status(500).send(err);
+        }
+        res.status(200).send(result.history);
 
     });
 });
+
+
+
 
 
 

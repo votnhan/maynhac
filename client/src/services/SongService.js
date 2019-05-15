@@ -136,6 +136,18 @@ class SongService extends React.Component {
             console.log(err);
         });
     }
+
+    handleNoteHistory(data, callback){
+        const token = localStorage.getItem('x-access-token');
+        const {songid} = data;
+        Service.get(`song/noteHistory/?songid=${songid}`, {headers: {'x-access-token': token}})
+        .then(res => {
+            callback(res.data);
+        })
+        .catch( err => {
+            console.log(err);
+        });
+    }
 }
 
 export default (new SongService());

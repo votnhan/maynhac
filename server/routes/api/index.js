@@ -6,5 +6,6 @@ router.use('/playlist', require('./PlaylistAPI'));
 router.use('/song', require('./SongAPI'));
 router.use('/album', require('./AlbumAPI'));
 router.use('/homepage', require('./HomePageAPI'));
+router.use('/history', require('./HistoryAPI'));
 
 module.exports = router;

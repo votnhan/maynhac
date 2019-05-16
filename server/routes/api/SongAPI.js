@@ -232,14 +232,12 @@ router.post('/comment', verifyToken, (req, res, next) => {
         "datecomment": new Date().toISOString()
     }
 
-    Song.update({_id: songId}, {$push: {comments: comment}}).then(
-        data => {
-            res.status(200).send(comment);
+    Song.findOneAndUpdate({_id: songId}, {$push: {comments: comment}}, {new: true}, (err, data) => {
+        if(err){
+            console.log(err);
+            res.status(500).send(err);
         }
-    )
-    .catch(err => {
-        console.log(err);
-        res.status(500).send(err);
+        res.status(200).send(comment);
     });
 });
 

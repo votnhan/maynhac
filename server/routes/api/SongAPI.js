@@ -224,13 +224,14 @@ router.post('/reaction', verifyToken, (req, res, next) => {
 });
 
 router.post('/comment', verifyToken, (req, res, next) => {
-
     const {content, commentator ,songId} = req.body;
     const comment = {
         "content": content,
         "commentator": commentator,
         "datecomment": new Date().toISOString()
     }
+    console.log(comment);
+    console.log(songId);
 
     Song.update({_id: songId}, {$push: {comments: comment}}).then(
         data => {

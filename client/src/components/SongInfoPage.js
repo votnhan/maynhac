@@ -9,6 +9,7 @@ import CommentPart from "./Comment";
 import RecommendPart from "./Recommend";
 import SongService from "../services/SongService";
 import { message } from 'antd';
+import ReportModal from "./report/ReportModal";
 
 class SongInfoPage extends Component {
   constructor(props) {
@@ -17,7 +18,8 @@ class SongInfoPage extends Component {
       like: null,
       numLike: 0,
       numListen: 0,
-      listCmt: []
+      listCmt: [],
+      reportOpen: false
     };
     SongService.handleGetStatusOfSongForUser(
       {
@@ -40,6 +42,7 @@ class SongInfoPage extends Component {
     console.log("construct state", this.state);
     message.info(this.props.name);
     console.log(this.props);
+    this.closeReport = this.closeReport.bind(this);
   }
 
   handlePlaySong(obj) {
@@ -86,9 +89,14 @@ class SongInfoPage extends Component {
     message.success("\"" + song.name +  "\" is Added to now playing");
   }
 
+  closeReport(e) {
+    this.setState({reportOpen: false}, () => {console.log(this.state.reportOpen)});
+  }
+
   render() {
     return (
       <div>
+        <ReportModal isOpen={this.state.reportOpen} onClose={this.closeReport}/>
         <Grid celled>
           <Grid.Row>
             <Grid.Column width={4} className="music-card-div">
@@ -158,6 +166,7 @@ class SongInfoPage extends Component {
                     animated="vertical"
                     color="yellow"
                     onClick={() => this.handleAddSongToQueue(this.props)}
+
                   >
                     <Button.Content hidden> Queue </Button.Content>
                     <Button.Content visible>
@@ -172,8 +181,9 @@ class SongInfoPage extends Component {
                   <span className="info-like-listen">
                     <Icon name="headphones" /> {this.state.numListen}
                   </span>
-                  <Button animated="vertical" color="black">
+                  <Button onClick={e => this.setState({reportOpen: true})} animated="vertical" color="black">
                     <Button.Content hidden> Report! </Button.Content>
+                    
                     <Button.Content visible>
                       <Icon name="flag" />
                     </Button.Content>

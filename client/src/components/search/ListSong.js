@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import * as types from '../constants/type';
+import * as types from '../../constants/type';
 import {connect} from 'react-redux';
-import "../assets/css/ListSong.css";
+import "../../assets/css/ListSong.css";
 import SongSearchItem from './SongSearchItem';
 
 class ListSong extends Component {

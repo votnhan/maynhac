@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import "../assets/css/UserPage.css";
 import PlaylistService from "../services/PlaylistService";
-import Playlists from './Playlists';
-import UserSong from './UserSong';
+import Playlists from './user/Playlists';
+import UserSong from './user/UserSong';
 
 
 

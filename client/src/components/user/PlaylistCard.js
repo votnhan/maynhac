@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import cover from '../assets/imgs/playlist.jpg'
-import history from "../history";
+import cover from '../../assets/imgs/playlist.jpg'
+import history from "../../history";
 
 class PlaylistCard extends Component {
 

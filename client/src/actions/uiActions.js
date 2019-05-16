@@ -25,3 +25,10 @@ export function addSongToQueue(obj) {
     songToAdd: obj,
   };
 }
+
+export function playPlaylist(obj) {
+  return {
+    type: types.PLAY_PLAYLIST,
+    listSong: obj
+  }
+}

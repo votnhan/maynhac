@@ -3,7 +3,7 @@ import React from 'react';
 import SongService from '../services/SongService';
 import * as types from '../constants/type';
 import {connect} from 'react-redux';
-import ListSong from './ListSong';
+import ListSong from './search/ListSong';
 
 class SearchPage extends React.Component {
 

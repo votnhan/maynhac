@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Modal from 'react-modal';
-import PlaylistService from '../services/PlaylistService';
-import SongService from '../services/SongService';
+import PlaylistService from '../../services/PlaylistService';
+import SongService from '../../services/SongService';
 import {connect} from 'react-redux';
 
 const customStyles = {

@@ -1,35 +1,58 @@
 import React from 'react';
-import {LineChart, XAxis, Tooltip, CartesianGrid, Line} from 'recharts';
+import {LineChart, XAxis, Tooltip, CartesianGrid, Line, YAxis, Legend} from 'recharts';
+import HomePageService from '../services/HomePageService';
 
 class ChartPage extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            songs:[],
+            dataforchart:[]
+        };
+        this.timetogetData = 3600000
+        this.hours = 24;
+    }
+    getIteminChart(i, songs){
+        var countlisten = []
+        songs.forEach(element => {
+            countlisten.push(element.listentimein24h[i]);
+        });
+        var item = {...countlisten};
+        item.name = i.toString();
+        return item;
+    }
+    getData(){
+        HomePageService.handleGetManySong(5, (songs) =>{
+            var result = [];
+            for (let i = 0;i<this.hours;++i){
+                result.push(this.getIteminChart(i, songs));
+            }
+            this.setState({songs, dataforchart: result});
+        });
+    }
+    componentDidMount(){
+        this.getData();
+        setInterval(this.getData, this.timetogetData);
+    }
     render() {
-        const data = [
-            { name: 'Page A', uv: 1000, pv: 2400, amt: 2400, uvError: [75, 20] },
-            { name: 'Page B', uv: 300, pv: 4567, amt: 2400, uvError: [90, 40] },
-            { name: 'Page C', uv: 280, pv: 1398, amt: 2400, uvError: 40 },
-            { name: 'Page D', uv: 200, pv: 9800, amt: 2400, uvError: 20 },
-            { name: 'Page E', uv: 278, pv: null, amt: 2400, uvError: 28 },
-            { name: 'Page F', uv: 189, pv: 4800, amt: 2400, uvError: [90, 20] },
-            { name: 'Page G', uv: 189, pv: 4800, amt: 2400, uvError: [28, 40] },
-            { name: 'Page H', uv: 189, pv: 4800, amt: 2400, uvError: 28 },
-            { name: 'Page I', uv: 189, pv: 4800, amt: 2400, uvError: 28 },
-            { name: 'Page J', uv: 189, pv: 4800, amt: 2400, uvError: [15, 60] },
-          ];
         return (
             <div>
                 <div>Chart page</div>
                 <LineChart
-                    width={800}
-                    height={800}
-                    data={data}
-                    margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
+                    width={1000}
+                    height={400}
+                    data={this.state.dataforchart}
+                    margin={{ top:15, right: 20, left: 30, bottom: 5 }}
                     >
                     <XAxis dataKey="name" />
+                    <YAxis />
                     <Tooltip />
+                    <Legend />
                     <CartesianGrid stroke="#f5f5f5" />
-                    <Line type="monotone" dataKey="uv" stroke="#ff7300" yAxisId={0} />
-                    <Line type="monotone" dataKey="pv" stroke="#387908" yAxisId={1} />
-                    </LineChart>
+                    <Line type="linear" dataKey="['0']" stroke="#0000FF"  />
+                    <Line type="linear" dataKey="['1']" stroke="#008000" /> 
+                    <Line type="linear" dataKey="['2']" stroke="#FF0000"  />
+                </LineChart>
             </div>
         )
     }

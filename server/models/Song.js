@@ -40,7 +40,10 @@ const SongSchema = new Schema({
     unsignedname:String,
     avatar: String,
     typecountry: Number,
-    listentimein24h:[Number]
+    listentimein24h:{
+        type: [Number],
+        default: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    }
 });
 
 const Song = mongoose.model('Song', SongSchema);

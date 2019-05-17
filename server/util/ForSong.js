@@ -1,5 +1,7 @@
 const {TypeSong} = require('../models/TypeSong');
 const {TypeCountry} = require('../models/TypeCountry');
+const {Song} = require('../models/Song');
+const cron = require('node-cron');
 
 function getSongName(unsignedname) {
     unsignedname = unsignedname.toLowerCase();
@@ -38,4 +40,33 @@ function getTypeCountryOfSong(typeid, res, callback){
     });
 }
 
-module.exports = {getSongName, getTypeOfSong, getTypeCountryOfSong}
+function updateTimelistenOfSongs(hour, callback){
+    Song.find({},(err, songs) => {
+        if(err){
+            console.log(err);
+            return ;
+        }
+        songs.forEach(Element => {
+            Element.listentimein24h.set(hour, Element.numlisten);
+            Element.save().then(result => {
+            
+            })
+            .catch(err=>{
+                console.log(err);
+            })
+        });
+        callback();
+    });
+}
+
+var taskupdate = cron.schedule('0 * * * *',() =>{
+    var nowtime = new Date();
+    updateTimelistenOfSongs(nowtime.getHours(), () =>{
+        console.log(nowtime.getHours()+':'+nowtime.getMinutes()+':'+nowtime.getSeconds());
+    });
+
+},{scheduled:false, timezone:'Asia/Bangkok'});
+
+taskupdate.start();
+
+module.exports = {getSongName, getTypeOfSong, getTypeCountryOfSong, updateTimelistenOfSongs}

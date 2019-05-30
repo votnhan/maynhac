@@ -89,9 +89,12 @@ class ReportModal extends Component {
       console.log(this.state.selection);
       console.log(this.state.description);
       var data = {songId: this.props._id, 
-        reasonId: this.state.selection, description: this.state.otherId == this.state.selection ? this.state.description : ''};
+        reasonId: this.state.selection, 
+        description: this.state.otherId == this.state.selection ? this.state.description : '',
+        username: this.props.username};
       ReportService.handleSubmitReport(data, (res) => {
         console.log("Submitted");
+        console.log(res);
       })
     }
 
@@ -150,7 +153,8 @@ function mapStateToProps(state) {
     songType: state.songInfo.songType,
     lyrics: state.songInfo.lyrics,
     datePosted: state.songInfo.datePosted,
-    listCmt: state.songInfo.listCmt
+    listCmt: state.songInfo.listCmt,
+    username: state.user.username
   };
 }
 

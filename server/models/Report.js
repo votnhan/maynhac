@@ -3,10 +3,14 @@ const Schema = mongoose.Schema;
 
 const ReportSchema = new Schema({
     
-    state:Boolean,
-    typeid: Number,
-    songs:[String],
+    
+    reasonId: Number,
+    songId:String,
     description:String,
+    state: {
+        type: Boolean,
+        default: () => false
+    },
     datecreate: {
         type:Schema.Types.Date,
         default: () => new Date().toISOString()

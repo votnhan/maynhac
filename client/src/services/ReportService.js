@@ -18,11 +18,10 @@ class ReportService extends React.Component {
     }
 
     handleSubmitReport(data, callback) {
-        const {songId, reasonId, description} = data;
+        const {songId, reasonId, description, username} = data;
         const headers= {'x-access-token': localStorage.getItem('x-access-token')};
-        Service.post('report/report', {songId, reasonId, description}, {headers: headers}).then(
+        Service.post('report/report', {songId, reasonId, description, username}, {headers: headers}).then(
             res => {
-                console.log(res.data);
                 callback(res.data);
             }
         )

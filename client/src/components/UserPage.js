@@ -4,6 +4,7 @@ import "../assets/css/UserPage.css";
 import PlaylistService from "../services/PlaylistService";
 import Playlists from './user/Playlists';
 import UserSong from './user/UserSong';
+import Reports from './user/Reports';
 
 
 
@@ -72,6 +73,9 @@ class UserPage extends Component {
       else if (this.state.activeItem === "Songs") {
         return <UserSong/>
       }
+      else if (this.state.activeItem === "Reports") {
+        return <Reports/>
+      }
       return (
         <div>Choose another option</div>
       );
@@ -87,7 +91,8 @@ class UserPage extends Component {
                       {this.createMenuItem("Songs", false)}
                       {this.createMenuItem("Playlists", false)}
                       {this.createMenuItem("Artists", false)}
-                      {this.createMenuItem("Upload", false)}
+                      {this.createMenuItem("Uploads", false)}
+                      {this.createMenuItem("Reports", false)}
                     </div>
 
                     </div>

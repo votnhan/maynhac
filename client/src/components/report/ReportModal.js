@@ -4,6 +4,7 @@ import { Tree } from 'antd';
 import TextareaAutosize from "react-textarea-autosize";
 import ReportService from '../../services/ReportService';
 import { connect } from "react-redux";
+import { message } from 'antd';
 
  
 const customStyles = {
@@ -93,9 +94,11 @@ class ReportModal extends Component {
         description: this.state.otherId == this.state.selection ? this.state.description : '',
         username: this.props.username};
       ReportService.handleSubmitReport(data, (res) => {
-        console.log("Submitted");
-        console.log(res);
+        message.info("Submitted");
+      }, err => {
+        message.error("You already submitted to this song");
       })
+        
     }
 
 

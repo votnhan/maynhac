@@ -27,21 +27,44 @@ router.get('/typeReport', (req, res, next) => {
 router.post('/report', verifyToken,  (req, res, next) => {
     const {reasonId, songId, description, username} = req.body;
     const report = new Report({reasonId, songId, description});
-    report.save().then(
-        report => {
-            const idreport = report._id;
-            User.update({username}, {$push: {report: idreport}}).then(
-                data =>  {
-                    res.status(200).send(report);
-                }
-            )
-            .catch(err => {
-                console.log(err);
-                res.status(500).send(err)
-            })
+    User.findOne({username}, (err, user) => {
+        for (var i = 0 ; i < user.report.length; ++i) {
+            if (user.report[i].song == songId) {
+                console.log(user.report[i].songId)
+                res.status(402).send(false);
+                return;
+            }
         }
-    )
-    .catch(err => console.log(err))
+
+        report.save().then(
+            report => {
+                const idreport = report._id;
+                User.update({username}, {$push: {report: {reportId: idreport, song: songId}}}).then(
+                    data =>  {
+                        res.status(200).send(report);
+                        return;
+                    }
+                )
+                .catch(err => {
+                    console.log(err);
+                    res.status(500).send(err);
+                    return;
+
+                })
+            }
+        )
+        .catch(err => {
+            console.log(err);
+            return;
+        })
+
+        
+    }).catch(err => {
+        console.log(err);
+        res.status(500).send(err);
+    });
+
+    
 });
 
 

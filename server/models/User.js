@@ -38,7 +38,10 @@ const UserSchema = new Schema({
         }
     }],
 
-    report: [String]
+    report: [{
+        reportId:String,
+        song:String
+    }]
     
 });
 

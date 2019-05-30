@@ -17,7 +17,7 @@ class ReportService extends React.Component {
 
     }
 
-    handleSubmitReport(data, callback) {
+    handleSubmitReport(data, callback, error) {
         const {songId, reasonId, description, username} = data;
         const headers= {'x-access-token': localStorage.getItem('x-access-token')};
         Service.post('report/report', {songId, reasonId, description, username}, {headers: headers}).then(
@@ -26,7 +26,7 @@ class ReportService extends React.Component {
             }
         )
         .catch( err => {
-            console.log(err);
+            error(err);
         })
 
     }

@@ -19,7 +19,7 @@ router.get('/listenSong', verifyToken, (req, res, next) => {
         }
         else{
             History.findOneAndUpdate({username, songid}, {$inc: {listencount:1}}, {new:true}, (err, result) =>{
-                if(err){
+                if(err) {
                     console.log(err);
                     return res.status(500).send(err);
                 }

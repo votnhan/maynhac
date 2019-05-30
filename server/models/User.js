@@ -23,6 +23,7 @@ const UserSchema = new Schema({
     listmusicsposted: [String],
     listplaylists:[String],
     listalbums: [String],
+    listreport: [String],
     
     reaction:[{
         songid:String,

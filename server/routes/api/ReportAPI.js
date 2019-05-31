@@ -24,6 +24,29 @@ router.get('/typeReport', (req, res, next) => {
     });
 });
 
+router.post('/typeFromId', (req, res, next) => {
+    var typeid = req.body.reasonId;
+    TypeReport.findOne({typeid}, (err, type, next) => {
+        console.log(type);
+            res.status(200).send(type);
+    })
+})
+
+router.post('/reportById', (req, res) => {
+    var _id = req.body.reportId;
+    Report.findOne({_id}, (err, report) => {
+        if (err) {
+            res.status(402).send(false);
+        }
+        else {
+            console.log(report);
+            res.status(200).send(report);
+        }
+        
+    })
+})
+
+
 router.post('/report', verifyToken,  (req, res, next) => {
     const {reasonId, songId, description, username} = req.body;
     const report = new Report({reasonId, songId, description});

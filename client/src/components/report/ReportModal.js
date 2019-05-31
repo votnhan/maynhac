@@ -96,7 +96,7 @@ class ReportModal extends Component {
       ReportService.handleSubmitReport(data, (res) => {
         message.info("Submitted");
       }, err => {
-        message.error("You already submitted to this song");
+        message.error("You already reported this song");
       })
         
     }

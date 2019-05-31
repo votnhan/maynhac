@@ -3,6 +3,8 @@ import "../assets/css/Comment.css";
 import { Button, Comment, Form, Header, Grid, Image } from "semantic-ui-react";
 import SongService from "../services/SongService";
 import { connect }from "react-redux";
+import { getSongInfo } from "../actions/getSongInfoAction";
+import { showSongPlayer, hideSongPlayer, addSongToQueue } from "../actions/uiActions";
 
 const logo =
   "https://github.com/trungnhanuchiha/maynhac/blob/server/client/src/assets/imgs/logo.jpg?raw=true";
@@ -12,9 +14,8 @@ class CommentPart extends React.Component {
   constructor(props) {
     super(props);
     console.log(props);
-    this.state = {comment: ""};
+    this.state = {comment: "", listCmts: []};
   }
-
 
   render() {
     const CmtCard = (obj, i) => (
@@ -63,13 +64,20 @@ class CommentPart extends React.Component {
           Comments
         </Header>
         {this.props.comments.map((object, idx) => CmtCard(object, idx))}
+        {this.state.listCmts.map((object, idx) => CmtCard(object, idx))}
       </Comment.Group>
     );
   }
 
   onCommentSubmit = (e) => {
-    var data = {content: this.state.comment, commentator: this.props.user.username, songId: this.props._id};
+    e.preventDefault();
+    console.log(this.props);
+    var data = {content: this.state.comment, commentator: this.props.user.username, songId: this.props.songInfo._id, datecomment: Date.now()};
     SongService.handleCommentSong(data, (res) => {
+      var Id = this.props.songInfo._id;
+      SongService.handleGetSongbyId(Id, (res) => {
+        this.props.getSongInfo(res.data);
+      })
       console.log(res);
     })
   }
@@ -89,7 +97,7 @@ function mapStateToProps(state) {
   
   function mapDispatchToProps(dispatch) {
     return {
-      
+      getSongInfo: obj => dispatch(getSongInfo(obj))
     };
   }
   

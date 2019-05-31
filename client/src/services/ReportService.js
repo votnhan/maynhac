@@ -14,7 +14,18 @@ class ReportService extends React.Component {
         .catch( err => {
             console.log(err);
         })
+    }
 
+    handleGetReportById(data, callback) {
+        const {reportId} = data;
+        Service.post('report/reportById', {reportId}).then(
+            res => {
+                callback(res.data);
+            }
+        )
+        .catch( err => {
+            console.log(err);
+        })
     }
 
     handleSubmitReport(data, callback, error) {
@@ -29,6 +40,18 @@ class ReportService extends React.Component {
             error(err);
         })
 
+    }
+
+    handleGetTypeFromId(data, callback, error) {
+        const {reasonId} = data;
+        Service.post('report/typeFromId', {reasonId}).then(
+            res => {
+                callback(res.data);
+            }
+        )
+        .catch( err => {
+            console.log(err);
+        })
     }
 
         

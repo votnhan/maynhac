@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ReportCard from './ReportCard';
 import {connect} from 'react-redux';
 import UserService from '../../services/UserService';
+import ReportService from "../../services/ReportService";
 
 
 

@@ -23,6 +23,7 @@ const UserSchema = new Schema({
     listmusicsposted: [String],
     listplaylists:[String],
     listalbums: [String],
+    listreport: [String],
     
     reaction:[{
         songid:String,
@@ -35,6 +36,11 @@ const UserSchema = new Schema({
             type:Date,
             default: () => new Date().toISOString()
         }
+    }],
+
+    report: [{
+        reportId:String,
+        song:String
     }]
     
 });

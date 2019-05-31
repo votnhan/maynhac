@@ -3,8 +3,10 @@ import cover from '../../assets/imgs/playlist_cover.png';
 import "../../assets/css/UserPage.css";
 import SongSearchItem from '../search/SongSearchItem';
 import SongService from '../../services/SongService';
+import PlaylistService from '../../services/PlaylistService';
 import { playPlaylist } from "../../actions/uiActions";
 import { connect } from "react-redux";
+
 
 class PlaylistDetailPage extends Component {
 
@@ -52,16 +54,9 @@ class PlaylistDetailPage extends Component {
     }
 
     onPlayAll = (e) => {
-        for (var i = 0 ; i < this.state.data.songs.length; ++i) {
-            var data = [];
-            SongService.handleGetSongbyId(this.state.data.songs[i], (res)=> {
-                data.push(res.data);
-                if (i >= this.state.data.songs.length - 1) {
-                    this.props.playPlaylist(data);
-                }
-            });
-        }
-        
+        PlaylistService.handleGetSongsOfPlaylist({playlistId: this.state.data._id}, (Songsofplaylist) => {
+            this.props.playPlaylist(Songsofplaylist);
+        });
     }
 
 
@@ -71,7 +66,7 @@ class PlaylistDetailPage extends Component {
                 <div>
                     <div className="ui placeholder segment" style={{backgroundColor: "#004655"}}>
                         <img alt="" src={cover} style={{maxWidth: "25%", width: "25%"}}/>
-                        <h3>{this.state.data.name}</h3>
+                        <h3 style={{color:'white'}}>{this.state.data.name}</h3>
                     </div>
                 </div>
 
@@ -99,11 +94,11 @@ function mapStateToProps(state) {
     return {};
   }
   
-  function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch) {
     return {
       playPlaylist: obj => dispatch(playPlaylist(obj)),
     };
-  }
+}
   
   export default connect(
     mapStateToProps,

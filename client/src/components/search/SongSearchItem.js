@@ -70,6 +70,10 @@ class SongSearchItem extends Component {
         history.push(`/info/${this.props.name}`);
         console.log(history);
     }
+
+    onDeleteItem = (e) => {
+        this.props.onDelete();
+    }
     
 
     render() {
@@ -88,13 +92,15 @@ class SongSearchItem extends Component {
                 </div>
                 <Popup closeOnDocumentClick  trigger={trigger} position="right center">
                     <div>
-                    
                         <div onClick={this.playSong}><i className="play circle icon"></i>Play this song</div>
                         <div onClick={this.addSong}><i className="plus square icon"></i>Add</div>
                         <div onClick={this.addToQueue}><i className="podcast icon"></i>Add to current playlist</div>
                         <div onClick={this.likeSong}><i className="heart icon"></i>Like</div>
                     </div>
                 </Popup>
+                {this.props.onDelete != null ? 
+                    <div onClick={this.onDeleteItem} style={{position: "relative", float: "right", visibility: this.state.visibility}}><i className="list alternate big icon"></i></div> 
+                    : null}
                 <SongAddModal closeModal={this.closeAddSong} isOpen={this.state.modalIsOpen} songItem={this.props._id}/>
             </div>
         );

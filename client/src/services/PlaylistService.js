@@ -60,6 +60,20 @@ class PlaylistService extends React.Component {
             console.log(err);
         });
     }
+
+    handleRemoveSongFromPlaylist(data, callback) {
+        const {songId, playlistId} = data;
+        const token = localStorage.getItem('x-access-token');
+        var idsong = songId;
+        var idplaylist = playlistId;
+        Service.post('song/removeSonginPlaylist', {idsong, idplaylist}, {headers: {'x-access-token': token}})
+        .then(res => {
+            callback(res.data);
+        })
+        .catch( err=>{
+            console.log(err);
+        })
+    }
     
 }
 

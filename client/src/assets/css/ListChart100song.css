@@ -1,0 +1,29 @@
+.list-song {
+    cursor: pointer;
+}
+
+.list-chart-item{
+    margin: 20px;
+    font-size: 25px;
+}
+
+.custom-margin-img-listchart{
+    margin: 0 15px 0 10px !important;
+    width: 80px !important;
+    height: 70px !important;
+}
+
+.list-chart-rank{
+    margin-top: 5px;
+    width: 75px;
+}
+
+.list-chart-content{
+    width: 450px;
+    max-width: 100%;
+}
+
+.custom-list-chart-numlisten{
+    width: 200px;
+    max-width: 100%;
+}

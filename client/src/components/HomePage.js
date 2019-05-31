@@ -3,6 +3,7 @@ import { Carousel, message } from "antd";
 import "antd/dist/antd.css";
 import "../assets/css/HomePage.css";
 import "../assets/css/MusicCard.css";
+import *  as types from '../constants/type.js';
 import HomePageService from "../services/HomePageService";
 import { Card, Icon, Image, Button } from "semantic-ui-react";
 import { showSongPlayer, hideSongPlayer, addSongToQueue } from "../actions/uiActions";
@@ -112,7 +113,7 @@ class HomePage extends React.Component {
         <Card className="music-card-wrapper">
           <Image
             className="music-card-img"
-            src={obj.avatar}
+            src={obj.avatar?obj.avatar:types.LOGO_LINK}
             alt="https://github.com/trungnhanuchiha/maynhac/blob/server/client/src/assets/imgs/logo.jpg?raw=true"
           />
 

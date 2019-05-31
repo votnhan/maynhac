@@ -27,7 +27,8 @@ class PlaylistService extends React.Component {
     } 
     
     handRemovePlaylist(data, callback){
-        const {playlistId, token} = data;
+        const {playlistId} = data;
+        const token = localStorage.getItem('x-access-token');
         Service.post('playlist/deletePlaylist',{playlistId} ,{headers: {'x-access-token': token}})
         .then( res => {
             callback(res);
@@ -38,7 +39,8 @@ class PlaylistService extends React.Component {
     }
 
     handleUpdatePlaylist(data, callback){
-        const {name, description, type, idplaylist, token} = data;
+        const {name, description, type, idplaylist} = data;
+        const token = localStorage.getItem('x-access-token');
         Service.post('playlist/updatePlaylist', {name, description, type, idplaylist} ,{headers: {'x-access-token': token}})
         .then( res => {
             callback(res);
@@ -47,6 +49,18 @@ class PlaylistService extends React.Component {
             console.log(err);
         });
     }
+    handleGetSongsOfPlaylist(data, callback){
+        const {playlistId} = data;
+        const token = localStorage.getItem('x-access-token');
+        Service.get(`playlist/SongsOfPlaylist/?playlistId=${playlistId}`, {headers: {'x-access-token': token}})
+        .then( res => {
+            callback(res.data.songs);
+        })
+        .catch( err => {
+            console.log(err);
+        });
+    }
+    
 }
 
 export default (new PlaylistService());

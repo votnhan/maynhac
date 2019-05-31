@@ -126,7 +126,7 @@ class SongAddModal extends Component {
                                 var name = this.state.newPlaylistName;
                                 var description = "Description";
                                 var typeid = 2;
-                                var token = this.props.user.jwt;
+                                var token = localStorage.getItem('x-access-token');
                                 var data = {name, description, typeid, token}
                                 
                                 
@@ -142,7 +142,7 @@ class SongAddModal extends Component {
                         var name = this.state.newPlaylistName;
                         var description = "Description";
                         var typeid = 2;
-                        var token = this.props.user.jwt;
+                        var token = localStorage.getItem('x-access-token');
                         var data = {name, description, typeid, token}
                         
                         

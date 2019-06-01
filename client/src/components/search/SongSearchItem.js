@@ -99,7 +99,7 @@ class SongSearchItem extends Component {
                     </div>
                 </Popup>
                 {this.props.onDelete != null ? 
-                    <div onClick={this.onDeleteItem} style={{position: "relative", float: "right", visibility: this.state.visibility}}><i className="list alternate big icon"></i></div> 
+                    <div onClick={this.onDeleteItem} style={{position: "relative", float: "right", visibility: this.state.visibility}}><i className="window close big icon"></i></div> 
                     : null}
                 <SongAddModal closeModal={this.closeAddSong} isOpen={this.state.modalIsOpen} songItem={this.props._id}/>
             </div>

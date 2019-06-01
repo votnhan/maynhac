@@ -1,7 +1,7 @@
 import React from "react";
 import "../assets/css/FooterPlayer.css";
 import { connect } from "react-redux";
-import { hideSongPlayer } from "../actions/uiActions";
+import { hideSongPlayer, setAudioList, removeSong } from "../actions/uiActions";
 import { Button, Icon } from "semantic-ui-react";
 import ReactJkMusicPlayer from "react-jinke-music-player";
 import "react-jinke-music-player/assets/index.css";
@@ -38,6 +38,14 @@ class FooterPlayer extends React.Component {
     this.props.hideSongPlayer();
   }
 
+  onAudioListsChange = (e, newPlaylist, audioInfo) => {
+    console.log("Something changed");
+    console.log(newPlaylist)
+    if (newPlaylist.length != this.props.songQueue.length) {
+      this.props.setAudioList(newPlaylist);
+    }
+  }
+
   render() {
     let t ;
     if (this.props.showPlayer) {
@@ -66,6 +74,7 @@ class FooterPlayer extends React.Component {
             
           </Button> */}
           <ReactJkMusicPlayer
+            onAudioListsChange={this.onAudioListsChange}
             className="order-behind"
             {...data}
             key={this.props.nowPlayingName}
@@ -90,7 +99,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    hideSongPlayer: () => dispatch(hideSongPlayer())
+    hideSongPlayer: () => dispatch(hideSongPlayer()),
+    setAudioList: (audioList) => dispatch(setAudioList(audioList)),
+    removeSong: (songName) => dispatch(removeSong(songName))
   };
 }
 

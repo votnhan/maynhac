@@ -15,6 +15,8 @@ const verifyToken = require('../../middlewares/verifyToken');
 const {uploadFileGoogleDrive} = require('../../middlewares/uploadFile');
 const router = express.Router();
 
+const MaxSongsToSearch = 5;
+
 router.post('/postSong',[ verifyToken, uploadFileGoogleDrive] ,(req, res, next) => {
     const username  = req.username;
     const {name, lyrics, typeid, author, artist, typecountry} = req.body;
@@ -230,13 +232,11 @@ router.post('/comment', verifyToken, (req, res, next) => {
         "commentator": commentator,
         "datecomment": new Date().toISOString()
     }
-    console.log(comment);
-    console.log(songId);
 
     Song.findOneAndUpdate({_id: songId}, {$push: {comments: comment}}, {new: true}, (err, data) => {
         if(err){
             console.log(err);
-            res.status(500).send(err);
+            return res.status(500).send(err);
         }
         res.status(200).send(comment);
     });

@@ -78,3 +78,9 @@
 .music-card-content {
     cursor: pointer;
 }
+
+.music-card-div .music-card-wrapper .music-card-img {
+    width: 100%;
+    width: 180px;
+    height: 130px;
+}

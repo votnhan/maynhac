@@ -110,24 +110,6 @@ class Header extends React.Component {
         </Menu.Item>
 
         <Menu.Item
-          name="top10"
-          active={activeItem === "top10"}
-          onClick={this.handleItemClick}
-        >
-          <Icon name="chart line" size="large" />
-          Top 10
-        </Menu.Item>
-
-        <Menu.Item
-          name="playlist"
-          active={activeItem === "playlist"}
-          onClick={this.handleItemClick}
-        >
-          <Icon name="list" size="large" />
-          My Playlist
-        </Menu.Item>
-
-        <Menu.Item
           name="upload"
           active={activeItem === "upload"}
           onClick={this.handleItemClick}

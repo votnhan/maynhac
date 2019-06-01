@@ -91,7 +91,7 @@ class ChartPage extends React.Component {
     var top100 = [];
     console.log("top3", top3Song);
     if (this.state.songs) {
-      for (var i = 3; i < this.state.songs.length; ++i) {
+      for (var i = 0; i < this.state.songs.length; ++i) {
         var { artist, avatar, link, name, _id, numlisten } = this.state.songs[i];
         var item = (
           
@@ -102,7 +102,7 @@ class ChartPage extends React.Component {
               avatar={avatar}
               artist={artist}
               link={link}
-              rank={i}
+              rank={i+1}
               numlisten={numlisten}
             />
           

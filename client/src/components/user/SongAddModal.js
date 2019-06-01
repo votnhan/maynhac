@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import PlaylistService from '../../services/PlaylistService';
 import SongService from '../../services/SongService';
 import {connect} from 'react-redux';
+import {message} from "antd";
 
 const customStyles = {
     content : {
@@ -19,7 +20,7 @@ class SongAddModal extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {isOpen: false, loadPlaylist: false, newPlaylistName: ""};
+        this.state = {isOpen: false, loadPlaylist: false, newPlaylistName: "", newPlaylistDesc: ""};
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -107,52 +108,98 @@ class SongAddModal extends Component {
         this.setState({newPlaylistName: e.target.value});
     }
 
-    onAddPlaylistKeyDown = (e) => {
-        if (e.key === 'Enter') {
-            if (this.state.newPlaylistName !== '') {
-                // TODO: Check for duplicate playlist name
+    onCreateNew = () => {
+        if (this.state.newPlaylistName !== '') {
+            // TODO: Check for duplicate playlist name
 
-                var token = this.props.user.jwt;
-                var duplicate = false;
-                PlaylistService.handleGetMyPlaylists({token}, (res) => {
-                    for (var i = 0 ; i < res.data.length ; ++i) {
-                        if (res.data[i].name === this.state.newPlaylistName) {
-                            duplicate = true;
-                        }
-
-                        if (i >= res.data.length - 1) {
-                            if (duplicate !== true) {
-                                // Can add
-                                var name = this.state.newPlaylistName;
-                                var description = "Description";
-                                var typeid = 2;
-                                var token = localStorage.getItem('x-access-token');
-                                var data = {name, description, typeid, token}
-                                
-                                
-                                PlaylistService.handleCreatePlaylist(data, (res) => {
-                                    this.setState({loadPlaylist: false});
-                                });
-
-                            }
-                        }
+            var token = this.props.user.jwt;
+            var duplicate = false;
+            PlaylistService.handleGetMyPlaylists({token}, (res) => {
+                for (var i = 0 ; i < res.data.length ; ++i) {
+                    if (res.data[i].name === this.state.newPlaylistName) {
+                        duplicate = true;
                     }
 
-                    if (res.data.length === 0) {
-                        var name = this.state.newPlaylistName;
-                        var description = "Description";
-                        var typeid = 2;
-                        var token = localStorage.getItem('x-access-token');
-                        var data = {name, description, typeid, token}
-                        
-                        
-                        PlaylistService.handleCreatePlaylist(data, (res) => {
-                            this.setState({loadPlaylist: false});
-                        });
+                    if (i >= res.data.length - 1) {
+                        if (duplicate !== true) {
+                            // Can add
+                            var name = this.state.newPlaylistName;
+                            var description = this.state.newPlaylistDesc;
+                            var typeid = 2;
+                            var token = localStorage.getItem('x-access-token');
+                            var data = {name, description, typeid, token}
+                            
+                            
+                            PlaylistService.handleCreatePlaylist(data, (res) => {
+                                message.info("Create new playlist successfully");
+                                this.setState({loadPlaylist: false});
+                            });
+
+                        }
+                        else {
+                            message.error("Duplicated playlist name");
+                        }
                     }
-                });
-            }
+                }
+
+                if (res.data.length === 0) {
+                    var name = this.state.newPlaylistName;
+                    var description = this.state.newPlaylistDesc;
+                    var typeid = 2;
+                    var token = localStorage.getItem('x-access-token');
+                    var data = {name, description, typeid, token}
+                    
+                    
+                    PlaylistService.handleCreatePlaylist(data, (res) => {
+                        message.info("Create new playlist successfully");
+                        this.setState({loadPlaylist: false});
+                    });
+                }
+            });
         }
+    }
+
+    newPlaylist = (e) => {
+        this.setState({newPlaylist: true});
+    }
+
+    getAddToPlaylistCode = () => {
+        return (
+            <div>
+                <div className="ui vertical menu">
+                    {this.getPlaylist()}
+                </div>
+                {/* Add playlist */}
+                <div className="item" onClick={this.newPlaylist}>
+                    <div className="ui transparent icon input">
+                    <button class="ui button">
+                    New playlist
+                    </button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    getNewPlaylistCode() {
+        return (
+            <div class="ui form" >
+                <div class="field">
+                    <label>Name</label>
+                    <input type="text" name="name" onChange={(e) => this.setState({newPlaylistName: e.target.value})} placeholder="Name"/>
+                </div>
+                <div class="field">
+                    <label>Description</label>
+                    <input type="text" name="description" onChange={(e) => this.setState({newPlaylistDesc: e.target.value})}  placeholder="Description"/>
+                </div>
+                <button onClick={(e) => this.onCreateNew()} class="ui secondary button">
+                Okay
+                </button>
+                <button onClick={(e) => this.setState({newPlaylist: false})} class="ui button">
+                Cancel
+                </button>
+            </div>
+        )
     }
 
     render() {
@@ -164,17 +211,9 @@ class SongAddModal extends Component {
                 shouldCloseOnOverlayClick={true}
                 shouldCloseOnEsc={true}
                 contentLabel="Example Modal">
-                {/* List playlists */}
-                <div className="ui vertical menu">
-                    {this.getPlaylist()}
-                </div>
-                {/* Add playlist */}
-                <div className="item">
-                    <div className="ui transparent icon input">
-                    <input onKeyDown={this.onAddPlaylistKeyDown} onChange={this.onAddPlaylistInputChanged} type="text" placeholder="New playlist..."/>
-                    <i className="plus square icon"></i>
-                    </div>
-                </div>
+                {this.state.newPlaylist ? this.getNewPlaylistCode() : this.getAddToPlaylistCode()}
+                
+                
             </Modal>
         )
     }

@@ -18,6 +18,20 @@ export function hideSongPlayer() {
   };
 }
 
+export function setAudioList(audioList) {
+  return {
+    type: types.SET_AUDIOLIST,
+    songQueue: audioList
+  }
+}
+
+export function removeSong(songName) {
+  return {
+    type: types.REMOVE_SONG_FROM_QUEUE,
+    name: songName
+  }
+}
+
 export function addSongToQueue(obj) {
   console.log("action obj", obj)
   return {

@@ -43,6 +43,13 @@ export default function uiReducer(state = initialState, action) {
       return {
         ...state, songQueue: [...state.songQueue, action.songToAdd]
       }
+
+      case types.SET_AUDIOLIST:
+        console.log("Inside reducer");
+        console.log(action);
+        return {
+          ...state, songQueue: action.songQueue
+        }
     case types.PLAY_PLAYLIST:
     var queue = []
     for (var i = 0 ; i < action.listSong.length; ++i) {
@@ -57,6 +64,25 @@ export default function uiReducer(state = initialState, action) {
       ...state,
       songQueue: queue
     }
+    case types.REMOVE_SONG_FROM_QUEUE:
+      var queue = [...state.songQueue];
+      var index = -1;
+      console.log("Start removing");
+      for (var i = 0 ; i < queue.length; ++i) {
+        console.log(queue[i].name);
+        console.log(action.name)
+        if (queue[i].name === action.name){
+          index = i;
+          break;
+        }
+      }
+      if (index !== -1) {
+        queue.slice(index, 1);
+        return {
+          ...state, songQueue: queue
+        }
+      }
+
     default:
       return state;
   }

@@ -104,6 +104,7 @@ class PlaylistDetailPage extends Component {
                     <div className="ui placeholder segment" style={{backgroundColor: "#004655"}}>
                         <img alt="" src={cover} style={{maxWidth: "25%", width: "25%"}}/>
                         <h3 style={{color:'white'}}>{this.state.data.name}</h3>
+                        <h5 style={{color:'white'}}>{this.state.data.description}</h5>
                     </div>
                 </div>
 

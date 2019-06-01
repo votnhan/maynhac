@@ -1,0 +1,10 @@
+.chart-page-chart-wrapper{
+    margin: 20px 50px 50px 150px;
+}
+.chart-page-chart-wrapper h1{
+    margin-bottom: 60px;
+}
+
+.margin-custom{
+    margin: 100px 25px 50px 25px !important;
+}

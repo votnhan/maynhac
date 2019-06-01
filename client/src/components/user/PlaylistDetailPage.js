@@ -27,21 +27,58 @@ class PlaylistDetailPage extends Component {
         }
     }
 
-    loadSong() {
-        var code = [];
-        var response = (res, i) => {
-            var {name, _id, avatar, link, artist} = res.data;
-            code.push(<SongSearchItem key={_id} name={name} _id={_id} avatar={avatar} artist={artist} link={link}/>);
-            if (i >= this.state.data.songs.length - 1) {
-                this.setState({songsCode: code, songsUpdate: true});
-                return;
+    deleteSongFromPlaylist = (_id) => {
+        var playlistId = this.state.data._id;
+        var songsCode = [...this.state.songsCode];
+        var index = -1;
+        for (var i = 0 ; i < this.state.songsCode.length ; ++i) {
+            if (this.state.songsCode[i].key === _id) {
+                index = i;
+                break;
             }
         }
-        for (var i = 0 ; i < this.state.data.songs.length; ++i) {
-            SongService.handleGetSongbyId(this.state.data.songs[i], (res)=> {
-                response(res, i);
+        if (index !== - 1) {
+            songsCode.splice(index, 1);
+            this.setState({songsCode: songsCode});
+            var songId = _id;
+            PlaylistService.handleRemoveSongFromPlaylist({playlistId, songId}, (res) => {
+                this.setState({songsCode: songsCode});
+                var songs = [...this.state.data.songs];
+                for (var i = 0 ; i < songs.length ; ++i) {
+                    if (songs[i]._id === _id) {
+                        index = i;
+                        break;
+                    }
+                }
+                songs.splice(index, 1);
+                this.setState({data: {...this.state.data, songs: songs}});
+                
+            })
+        }
+
+    }
+
+    loadSong() {
+        if (this.state.songsUpdate !== true) {
+            var response = (code, res, i, length) => {
+                var {name, _id, avatar, link, artist} = res;
+                code.push(<SongSearchItem key={_id} name={name} _id={_id}  avatar={avatar} artist={artist} link={link} onDelete={() => this.deleteSongFromPlaylist(_id)}/>);
+                if (i >= length - 1) {
+                    this.setState({songsCode: code, songsUpdate: true});
+                    return;
+                }
+            }
+            var playlistId = this.state.data._id;
+            PlaylistService.handleGetSongsOfPlaylist({playlistId}, res => {
+                console.log(res);
+                var code = [];
+                for (var i = 0 ; i < res.length; ++i) {
+                    response(code, res[i], i, res.length);
+                }
+                
             });
         }
+        
     }
 
     getSong() {

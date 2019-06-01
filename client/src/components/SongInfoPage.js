@@ -32,13 +32,14 @@ class SongInfoPage extends Component {
         });
       }
     );
-    SongService.handleGetSongbyId(this.props._id, res => {
-      console.log("return res", res);
-      this.setState({
-        numLike: res.data.numlike,
-        numListen: res.data.numlisten + 1
-      });
-    });
+    // SongService.handleGetSongbyId(this.props._id, res => {
+    //   console.log("return res", res);
+    //   this.setState({
+    //     numLike: res.data.numlike,
+    //     numListen: res.data.numlisten
+    //   });
+    // });
+
     console.log("construct state", this.state);
     message.info(this.props.name);
     console.log(this.props);
@@ -92,6 +93,7 @@ class SongInfoPage extends Component {
   closeReport(e) {
     this.setState({reportOpen: false}, () => {console.log(this.state.reportOpen)});
   }
+
 
   render() {
     return (
@@ -176,10 +178,10 @@ class SongInfoPage extends Component {
                 </div>
                 <div>
                   <span className="info-like-listen">
-                    <Icon name="like" /> {this.state.numLike}
+                    <Icon name="like" /> {this.props.numLike}
                   </span>
                   <span className="info-like-listen">
-                    <Icon name="headphones" /> {this.state.numListen}
+                    <Icon name="headphones" /> {this.props.numListen}
                   </span>
                   <Button onClick={e => this.setState({reportOpen: true})} animated="vertical" color="black">
                     <Button.Content hidden> Report! </Button.Content>

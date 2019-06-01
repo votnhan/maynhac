@@ -90,7 +90,6 @@ class UserPage extends Component {
                     <div className="ui secondary vertical pointing menu">
                       {this.createMenuItem("Songs", false)}
                       {this.createMenuItem("Playlists", false)}
-                      {this.createMenuItem("Artists", false)}
                       {this.createMenuItem("Uploads", false)}
                       {this.createMenuItem("Reports", false)}
                     </div>
